@@ -1,7 +1,7 @@
-#include "coBan.h"
+#include "QuanLy.h"
 
 template <typename T>
-Vector<T>::Vector(const size_t &doLon) : doLon(doLon), soPhanTu(doLon)
+QuanLy<T>::QuanLy(const size_t &doLon) : doLon(doLon), soPhanTu(doLon)
 {
     conTro = nullptr;
     if (this->doLon > 0)
@@ -12,7 +12,7 @@ Vector<T>::Vector(const size_t &doLon) : doLon(doLon), soPhanTu(doLon)
         throw -1;
 }
 template <typename T>
-Vector<T>::Vector(const size_t &doLon, const T &gT) : doLon(doLon), soPhanTu(doLon)
+QuanLy<T>::QuanLy(const size_t &doLon, const T &gT) : doLon(doLon), soPhanTu(doLon)
 {
     conTro = new T[this->doLon];
     for (size_t i = 0; i < this->doLon; i++)
@@ -23,7 +23,7 @@ Vector<T>::Vector(const size_t &doLon, const T &gT) : doLon(doLon), soPhanTu(doL
         throw -1;
 }
 template <typename T>
-T &Vector<T>::operator[](size_t i) const
+T &QuanLy<T>::operator[](size_t i) const
 {
     if (i >= soPhanTu)
         throw -1;
@@ -31,29 +31,30 @@ T &Vector<T>::operator[](size_t i) const
 }
 
 template <typename T>
-Vector<T>::~Vector()
+QuanLy<T>::~QuanLy()
 {
     delete[] conTro;
 }
 
 template <typename T>
-T *Vector<T>::viTriDau() const
+const T *QuanLy<T>::lDCDau() const
 {
     return conTro;
 }
 template <typename T>
-T *Vector<T>::viTriCuoi() const
+const T *QuanLy<T>::lDCCuoi() const
 {
-    return conTro + soPhanTu;
+    return conTro + soPhanTu - 1;
 }
 
 template <typename T>
-size_t Vector<T>::lDoLon() const { return doLon; }
+size_t QuanLy<T>::lDoLon() const { return doLon; }
 
 template <typename T>
-size_t Vector<T>::lSoPhanTu() const { return soPhanTu; }
+size_t QuanLy<T>::lSoPhanTu() const { return soPhanTu; }
+
 template <typename T>
-void Vector<T>::doi(T &phanTu_1, T &phanTu_2)
+void QuanLy<T>::doi(T &phanTu_1, T &phanTu_2)
 {
     T tamThoi = phanTu_1;
     phanTu_1 = phanTu_2;
@@ -61,7 +62,7 @@ void Vector<T>::doi(T &phanTu_1, T &phanTu_2)
 }
 
 template <typename T>
-void Vector<T>::capPhat()
+void QuanLy<T>::capPhat()
 {
     doLon *= 2;
     T *tamThoi = new T[doLon];
@@ -73,20 +74,20 @@ void Vector<T>::capPhat()
     }
 
     delete[] conTro;
-    cout << "here" << endl;
 
     conTro = tamThoi;
 }
 template <typename T>
-void Vector<T>::keoLui(const size_t &viTri)
+void QuanLy<T>::keoLui(const size_t &viTri)
 {
     for (size_t i = viTri; i < soPhanTu - 1; i++)
     {
         doi(conTro[i], conTro[i + 1]);
     }
 }
+
 template <typename T>
-void Vector<T>::dayToi(const size_t &viTri)
+void QuanLy<T>::dayToi(const size_t &viTri)
 {
 
     if (soPhanTu == doLon)
@@ -99,35 +100,50 @@ void Vector<T>::dayToi(const size_t &viTri)
 }
 
 template <typename T>
-size_t Vector<T>::tim(const T &phanTuTim) const
+const T *QuanLy<T>::tim(const T &phanTuTim) const
 {
     for (size_t i = 0; i < soPhanTu; i++)
     {
-        if ( this->conTro[i] == phanTuTim)
-            return i;
+        if (this->conTro[i] == phanTuTim)
+            return conTro + i;
     }
     return KHONG_TIM_THAY;
 }
+
 template <typename T>
-void Vector<T>::xoa(const T &phanTuXoa)
+void QuanLy<T>::xoa(const T *dCXoa)
 {
-    for (size_t i = 0; i < soPhanTu; i++)
+
+    if (lDCDau() <= dCXoa && dCXoa <= lDCCuoi())
     {
-        if (phanTuXoa == conTro[i])
-        {
-            keoLui(i);
-            soPhanTu--;
-        }
+        keoLui(dCXoa - lDCDau());
+        soPhanTu--;
     }
 }
 
 template <typename T>
-void Vector<T>::chen(const size_t &viTri, const T &phanTuThem)
+void QuanLy<T>::xoa(const T *dCXoaBatDau, const T *dCXoaKetThuc)
+{
+    size_t KhoangCach = dCXoaKetThuc - dCXoaBatDau + 1;
+    size_t viTriBatDauX = dCXoaBatDau - lDCDau();
+
+    if (dCXoaKetThuc >= dCXoaBatDau && lDCDau() <= dCXoaBatDau && dCXoaKetThuc <= lDCCuoi())
+    {
+        for (size_t i = viTriBatDauX; i < soPhanTu - KhoangCach; i++)
+        {
+            doi(conTro[i], conTro[i + KhoangCach]);
+        }
+        soPhanTu -= KhoangCach;
+    }
+}
+
+template <typename T>
+void QuanLy<T>::chen(const T *dCChen, const T &phanTuThem)
 {
 
     if (soPhanTu == doLon)
         capPhat();
-    dayToi(viTri);
-    conTro[viTri] = phanTuThem;
+    dayToi(dCChen - lDCDau());
+    conTro[dCChen - lDCDau()] = phanTuThem;
     soPhanTu++;
 }

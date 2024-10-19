@@ -1,23 +1,23 @@
-#include "nguoi.h"
+#include "Nguoi.h"
 
-nguoi::nguoi(const string &hoVaTenDV, const string &maDV, const thoiGianNTN &ngaySinhDV) : hoVaTen(hoVaTenDV), ma(maDV), ngaySinh(ngaySinhDV) {}
+Nguoi::Nguoi(const string &hoVaTenDV, const string &maDV, const thoiGianNTN &ngaySinhDV) : hoVaTen(hoVaTenDV), ma(maDV), ngaySinh(ngaySinhDV) {}
 
-void nguoi::cDanhTinh(const string &hoVaTenDV, const string &maDV, const thoiGianNTN &ngaySinhDV)
+void Nguoi::cDanhTinh(const string &hoVaTenDV, const string &maDV, const thoiGianNTN &ngaySinhDV)
 {
     hoVaTen = hoVaTenDV;
     ma = maDV;
     ngaySinh = ngaySinhDV;
 }
-void nguoi::cHoVaTen(const string &hoVaTenDV) { hoVaTen = hoVaTenDV; }
-void nguoi::cMa(const string &maDV) { ma = maDV; }
-void nguoi::cNgaySinh(const thoiGianNTN &ngaySinhDV) { ngaySinh = ngaySinhDV; }
-string nguoi::lHoVaTen() { return hoVaTen; }
-string nguoi::lMa() { return ma; }
-thoiGianNTN nguoi::lngaySinh() { return ngaySinh; }
-bool nguoi::operator==(const nguoi &n)
+void Nguoi::cHoVaTen(const string &hoVaTenDV) { hoVaTen = hoVaTenDV; }
+void Nguoi::cMa(const string &maDV) { ma = maDV; }
+void Nguoi::cNgaySinh(const thoiGianNTN &ngaySinhDV) { ngaySinh = ngaySinhDV; }
+string Nguoi::lHoVaTen() { return hoVaTen; }
+string Nguoi::lMa() { return ma; }
+thoiGianNTN Nguoi::lngaySinh() { return ngaySinh; }
+bool operator==(const Nguoi &nguoi1, const Nguoi &nguoi2)
 {
-    if (this->ma == n.ma)
+    if (nguoi1.ma == nguoi2.ma)
         return true;
     return false;
 };
-nguoi::~nguoi() {}
+Nguoi::~Nguoi() {}

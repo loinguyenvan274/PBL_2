@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <vector>
+using namespace std;
 class animal
 {
 protected:
@@ -27,12 +28,18 @@ public:
         std::cout << "meo meo ";
     }
 };
+int a = 9;
+const int *f()
+{
+
+    return &a;
+}
 int main()
 {
-    animal a(4);
-    animal b(5);
-    dog d(3);
-    a = d;
-    a.print();
+    // int *const b = f();
+    throw -1;
+    // cout << b << endl;
+    // b = 6;
+    // cout << b;
     return 0;
 }

@@ -1,16 +1,15 @@
 #pragma once
+#include "QuanLy.h"
 #include <string>
-#include "coBan.h"
 using namespace std;
-class nguoi
+class Nguoi
 {
 protected:
     string hoVaTen;
     string ma;
     thoiGianNTN ngaySinh;
-
 public:
-    nguoi(const string & = "", const string & = "", const thoiGianNTN & = {0, 0, 2000});
+    Nguoi(const string & = "", const string & = "", const thoiGianNTN & = {0, 0, 2000});
     void cDanhTinh(const string &, const string &, const thoiGianNTN &);
     void cHoVaTen(const string &);
     void cNgaySinh(const thoiGianNTN &);
@@ -18,6 +17,7 @@ public:
     string lHoVaTen();
     string lMa();
     thoiGianNTN lngaySinh();
-    bool operator==(const nguoi &);
-    virtual ~nguoi();
+    friend bool operator==(const Nguoi &, const Nguoi &);
+    virtual ~Nguoi();
 };
+bool operator==(const Nguoi &, const Nguoi &);

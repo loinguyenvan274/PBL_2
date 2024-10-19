@@ -12,6 +12,7 @@ int main()
     int n = 10; // cout << "here" << endl;
     Vector<sinhVien> a(n);
 
+    a[0].cDanhTinh("Phan Van L", "102231000", {5, 6, 1996});
     a[1].cDanhTinh("Phan Van B", "102230324", {7, 9, 1995});
     a[2].cDanhTinh("Tran Van C", "102230111", {8, 5, 2000});
     a[3].cDanhTinh("Le Thi D", "102230222", {9, 12, 1998});
@@ -21,12 +22,12 @@ int main()
     a[7].cDanhTinh("Tran Thi H", "102230666", {25, 4, 1999});
 
     a[8].cDanhTinh("Le Van I", "102230777", {30, 8, 2002});
-    // a[9].cDanhTinh("Hoang Thi J", "102230888", {19, 11, 1985});
+    a[9].cDanhTinh("Hoang Thi J", "102230888", {19, 11, 1985});
 
-    a.chen(4, sinhVien("Nguyen Van K", "102230999", {12, 10, 2003}));
-    a.tim(a[5]);
-    // a.xoa(a[5]);
-
+    // a.chen(4, sinhVien("Nguyen Van K", "102230999", {12, 10, 2003}));
+    // a.tim(a[5]);
+    a.xoa(a.lDCCuoi());
+    // a.xoa(a.lDCDau(), a.lDCCuoi());
     //     .cDanhTinh("Nguyen Van K", "102230999", {12, 10, 2003});
     // a[11].cDanhTinh("Phan Van L", "102231000", {5, 6, 1996});
     // a[12].cDanhTinh("Tran Van M", "102231111", {21, 2, 2004});

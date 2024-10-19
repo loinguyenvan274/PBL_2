@@ -1,6 +1,9 @@
-#include "nguoi.h"
-#include "coBan.h"
-class sinhVien : public nguoi
+#ifndef _SINHVIEN
+#define _SINHVIEN
+#include <string>
+#include "Nguoi.h"
+#include "QuanLy.h"
+class SinhVien : public Nguoi
 {
 private:
     thoiGianNTN ngayBatDauO;
@@ -8,7 +11,7 @@ private:
     double thoiGianO;
 
 public:
-    sinhVien(const string & = "", const string & = "", const thoiGianNTN & = {0,0,2000});
+    SinhVien(const string & = "", const string & = "", const thoiGianNTN & = {0, 0, 2000});
     void cNgayBatDauO(const thoiGianNTN &);
     void cMaPhong(const string &);
     void cThoiGianO(const int &);
@@ -16,5 +19,6 @@ public:
     string lMaPhong();
     double lThoiGianO();
     void bieuDien();
-    ~sinhVien();
+    ~SinhVien();
 };
+#endif

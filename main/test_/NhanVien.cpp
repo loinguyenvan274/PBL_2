@@ -1,10 +1,10 @@
 #include "nhanVien.h"
 
-nhanVien::nhanVien(const string &hoVaTenDV, const string &maDV, const string &ngaySinhDV) : nguoi(hoVaTenDV, maDV, ngaySinhDV)
+nhanVien::nhanVien(const string &hoVaTenDV, const string &maDV, const thoiGianNTN &ngaySinhDV) : nguoi(hoVaTenDV, maDV, ngaySinhDV)
 {
-
-    luongMoiGio = 0;
-    moTaCongViec = ""
+    ngayBatDauO = {0, 0, 2000};
+    maPhong = "";
+    thoiGianO = 0;
 }
 void nhanVien::cThoiGianLam(const int &thoiGian) { thoiGianLam = thoiGian; }
 void nhanVien::cMoTaCongViec(const string &) {}

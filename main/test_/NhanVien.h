@@ -1,17 +1,17 @@
 #ifndef _NHANVIEN
 #define _NHANVIEN
-#include "nguoi.h"
-#include "coBan.h"
-class nhanVien : public nguoi
+#include "quanLy.h"
+class nhanVien : public Nguoi
 {
 private:
     double thoiGianLam;
     double luongMoiGio;
     thoiGianNTN batDau;
+    quanLy<NC> ngayCong;
     string moTaCongViec;
 
 public:
-    nhanVien(const string & = "", const string & = "", const string & = "");
+    nhanVien(const string & = "", const string & = "", const thoiGianNTN & = {0, 0, 2000});
     void cThoiGianLam(const int &);
     void cMoTaCongViec(const string &);
     void cthoiGianLam(const int &);
