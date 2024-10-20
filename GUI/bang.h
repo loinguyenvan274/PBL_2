@@ -19,7 +19,7 @@ private:
 public:
     Bang();
     Bang(const Vector2 & = {0, 0}, const int & = 2, const int & = 2, const Vector2 & = {20, 10});
-    void cKieuChu(const Font &);
+    void cKieuChu(const Font &, const int & = 28);
     void cCot(const int &, const double &);
     void cHang(const int &, const double &);
     void cMauTheoO(const OXY &, const Color &);

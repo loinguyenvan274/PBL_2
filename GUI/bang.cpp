@@ -23,13 +23,14 @@ Bang::Bang(const Vector2 &viTriDV, const int &soCot, const int &soHang, const Ve
         }
     }
 }
-void Bang::cKieuChu(const Font &fontDV)
+void Bang::cKieuChu(const Font &fontDV, const int &coChu)
 {
     for (int i = 0; i < soHang; i++)
     {
         for (int j = 0; j < soCot; j++)
         {
             hop[i][j].cKieuChu(fontDV);
+            hop[i][j].cCoChu(coChu);
         }
     }
 }
@@ -121,7 +122,7 @@ void Bang::capNhatTT() const
         double gTCuon = GetMouseWheelMove();
         gTCuon = double(long(gTCuon * 100000000.0) / 100000000.0); // làm tròn số tránh lỗi công 2 số thập phân
 
-        if (gTCuon > 0 && hop[1][0].layViTri().y + hop[0][0].layKichCo().y + cachHang > chanTren)
+        if (gTCuon > 0 && hop[1][0].layViTri().y > chanTren + hop[0][0].layKichCo().y + cachHang)
             gTCuon = 0;
 
         for (int i = 0 + int(tieuDe); i < soHang; i++)
