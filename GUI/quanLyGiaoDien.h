@@ -1,5 +1,7 @@
 #ifndef _QUANLYGIAODIEN
 #define _QUANLYGIAODIEN
+#include "raylib.h"
+#include "giaoDienChinh.h"
 #include "nganXep.h"
 #include "giaoDien.h"
 

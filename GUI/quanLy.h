@@ -20,6 +20,11 @@ struct dienNuoc
     double dien;
     double nuoc;
 };
+struct thoiGianNT
+{
+    int ngay;
+    int thang;
+};
 struct thoiGianNTN
 {
     int ngay;
@@ -49,7 +54,8 @@ public:
     QuanLy(const size_t & = 0);
     QuanLy(const size_t &, const T &);
     T &operator[](size_t) const;
-
+    T &operator=(const T &);
+    QuanLy<T> &operator=(const QuanLy<T> &);
     const T *lDCDau() const;
     const T *lDCCuoi() const;
 
@@ -85,7 +91,7 @@ QuanLy<T>::QuanLy(const size_t &doLon, const T &gT) : doLon(doLon), soPhanTu(doL
     {
         conTro[i] = gT;
     }
-    if (this->doLon < 0)
+    if (this->doLon <= 0)
         throw -1;
 }
 
@@ -132,14 +138,16 @@ void QuanLy<T>::doi(T &phanTu_1, T &phanTu_2)
 template <typename T>
 void QuanLy<T>::capPhat()
 {
-    doLon *= 2;
+    if (doLon == 0)
+        doLon = 1;
+    else
+        doLon *= 2;
     T *tamThoi = new T[doLon];
 
     for (size_t i = 0; i < soPhanTu; i++)
     {
         tamThoi[i] = conTro[i];
     }
-
     delete[] conTro;
     conTro = tamThoi;
 }
@@ -218,6 +226,22 @@ void QuanLy<T>::them(const T &phanTuThem)
         capPhat();
     conTro[soPhanTu] = phanTuThem;
     soPhanTu++;
+}
+
+template <typename T>
+QuanLy<T> &QuanLy<T>::operator=(const QuanLy<T> &doiTuongCP)
+{
+
+    size_t sPhanTuDTCP = doiTuongCP.lSoPhanTu();
+    for (size_t i = 0; i < sPhanTuDTCP; i++)
+    {
+        if (doLon < sPhanTuDTCP)
+            capPhat();
+
+        soPhanTu += (sPhanTuDTCP > soPhanTu) ? 1 : 0;
+        conTro[i] = doiTuongCP[i];
+    }
+    return *this;
 }
 
 #endif // _QUANLY

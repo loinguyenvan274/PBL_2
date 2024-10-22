@@ -9,7 +9,7 @@ int main()
     SetWindowPosition(45, 45);
     quanLyGiaoDien dD;
 
-    dD.them(new giaoDienChinh(dD)); 
+    dD.them(new giaoDienChinh(dD));
 
     while (!WindowShouldClose())
     {

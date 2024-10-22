@@ -21,7 +21,7 @@ public:
     {
 
         soSinhVien = 200;
-        font28 = LoadFontEx("arial.ttf", 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
+        font28 = LoadFontEx("roboto.ttf", 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
 
         table = new Bang({10, 200}, 8, soSinhVien + 1, {250, 36});
         table->cTieuDe(true);
