@@ -44,10 +44,6 @@ Bang::~Bang()
     }
     delete[] hop;
 }
-void Bang::cViTri()
-{
-    // Xử lý vị trí ô dựa trên độ dài và độ rộng của các hàng, cột
-}
 
 void Bang::cCot(const int &cot, const double &cDai)
 {
@@ -63,15 +59,10 @@ void Bang::cCot(const int &cot, const double &cDai)
     }
 }
 
-// void Bang::cHang(const int &hang, const double &rong)
-// {
-//     if (hang >= 0 && hang < soHang)
-//         doDaiMO[hang] = rong;
-// }
 
 void Bang::cMauTheoO(const OXY &viTri, const Color &mau)
 {
-    // Thay đổi màu sắc của một ô
+    // cái ni khi nào dùng rồi viết chừ thấy chưa dùng chi hết nên không viết
 }
 
 void Bang::cMauTheoCot(const int &cot, const Color &mau)
@@ -99,6 +90,7 @@ void Bang::cGioHanBD(const int &chanTren, const int &chanDuoi)
     this->chanTren = chanTren;
     this->chanDuoi = chanDuoi;
 }
+//render ra 
 void Bang::bieuDien(const int &y, const int &x, const int &yy, const int &xx) const
 {
     for (int i = y; i < yy; i++)
