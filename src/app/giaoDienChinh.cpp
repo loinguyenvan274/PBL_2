@@ -151,7 +151,7 @@ void giaoDienChinh::capNhatTT()
         soDoiTuongTim = 0;
         for (int i = 0; i < soSinhVien; i++)
         {
-            if ((*danhSachQLSV)[i].lHoVaTen().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
+            if ((*danhSachQLSV)[i].lHoVaTen().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
             {
                 viTriLuu[soDoiTuongTim++] = i;
             }

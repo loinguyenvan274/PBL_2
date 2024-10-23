@@ -21,7 +21,6 @@ int main()
     dD.them(dDC);
 
 
-   
     while (!WindowShouldClose())
     {
         dD.capNhatTT();
@@ -30,7 +29,6 @@ int main()
         dD.bieuDien();
         EndDrawing();
     }
-
 
     delete dDC;
     CloseWindow();
