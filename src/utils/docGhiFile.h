@@ -9,6 +9,7 @@ using namespace std;
 class docGhiFile
 {
     string duongDan;
+
 private:
 public:
     docGhiFile(const string &);

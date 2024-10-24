@@ -1,16 +1,17 @@
-#ifndef _GIAODIENPHONG
-#define _GIAODIENPHONG
+#ifndef _GIAODIENCHINH
+#define _GIEODIENCHINH
 
-#include "giaoDienChinh.h"
-
+#include "raylib.h"
+#include "giaoDien.h"
 
 class giaoDienPhong : public giaoDien
 {
 private:
+    void capNhatThuTu();
 public:
     giaoDienPhong(quanLyGiaoDien &);
     void capNhatTT() override;
-    void bieuDien() override;
+    void bieuDien() override; 
     ~giaoDienPhong();
-};
+}; 
 #endif

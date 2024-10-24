@@ -7,11 +7,10 @@
 class giaoDienChinh : public giaoDien
 {
 private:
-    QuanLy<SinhVien> *danhSachQLSV;
     void capNhatThuTu();
-    void luuDuLieu() const;
+    // void luuDuLieu() const;
 public:
-    giaoDienChinh(quanLyGiaoDien &);
+    giaoDienChinh(quanLyGiaoDien &, QuanLy<SinhVien> &);
     void capNhatTT() override;
     void bieuDien() override;
     ~giaoDienChinh();

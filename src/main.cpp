@@ -3,30 +3,81 @@
 #include "app/quanLyGiaoDien.h"
 
 #include "app/giaoDienChinh.h"
+#include "app/giaoDienPhong.h"
 // #include "giaoDien.h"
-
 Font giaoDien::font28;
+
+// đọc dữ liệu từ file và trả về mảng hai chiều (dòng chứa các đối tượng , cột chứa các thuộc tính của đối tương)
+template <typename type>
+QuanLy<type> lay(const char *duongDan)
+{
+    docGhiFile docGhi(duongDan);
+    QuanLy<QuanLy<string>> dSDoc = docGhi.docData();
+
+    QuanLy<type> qL(dSDoc.lSoPhanTu());
+    for (int i = 0; i < dSDoc.lSoPhanTu(); i++)
+    {
+        qL[i].cThongTin(dSDoc[i]);
+    }
+    return qL;
+}
+// lưu dữ liệu từ danh sách quản lý
+template <typename type>
+void luu(const char *duongDan, const QuanLy<type> &danhSach)
+{
+    docGhiFile docGhi(duongDan);
+
+    QuanLy<QuanLy<string>> dSGhi(danhSach.lSoPhanTu());
+
+    for (int i = 0; i < dSGhi.lSoPhanTu(); i++)
+    {
+        dSGhi[i] = danhSach[i].lThongTin();
+    }
+
+    docGhi.ghiData(dSGhi);
+}
+
 int main()
 {
-    InitWindow(1480, 880, "Quản Lý Sinh Viên Ký Túc Xá [ PBL2 Nguyễn Văn Lợi 102230026 - Nguyễn Thanh Hậu 102230013 ]");
+    const char *tieuDeChuongTrinh = "Quản Lý Sinh Viên Ký Túc Xá [ PBL2 Nguyễn Văn Lợi 102230026 - Nguyễn Thanh Hậu 102230013 ]";
+    
+    const char *dDFileFontChu = "assets/roboto.ttf";
+    const char *dDFileSinhVien = "data/sinhVien.csv";
+    const char *dDFilePhong = "data/Phong.csv";
+    const char *dDFileTien = "data/tien.csv";
+
+    InitWindow(1480, 880, tieuDeChuongTrinh);
     SetWindowPosition(45, 45);
 
-    giaoDien::font28 = LoadFontEx("assets/roboto.ttf", 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
+    giaoDien::font28 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
 
-    quanLyGiaoDien dD;
-    giaoDienChinh *dDC = new giaoDienChinh(dD);
-    dD.them(dDC);
+    quanLyGiaoDien gD;
+    QuanLy<SinhVien> sinhVienKTX = lay<SinhVien>(dDFileSinhVien);
+    QuanLy<Phong> phongKTX = lay<Phong>(dDFilePhong);
+    giaoDienChinh *gDChinh = new giaoDienChinh(gD, sinhVienKTX);
+    giaoDienPhong *gDPhong = new giaoDienPhong(gD);
+
+    // thêm giao chính vào ngăn xếp (lớp trên cùng sẽ được biểu diễn)
+    gD.them(gDChinh);
 
     while (!WindowShouldClose())
     {
-        dD.capNhatTT();
+        gD.capNhatTT();
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        dD.bieuDien();
+
+        gD.bieuDien();
+
         EndDrawing();
     }
 
-    delete dDC;
+    // lưu file
+    luu(dDFileSinhVien, sinhVienKTX);
+    luu(dDFilePhong, phongKTX);
+
+    delete gDChinh;
+    // delete gDPhong;
     UnloadFont(giaoDien::font28);
     CloseWindow();
     return 0;

@@ -24,7 +24,7 @@ public:
         }
         else
         {
-            throw std::runtime_error("Ngăn xếp rỗng, không thể xóa.");
+            throw std::runtime_error("ngan xep rong");
         }
     }
 
@@ -36,7 +36,7 @@ public:
         }
         else
         {
-            throw std::runtime_error("Ngăn xếp rỗng, không có phần tử ở đỉnh.");
+            throw std::runtime_error("Ngan xep rong");
         }
     }
 

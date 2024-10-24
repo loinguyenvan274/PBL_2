@@ -34,14 +34,12 @@ QuanLy<string> SinhVien::lThongTin()
 }
 void SinhVien::cThongTin(const QuanLy<string> &dSThuocTinhDV)
 {
-    QuanLy<string> dSThuocTinh(7);
-    dSThuocTinh = dSThuocTinhDV;
-    hoVaTen = dSThuocTinh[0];
-    ngaySinh = dSThuocTinh[1];
-    ma = dSThuocTinh[2];
-    ngayBatDauO = dSThuocTinh[3];
-    thoiGianO = dSThuocTinh[4];
-    maPhong = dSThuocTinh[5];
+    hoVaTen = dSThuocTinhDV[0];
+    ngaySinh = dSThuocTinhDV[1];
+    ma = dSThuocTinhDV[2];
+    ngayBatDauO = dSThuocTinhDV[3];
+    thoiGianO = dSThuocTinhDV[4];
+    maPhong = dSThuocTinhDV[5];
 }
 
 SinhVien::~SinhVien() {}

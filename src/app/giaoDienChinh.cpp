@@ -1,17 +1,12 @@
 #include "giaoDienChinh.h"
 
-giaoDienChinh ::giaoDienChinh(quanLyGiaoDien &qLGiaoDienDV)
+giaoDienChinh ::giaoDienChinh(quanLyGiaoDien &qLGiaoDienDV, QuanLy<SinhVien> &qLSinhVienDV)
 {
-    docGhiFile docGhi("data/sinhVien.csv");
-    QuanLy<QuanLy<string>> dSDoc = docGhi.docData();
-    danhSachQLSV = new QuanLy<SinhVien>(dSDoc.lSoPhanTu());
-    for (int i = 0; i < dSDoc.lSoPhanTu(); i++)
-    {
-        (*danhSachQLSV)[i].cThongTin(dSDoc[i]);
-    }
 
+    qLSV = &qLSinhVienDV;
     qLGiaoDien = &qLGiaoDienDV;
-    soSinhVien = danhSachQLSV->lSoPhanTu();
+
+    soSinhVien = qLSV->lSoPhanTu();
     sohangBD = soSinhVien;
 
     // table ;
@@ -78,27 +73,27 @@ void giaoDienChinh::capNhatTT()
         switch (c)
         {
         case 1:
-            (*danhSachQLSV)[vT].cHoVaTen((*table)(h, c).layChu());
+            (*qLSV)[vT].cHoVaTen((*table)(h, c).layChu());
             break;
         case 2:
-            (*danhSachQLSV)[vT].cNgaySinh((*table)(h, c).layChu());
+            (*qLSV)[vT].cNgaySinh((*table)(h, c).layChu());
             break;
         case 3:
-            (*danhSachQLSV)[vT].cMa((*table)(h, c).layChu());
+            (*qLSV)[vT].cMa((*table)(h, c).layChu());
             break;
         case 4:
-            (*danhSachQLSV)[vT].cNgayBatDauO((*table)(h, c).layChu());
+            (*qLSV)[vT].cNgayBatDauO((*table)(h, c).layChu());
             break;
         case 5:
-            (*danhSachQLSV)[vT].cThoiGianO((*table)(h, c).layChu());
+            (*qLSV)[vT].cThoiGianO((*table)(h, c).layChu());
             break;
         case 6:
-            (*danhSachQLSV)[vT].cMaPhong((*table)(h, c).layChu());
+            (*qLSV)[vT].cMaPhong((*table)(h, c).layChu());
             break;
         case 7:
             soSinhVien--;
             soDoiTuongTim--;
-            (*danhSachQLSV).xoa(vT);
+            (*qLSV).xoa(vT);
             (*table)(h, c).cTranThaiChon(false);
             capNhatThuTu();
             break;
@@ -112,7 +107,7 @@ void giaoDienChinh::capNhatTT()
 
     if (boxThemSinhVien->laDuocChon())
     {
-        danhSachQLSV->chen(danhSachQLSV->lDCDau(), SinhVien());
+        qLSV->chen(qLSV->lDCDau(), SinhVien());
         soSinhVien++;
         soDoiTuongTim++;
         boxThemSinhVien->cTranThaiChon(false);
@@ -120,7 +115,7 @@ void giaoDienChinh::capNhatTT()
     }
     if (boxXoaHet->laDuocChon())
     {
-        danhSachQLSV->xoa(danhSachQLSV->lDCDau(), danhSachQLSV->lDCCuoi());
+        qLSV->xoa(qLSV->lDCDau(), qLSV->lDCCuoi());
         soSinhVien = 0;
         soDoiTuongTim = 0;
         boxXoaHet->cTranThaiChon(false);
@@ -136,7 +131,7 @@ void giaoDienChinh::capNhatTT()
         boxTimKiem->cNoiDung("          Tìm kiếm");
         flagTimKiem = false;
     }
-    // tìm kiếm 
+    // tìm kiếm
     if (boxTimKiem->laDuocChon() && chuoiTimSoSanh != boxTimKiem->layChu())
     {
         soDoiTuongTim = 0;
@@ -144,7 +139,7 @@ void giaoDienChinh::capNhatTT()
 
         for (int i = 0; i < soSinhVien; i++)
         {
-            if ((*danhSachQLSV)[i].lHoVaTen().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
+            if ((*qLSV)[i].lHoVaTen().find(boxTimKiem->layChu()) != string::npos || (*qLSV)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos || (*qLSV)[i].lMa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
             {
                 viTriLuu[soDoiTuongTim++] = i;
             }
@@ -160,26 +155,25 @@ void giaoDienChinh::bieuDien()
     boxThemSinhVien->bieuDien();
     boxXoaHet->bieuDien();
 }
-void giaoDienChinh::luuDuLieu() const
-{
-    docGhiFile docGhi("data/sinhVien.csv");
-    QuanLy<QuanLy<string>> dSSVBK((*danhSachQLSV).lSoPhanTu());
-    for (int i = 0; i < (*danhSachQLSV).lSoPhanTu(); i++)
-    {
-        dSSVBK[i] = (*danhSachQLSV)[i].lThongTin();
-    }
+// void giaoDienChinh::luuDuLieu() const
+// {
+//     docGhiFile docGhi("data/sinhVien.csv");
+//     QuanLy<QuanLy<string>> dSSVBK((*qLSV).lSoPhanTu());
+//     for (int i = 0; i < (*qLSV).lSoPhanTu(); i++)
+//     {
+//         dSSVBK[i] = (*qLSV)[i].lThongTin();
+//     }
 
-    docGhi.ghiData(dSSVBK);
-}
+//     docGhi.ghiData(dSSVBK);
+// }
 giaoDienChinh::~giaoDienChinh()
 {
-    luuDuLieu();
+    // luuDuLieu();
 
     delete[] viTriLuu;
     delete boxThemSinhVien;
     delete boxXoaHet;
     delete boxTimKiem;
-    delete danhSachQLSV;
     delete table;
 }
 void giaoDienChinh::capNhatThuTu()
@@ -196,12 +190,12 @@ void giaoDienChinh::capNhatThuTu()
         else
             vT = i - 1;
         (*table)(i, 0).cNoiDung(to_string(i));
-        (*table)(i, 1).cNoiDung((*danhSachQLSV)[vT].lHoVaTen());
-        (*table)(i, 2).cNoiDung((*danhSachQLSV)[vT].lngaySinh());
-        (*table)(i, 3).cNoiDung((*danhSachQLSV)[vT].lMa());
-        (*table)(i, 4).cNoiDung((*danhSachQLSV)[vT].lNgayBatDauO());
-        (*table)(i, 5).cNoiDung((*danhSachQLSV)[vT].lThoiGianO());
-        (*table)(i, 6).cNoiDung((*danhSachQLSV)[vT].lMaPhong());
+        (*table)(i, 1).cNoiDung((*qLSV)[vT].lHoVaTen());
+        (*table)(i, 2).cNoiDung((*qLSV)[vT].lngaySinh());
+        (*table)(i, 3).cNoiDung((*qLSV)[vT].lMa());
+        (*table)(i, 4).cNoiDung((*qLSV)[vT].lNgayBatDauO());
+        (*table)(i, 5).cNoiDung((*qLSV)[vT].lThoiGianO());
+        (*table)(i, 6).cNoiDung((*qLSV)[vT].lMaPhong());
         (*table)(i, 7).cNoiDung("Xóa");
     }
     table->cMauTheoHang(0, {65, 105, 225, 255});
