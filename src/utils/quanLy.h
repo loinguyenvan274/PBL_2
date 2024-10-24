@@ -65,6 +65,7 @@ public:
     const T *tim(const T &) const;
 
     void xoa(const T *);
+    void xoa(const size_t &);
     void xoa(const T *, const T *);
     void chen(const T *, const T &);
     void them(const T &);
@@ -192,7 +193,15 @@ void QuanLy<T>::xoa(const T *dCXoa)
         soPhanTu--;
     }
 }
-
+template <typename T>
+void QuanLy<T>::xoa(const size_t &viTriXoa)
+{
+    if (0 <= viTriXoa && viTriXoa <= soPhanTu - 1)
+    {
+        keoLui(viTriXoa);
+        soPhanTu--;
+    }
+}
 template <typename T>
 void QuanLy<T>::xoa(const T *dCXoaBatDau, const T *dCXoaKetThuc)
 {

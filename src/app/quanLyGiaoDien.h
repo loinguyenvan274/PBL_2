@@ -1,9 +1,8 @@
 #ifndef _QUANLYGIAODIEN
 #define _QUANLYGIAODIEN
 #include "raylib.h"
-#include "giaoDien.h"
 #include "nganXep.h"
-
+#include "giaoDien.h"
 class quanLyGiaoDien
 {
 private:

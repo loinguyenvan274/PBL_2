@@ -48,7 +48,7 @@ giaoDienChinh ::giaoDienChinh(quanLyGiaoDien &qLGiaoDienDV)
     table->cCot(7, 60);
     capNhatThuTu();
     // hộp xóa
-    boxThemSinhVien = new hopChu({1030, 134, 210, 40}, "   Thêm Sinh Viên", BLUE, YELLOW, BLACK);
+    boxThemSinhVien = new hopChu({1030, 134, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK);
     (*boxThemSinhVien).cKieuChu(font28);
     (*boxThemSinhVien).cCoChu(26);
     (*boxThemSinhVien).cDoDayVien(3);
@@ -56,7 +56,7 @@ giaoDienChinh ::giaoDienChinh(quanLyGiaoDien &qLGiaoDienDV)
     (*boxXoaHet).cKieuChu(font28);
     (*boxXoaHet).cCoChu(26);
     (*boxXoaHet).cDoDayVien(3);
-    boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm Kiếm", WHITE, YELLOW, BLACK);
+    boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
     (*boxTimKiem).cKieuChu(font28);
     (*boxTimKiem).cCoChu(26);
     (*boxTimKiem).cDoDayVien(3);
@@ -108,7 +108,7 @@ void giaoDienChinh::capNhatTT()
             soDoiTuongTim--;
             cout << "here";
             (*danhSachQLSV).xoa(vT);
-            (*table)(h, c).laDuocChon() = false;
+            (*table)(h, c).cTranThaiChon(false);
             capNhatThuTu();
             cout << "here";
             break;
@@ -125,7 +125,7 @@ void giaoDienChinh::capNhatTT()
         danhSachQLSV->chen(danhSachQLSV->lDCDau(), SinhVien());
         soSinhVien++;
         soDoiTuongTim++;
-        boxThemSinhVien->laDuocChon() = false;
+        boxThemSinhVien->cTranThaiChon(false);
         capNhatThuTu();
     }
     if (boxXoaHet->laDuocChon())
@@ -133,7 +133,7 @@ void giaoDienChinh::capNhatTT()
         danhSachQLSV->xoa(danhSachQLSV->lDCDau(), danhSachQLSV->lDCCuoi());
         soSinhVien = 0;
         soDoiTuongTim = 0;
-        boxXoaHet->laDuocChon() = false;
+        boxXoaHet->cTranThaiChon(false);
         capNhatThuTu();
     }
     if (boxTimKiem->laDuocChon() && !flagTimKiem)
@@ -143,7 +143,7 @@ void giaoDienChinh::capNhatTT()
     }
     if (!boxTimKiem->laDuocChon() && boxTimKiem->layChu() == "")
     {
-        boxTimKiem->cNoiDung("          Tìm Kiếm");
+        boxTimKiem->cNoiDung("          Tìm kiếm");
         flagTimKiem = false;
     }
     if (boxTimKiem->laDuocChon())
@@ -167,9 +167,8 @@ void giaoDienChinh::bieuDien()
     boxThemSinhVien->bieuDien();
     boxXoaHet->bieuDien();
 }
-giaoDienChinh::~giaoDienChinh()
+void giaoDienChinh::luuDuLieu() const
 {
-
     docGhiFile docGhi("data/sinhVien.csv");
     QuanLy<QuanLy<string>> dSSVBK((*danhSachQLSV).lSoPhanTu());
     for (int i = 0; i < (*danhSachQLSV).lSoPhanTu(); i++)
@@ -178,6 +177,10 @@ giaoDienChinh::~giaoDienChinh()
     }
 
     docGhi.ghiData(dSSVBK);
+}
+giaoDienChinh::~giaoDienChinh()
+{
+    luuDuLieu();
 
     delete[] viTriLuu;
     delete boxThemSinhVien;
@@ -210,11 +213,12 @@ void giaoDienChinh::capNhatThuTu()
         (*table)(i, 6).cNoiDung((*danhSachQLSV)[vT].lMaPhong());
         (*table)(i, 7).cNoiDung("Xóa");
     }
-    for (int i = 0; i <= sohangBD; i++)
+    table->cMauTheoHang(0, {65, 105, 225, 255});
+    for (int i = 1; i <= sohangBD; i++)
     {
         if (i % 2 == 0)
-            table->cMauTheoHang(i, {184, 184, 255, 255});
+            table->cMauTheoHang(i, {135, 206, 235, 255});
         else
-            table->cMauTheoHang(i, {255, 238, 221, 255});
+            table->cMauTheoHang(i, {173, 216, 230, 255});
     }
 }

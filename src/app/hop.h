@@ -24,7 +24,9 @@ public:
     void cDoDayVien(float);
     Vector2 layViTri();
     Vector2 layKichCo();
-    bool& laDuocChon();
+    const bool& laDuocChon();
+    void cTranThaiChon(const bool &);
+
 
     virtual void capNhatTT();
     virtual void bieuDien();

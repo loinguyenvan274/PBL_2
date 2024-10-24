@@ -23,10 +23,11 @@ void hop::cMauVien(const Color &mauVienDV) { mauNen = mauVienDV; }
 Vector2 hop::layViTri() { return Vector2{hinhThai.x, hinhThai.y}; }
 Vector2 hop::layKichCo() { return Vector2{hinhThai.width, hinhThai.height}; }
 void hop::cDoDayVien(float doDayDV) { doDayVien = doDayDV; }
-bool& hop::laDuocChon()
+const bool &hop::laDuocChon()
 {
     return tTchon;
 }
+void hop::cTranThaiChon(const bool &TTChon) { tTchon = TTChon; }
 
 void hop::bieuDien()
 {

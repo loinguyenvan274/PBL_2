@@ -2,6 +2,7 @@
 #define _NGANXEP
 
 #include "quanLy.h"
+class giaoDien;
 
 template <typename S>
 class NganXep
