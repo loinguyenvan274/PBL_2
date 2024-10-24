@@ -16,16 +16,17 @@ class giaoDien
 {
 protected:
     quanLyGiaoDien *qLGiaoDien;
-    Font font28;
     Bang *table;
     hopChu *boxThemSinhVien, *boxXoaHet, *boxTimKiem;
     int soSinhVien, sohangBD;
     bool flagTimKiem;
     int *viTriLuu, soDoiTuongTim; // dùng để tìm kiếm
+    string chuoiTimSoSanh;  // dung để kiểm tra cập nhật tìm kiếm nếu chuổi vừa mới nhật khác chuổi vừa nảy thì sẽ tìm kiếm lại
 public:
-
+    static Font font28;
     virtual void capNhatTT() = 0;
     virtual void bieuDien() = 0;
     virtual ~giaoDien() = default;
 };
+
 #endif

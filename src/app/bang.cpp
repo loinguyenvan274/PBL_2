@@ -5,9 +5,9 @@ Bang::Bang(const Vector2 &viTriDV, const int &soCot, const int &soHang, const Ve
     chanDuoi = GetScreenHeight();
     chanTRai = viTri.x;
     chanPhai = viTri.x + kichCoDV.x * soCot;
-
     cachHang = 0;
     cachCot = 0;
+    flagCuonBang = false;
     hop = new hopChu *[soHang];
     for (int i = 0; i < soHang; i++)
     {
@@ -59,7 +59,6 @@ void Bang::cCot(const int &cot, const double &cDai)
     }
 }
 
-
 void Bang::cMauTheoO(const OXY &viTri, const Color &mau)
 {
     // cái ni khi nào dùng rồi viết chừ thấy chưa dùng chi hết nên không viết
@@ -90,7 +89,7 @@ void Bang::cGioHanBD(const int &chanTren, const int &chanDuoi)
     this->chanTren = chanTren;
     this->chanDuoi = chanDuoi;
 }
-//render ra 
+// render ra
 void Bang::bieuDien(const int &y, const int &x, const int &yy, const int &xx) const
 {
     for (int i = y; i < yy; i++)
@@ -107,31 +106,43 @@ void Bang::bieuDien(const int &y, const int &x, const int &yy, const int &xx) co
         for (int j = x; j < xx; j++)
             hop[0][j].bieuDien();
 }
-void Bang::capNhatTT() const
+void Bang::cuon()
 {
-    if (GetMouseX() > chanTRai && GetMouseX() < chanPhai && GetMouseY() > chanTren && GetMouseY() < chanDuoi)
-    {
-        double gTCuon = GetMouseWheelMove();
-        gTCuon = double(long(gTCuon * 100000000.0) / 100000000.0); // làm tròn số tránh lỗi công 2 số thập phân
-
-        if (gTCuon > 0 && hop[1][0].layViTri().y > chanTren + hop[0][0].layKichCo().y + cachHang)
-            gTCuon = 0;
-
+    double gTCuon = GetMouseWheelMove();
+    gTCuon = double(long(gTCuon * 100000000.0) / 100000000.0); // làm tròn số tránh lỗi công 2 số thập phân
+    if (gTCuon > 0 && hop[1][0].layViTri().y > chanTren + hop[0][0].layKichCo().y + cachHang)
+        gTCuon = 0;
+/* chỉnh vị trí khi cuộc nếu con trỏ nằm ở vị trí bản , có điều viết hơi ngu là tại sao ta 
+phải cập nhật cả đống đó ta chỉ cập nhật vị trí được xacs định hiển thị lên thôi mà // nhưng mà nhát quá mà thấy 
+chương trình vẫn mược nên để đó khi lào lag thì sữa :))
+*/
+    if (GetMouseX() > chanTRai && GetMouseX() < chanPhai && GetMouseY() > chanTren && GetMouseY() < chanDuoi && gTCuon != 0)
+    { 
         for (int i = 0 + int(tieuDe); i < soHang; i++)
             for (int j = 0; j < soCot; j++)
             {
-
                 hop[i][j].cVitri(hop[i][j].layViTri().x, hop[i][j].layViTri().y + gTCuon * 8);
             }
     }
 }
-void Bang::vungHoatDong(const int &y, const int &x, const int &yy, const int &xx)const
+void Bang::capNhatTT()
 {
-    for (int i = y ; i < yy; i++)
+    if (flagCuonBang)
+        cuon();
+}
+void Bang::cFlagCuon(const bool &flag) { flagCuonBang = flag; }
+
+void Bang::vungHoatDong(const int &y, const int &x, const int &yy, const int &xx) const
+{
+    for (int i = y; i < yy; i++)
+    {
         for (int j = x; j < xx; j++)
         {
+            if (hop[i][j].layViTri().y < chanTren || hop[i][j].layViTri().y > chanDuoi)
+                break;
             hop[i][j].capNhatTT();
         }
+    }
 }
 void Bang::cDangHangCot(const int &dangHang, const int &dangCot)
 {

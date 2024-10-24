@@ -10,7 +10,6 @@ private:
     QuanLy<SinhVien> *danhSachQLSV;
     void capNhatThuTu();
     void luuDuLieu() const;
-
 public:
     giaoDienChinh(quanLyGiaoDien &);
     void capNhatTT() override;

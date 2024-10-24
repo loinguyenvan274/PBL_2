@@ -2,7 +2,6 @@
 
 giaoDienChinh ::giaoDienChinh(quanLyGiaoDien &qLGiaoDienDV)
 {
-
     docGhiFile docGhi("data/sinhVien.csv");
     QuanLy<QuanLy<string>> dSDoc = docGhi.docData();
     danhSachQLSV = new QuanLy<SinhVien>(dSDoc.lSoPhanTu());
@@ -15,16 +14,16 @@ giaoDienChinh ::giaoDienChinh(quanLyGiaoDien &qLGiaoDienDV)
     soSinhVien = danhSachQLSV->lSoPhanTu();
     sohangBD = soSinhVien;
 
-    font28 = LoadFontEx("assets/roboto.ttf", 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
-
     // table ;
 
     int soDongToiDA = 1000;
     viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
     flagTimKiem = false;
+    chuoiTimSoSanh = "";
 
     table = new Bang({10, 200}, 8, soDongToiDA, {250, 36});
     table->cTieuDe(true);
+    table->cFlagCuon(true);
     table->cDangHangCot(3, 0);
     table->cKieuChu(font28, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight());
@@ -68,8 +67,8 @@ void giaoDienChinh::capNhatTT()
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         cout << GetMouseY() << "  ---  " << GetMouseX() << endl;
 
-    table->vungHoatDong(1, 1, sohangBD + 1, 8);
     table->capNhatTT();
+    table->vungHoatDong(1, 1, sohangBD + 1, 8);
     Vector2 dCLay = table->oHoatDong();
     int c = dCLay.y, h = dCLay.x, vT = h - 1;
     if (h != -1)
@@ -79,38 +78,29 @@ void giaoDienChinh::capNhatTT()
         switch (c)
         {
         case 1:
-            cout << h << "---" << c << endl;
             (*danhSachQLSV)[vT].cHoVaTen((*table)(h, c).layChu());
             break;
         case 2:
-            cout << h << "---" << c << endl;
             (*danhSachQLSV)[vT].cNgaySinh((*table)(h, c).layChu());
             break;
         case 3:
-            cout << h << "---" << c << endl;
             (*danhSachQLSV)[vT].cMa((*table)(h, c).layChu());
             break;
         case 4:
-            cout << h << "---" << c << endl;
             (*danhSachQLSV)[vT].cNgayBatDauO((*table)(h, c).layChu());
             break;
         case 5:
-            cout << h << "---" << c << endl;
             (*danhSachQLSV)[vT].cThoiGianO((*table)(h, c).layChu());
             break;
         case 6:
-            cout << h << "---" << c << endl;
             (*danhSachQLSV)[vT].cMaPhong((*table)(h, c).layChu());
             break;
         case 7:
-            cout << h << "---" << c << endl;
             soSinhVien--;
             soDoiTuongTim--;
-            cout << "here";
             (*danhSachQLSV).xoa(vT);
             (*table)(h, c).cTranThaiChon(false);
             capNhatThuTu();
-            cout << "here";
             break;
         default:
             break;
@@ -146,9 +136,12 @@ void giaoDienChinh::capNhatTT()
         boxTimKiem->cNoiDung("          Tìm kiếm");
         flagTimKiem = false;
     }
-    if (boxTimKiem->laDuocChon())
+    // tìm kiếm 
+    if (boxTimKiem->laDuocChon() && chuoiTimSoSanh != boxTimKiem->layChu())
     {
         soDoiTuongTim = 0;
+        chuoiTimSoSanh = boxTimKiem->layChu();
+
         for (int i = 0; i < soSinhVien; i++)
         {
             if ((*danhSachQLSV)[i].lHoVaTen().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
@@ -187,8 +180,6 @@ giaoDienChinh::~giaoDienChinh()
     delete boxXoaHet;
     delete boxTimKiem;
     delete danhSachQLSV;
-    UnloadFont(font28);
-
     delete table;
 }
 void giaoDienChinh::capNhatThuTu()
