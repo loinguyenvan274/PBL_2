@@ -7,8 +7,8 @@ class SinhVien : public Nguoi
 {
 private:
     string ngayBatDauO;
-    string maPhong;
     string thoiGianO;
+    string maPhong;
 
 public:
     SinhVien(const string & = "", const string & = "", const string & = "");
