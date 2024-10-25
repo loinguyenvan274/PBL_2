@@ -1,6 +1,7 @@
 #include "docGhiFile.h"
 
 docGhiFile::docGhiFile(const string &tenPath) : duongDan(tenPath) {}
+
 const QuanLy<QuanLy<string>> &docGhiFile::docData()
 {
     fstream docFile(duongDan, ios::in | ios::app);
@@ -13,8 +14,9 @@ const QuanLy<QuanLy<string>> &docGhiFile::docData()
         std::stringstream ss(line);
 
         string token;
-        while (getline(ss, token, ','))
+        while (getline(ss, token, '~'))
         {
+
             doiTuong.them(token);
         }
         dSDoiTuong->them(doiTuong);
@@ -26,7 +28,6 @@ const QuanLy<QuanLy<string>> &docGhiFile::docData()
 void docGhiFile::ghiData(const QuanLy<QuanLy<string>> &dSDoiTuong)
 {
     fstream ghiFile(duongDan, ios::out | ios::trunc);
-
     size_t dong = dSDoiTuong.lSoPhanTu();
     for (size_t i = 0; i < dong; i++)
     {
@@ -35,7 +36,7 @@ void docGhiFile::ghiData(const QuanLy<QuanLy<string>> &dSDoiTuong)
         {
             ghiFile << dSDoiTuong[i][j];
             if (j < cot - 1)
-                ghiFile << ",";
+                ghiFile << '~';
         }
         ghiFile << "\n";
     }

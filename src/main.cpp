@@ -40,7 +40,7 @@ void luu(const char *duongDan, const QuanLy<type> &danhSach)
 int main()
 {
     const char *tieuDeChuongTrinh = "Quản Lý Sinh Viên Ký Túc Xá [ PBL2 Nguyễn Văn Lợi 102230026 - Nguyễn Thanh Hậu 102230013 ]";
-    
+
     const char *dDFileFontChu = "assets/roboto.ttf";
     const char *dDFileSinhVien = "data/sinhVien.csv";
     const char *dDFilePhong = "data/Phong.csv";
@@ -51,14 +51,12 @@ int main()
 
     giaoDien::font28 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
 
-    quanLyGiaoDien gD;
     QuanLy<SinhVien> sinhVienKTX = lay<SinhVien>(dDFileSinhVien);
     QuanLy<Phong> phongKTX = lay<Phong>(dDFilePhong);
-    giaoDienChinh *gDChinh = new giaoDienChinh(gD, sinhVienKTX);
-    giaoDienPhong *gDPhong = new giaoDienPhong(gD);
+    cout << "\n\n\n\nhere";
+    quanLyGiaoDien gD(&sinhVienKTX, &phongKTX);
 
     // thêm giao chính vào ngăn xếp (lớp trên cùng sẽ được biểu diễn)
-    gD.them(gDChinh);
 
     while (!WindowShouldClose())
     {
@@ -76,8 +74,6 @@ int main()
     luu(dDFileSinhVien, sinhVienKTX);
     luu(dDFilePhong, phongKTX);
 
-    delete gDChinh;
-    // delete gDPhong;
     UnloadFont(giaoDien::font28);
     CloseWindow();
     return 0;

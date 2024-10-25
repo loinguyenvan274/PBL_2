@@ -10,21 +10,20 @@
 #include "../utils/Phong.h"
 #include "../utils/docGhiFile.h"
 
-class quanLyGiaoDien;
-
 class giaoDien
 {
 protected:
     QuanLy<SinhVien> *qLSV;
     QuanLy<Phong> *qLPhong;
+    int soSinhVien, soPhong;
 
-    quanLyGiaoDien *qLGiaoDien;
     Bang *table;
-    hopChu *boxThemSinhVien, *boxXoaHet, *boxTimKiem;
-    int soSinhVien, sohangBD;
+    hopChu *boxThem, *boxXoaHet, *boxTimKiem;
+    int sohangBD;
     bool flagTimKiem;
     int *viTriLuu, soDoiTuongTim; // dùng để tìm kiếm
     string chuoiTimSoSanh;        // dung để kiểm tra cập nhật tìm kiếm nếu chuổi vừa mới nhật khác chuổi vừa nảy thì sẽ tìm kiếm lại
+
 public:
     static Font font28;
     virtual void capNhatTT() = 0;

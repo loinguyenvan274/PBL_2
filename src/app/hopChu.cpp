@@ -6,13 +6,15 @@ double hopChu::tGBatDauNhan = 0;
 
 hopChu::hopChu(Rectangle hinhThaiDV, const string chuDV, Color mauNenDV, Color mauVienDV, Color mauChuDV) : hop(hinhThaiDV, mauNenDV, mauVienDV), chu(chuDV), mauChu(mauChuDV)
 {
-    coChu = 28;
-    kieuChu = GetFontDefault();
+    coChu = 26;                 // cở chử mặt định 26
+    kieuChu = GetFontDefault(); // lấy kiểu chữ mặt định của thư viện raylib
+    chiNhapSo = false;
 }
 hopChu ::~hopChu() {}
 
 void hopChu::cMauChu(const Color &mauDV) { mauChu = mauDV; }
 void hopChu::cNoiDung(const string chuDV) { chu = chuDV; }
+void hopChu::cChiNhapSo(const bool &cChiNhapSo) { this->chiNhapSo = cChiNhapSo; }
 void hopChu::cCoChu(int coChuDV)
 {
     coChu = coChuDV;
@@ -44,14 +46,13 @@ void hopChu::capNhatTT()
         }
         if (IsKeyDown(KEY_BACKSPACE) && GetTime() - tGBatDauNhan > 0.8)
         {
-
             if (!chu.empty() && GetTime() - tGTamThoi > 0.04)
             {
                 tGTamThoi = GetTime();
                 chu.pop_back();
             }
         }
-        else if (kyTuVuaNhan != 0)
+        else if (kyTuVuaNhan != 0 && kyTuVuaNhan != '~' && !((kyTuVuaNhan < '0' || kyTuVuaNhan > '9') && chiNhapSo))
         {
             chu += kyTuVuaNhan;
         }

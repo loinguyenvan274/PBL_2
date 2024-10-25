@@ -44,7 +44,6 @@ Bang::~Bang()
     }
     delete[] hop;
 }
-
 void Bang::cCot(const int &cot, const double &cDai)
 {
     double doDai = cDai - hop[0][cot].layKichCo().x;
@@ -92,18 +91,18 @@ void Bang::cGioHanBD(const int &chanTren, const int &chanDuoi)
 // render ra
 void Bang::bieuDien(const int &y, const int &x, const int &yy, const int &xx) const
 {
-    for (int i = y; i < yy; i++)
+    for (int i = y; i <= yy; i++)
     {
         if (hop[i][0].layViTri().y >= chanTren && hop[i][0].layViTri().y <= chanDuoi)
         {
-            for (int j = x; j < xx; j++)
+            for (int j = x; j <= xx; j++)
             {
                 hop[i][j].bieuDien();
             }
         }
     }
     if (tieuDe)
-        for (int j = x; j < xx; j++)
+        for (int j = x; j <= xx; j++)
             hop[0][j].bieuDien();
 }
 void Bang::cuon()
@@ -112,12 +111,12 @@ void Bang::cuon()
     gTCuon = double(long(gTCuon * 100000000.0) / 100000000.0); // làm tròn số tránh lỗi công 2 số thập phân
     if (gTCuon > 0 && hop[1][0].layViTri().y > chanTren + hop[0][0].layKichCo().y + cachHang)
         gTCuon = 0;
-/* chỉnh vị trí khi cuộc nếu con trỏ nằm ở vị trí bản , có điều viết hơi ngu là tại sao ta 
-phải cập nhật cả đống đó ta chỉ cập nhật vị trí được xacs định hiển thị lên thôi mà // nhưng mà nhát quá mà thấy 
-chương trình vẫn mược nên để đó khi lào lag thì sữa :))
-*/
+    /* chỉnh vị trí khi cuộc nếu con trỏ nằm ở vị trí bản , có điều viết hơi ngu là tại sao ta
+    phải cập nhật cả đống đó ta chỉ cập nhật vị trí được xacs định hiển thị lên thôi mà // nhưng mà nhát quá mà thấy
+    chương trình vẫn mược nên để đó khi lào lag thì sữa :))
+    */
     if (GetMouseX() > chanTRai && GetMouseX() < chanPhai && GetMouseY() > chanTren && GetMouseY() < chanDuoi && gTCuon != 0)
-    { 
+    {
         for (int i = 0 + int(tieuDe); i < soHang; i++)
             for (int j = 0; j < soCot; j++)
             {
@@ -132,11 +131,12 @@ void Bang::capNhatTT()
 }
 void Bang::cFlagCuon(const bool &flag) { flagCuonBang = flag; }
 
+// vungHoatDong( vi tri y góc trái trên  , vị trí x góc trái tren , vi trí yy góc phải dưới, víj trí xx góc phải dưới) const
 void Bang::vungHoatDong(const int &y, const int &x, const int &yy, const int &xx) const
 {
-    for (int i = y; i < yy; i++)
+    for (int i = y; i <= yy; i++)
     {
-        for (int j = x; j < xx; j++)
+        for (int j = x; j <= xx; j++)
         {
             if (hop[i][j].layViTri().y < chanTren || hop[i][j].layViTri().y > chanDuoi)
                 break;
@@ -144,7 +144,8 @@ void Bang::vungHoatDong(const int &y, const int &x, const int &yy, const int &xx
         }
     }
 }
-void Bang::cDangHangCot(const int &dangHang, const int &dangCot)
+// Bang::cGianHangCot(độ giãn hàng,độ giãn cột)
+void Bang::cGianHangCot(const int &dangHang, const int &dangCot)
 {
     chanPhai += (dangCot - cachCot) * (soCot - 1);
     cachHang = dangHang;

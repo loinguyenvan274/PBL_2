@@ -10,7 +10,7 @@ private:
     void capNhatThuTu();
     // void luuDuLieu() const;
 public:
-    giaoDienChinh(quanLyGiaoDien &, QuanLy<SinhVien> &);
+    giaoDienChinh(QuanLy<SinhVien>*);
     void capNhatTT() override;
     void bieuDien() override;
     ~giaoDienChinh();

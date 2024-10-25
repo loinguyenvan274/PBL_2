@@ -1,26 +1,24 @@
 #include "giaoDienPhong.h"
 
-giaoDienPhong ::giaoDienPhong(quanLyGiaoDien &qLGiaoDienDV)
+giaoDienPhong ::giaoDienPhong(QuanLy<Phong> *qLPhongDV)
 {
-    
-    
-    qLGiaoDien = &qLGiaoDienDV;
-    // soSinhVien = danhSachQLSV->lSoPhanTu();
-    // sohangBD = soSinhVien;
 
-    // table ;
+    qLPhong = qLPhongDV;
+
+    soPhong = qLPhong->lSoPhanTu();
+    sohangBD = soPhong;
+
+    // table
 
     int soDongToiDA = 1000;
-    sohangBD = soDongToiDA;
-
-    // viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
-    // flagTimKiem = false;
+    viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
+    flagTimKiem = false;
     // chuoiTimSoSanh = "";
 
     table = new Bang({10, 200}, 6, soDongToiDA + 1, {250, 36});
     table->cTieuDe(true);
     table->cFlagCuon(true);
-    table->cDangHangCot(3, 0);
+    table->cGianHangCot(3, 0);
     table->cKieuChu(font28, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight());
 
@@ -37,12 +35,16 @@ giaoDienPhong ::giaoDienPhong(quanLyGiaoDien &qLGiaoDienDV)
     table->cCot(3, 200);
     table->cCot(4, 700);
     table->cCot(5, 60);
+    for (int i = 0; i < soDongToiDA; i++)
+    {
+        (*table)(i, 2).cChiNhapSo(true);
+    }
     capNhatThuTu();
     // hộp xóa
-    boxThemSinhVien = new hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
-    (*boxThemSinhVien).cKieuChu(font28);
-    (*boxThemSinhVien).cCoChu(26);
-    (*boxThemSinhVien).cDoDayVien(3);
+    boxThem = new hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
+    (*boxThem).cKieuChu(font28);
+    (*boxThem).cCoChu(26);
+    (*boxThem).cDoDayVien(3);
 
     boxXoaHet = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     (*boxXoaHet).cKieuChu(font28);
@@ -62,60 +64,61 @@ void giaoDienPhong::capNhatTT()
     //     cout << GetMouseY() << "  ---  " << GetMouseX() << endl;
 
     table->capNhatTT();
-    table->vungHoatDong(1, 1, sohangBD + 1, 6);
-    // Vector2 dCLay = table->oHoatDong();
-    // int c = dCLay.y, h = dCLay.x, vT = h - 1;
-    // if (h != -1)
-    // {
-    //     if (flagTimKiem)
-    //         vT = viTriLuu[h - 1];
-    //     switch (c)
-    //     {
-    //     case 1:
-    //         (*danhSachQLSV)[vT].cHoVaTen((*table)(h, c).layChu());
-    //         break;
-    //     case 2:
-    //         (*danhSachQLSV)[vT].cNgaySinh((*table)(h, c).layChu());
-    //         break;
-    //     case 3:
-    //         (*danhSachQLSV)[vT].cMa((*table)(h, c).layChu());
-    //         break;
-    //     case 4:
-    //         (*danhSachQLSV)[vT].cNgayBatDauO((*table)(h, c).layChu());
-    //         break;
-    //     case 5:
-    //         (*danhSachQLSV)[vT].cThoiGianO((*table)(h, c).layChu());
-    //         break;
-    //     case 6:
-    //         (*danhSachQLSV)[vT].cMaPhong((*table)(h, c).layChu());
-    //         break;
-    //     case 7:
-    //         soSinhVien--;
-    //         soDoiTuongTim--;
-    //         (*danhSachQLSV).xoa(vT);
-    //         (*table)(h, c).cTranThaiChon(false);
-    //         capNhatThuTu();
-    //         break;
-    //     default:
-    //         break;
-    //     }
-    // }
-    // boxThemSinhVien->capNhatTT();
+    table->vungHoatDong(1, 1, sohangBD, 2);
+    table->vungHoatDong(1, 4, sohangBD, 5);
+    Vector2 dCLay = table->oHoatDong();
+    int c = dCLay.y, h = dCLay.x, vT = h - 1;
+    if (h != -1)
+    {
+        string chuoiMoi = (*table)(h, c).layChu();
+
+        cout
+            << h << " ---- " << c;
+        if (flagTimKiem)
+            vT = viTriLuu[h - 1];
+        switch (c)
+        {
+        case 1:
+            (*qLPhong)[vT].cMaPhong(chuoiMoi);
+            break;
+        case 2:
+            if (chuoiMoi == "")
+                chuoiMoi += '0';
+            (*qLPhong)[vT].cSoNguoiToiDa(stoi(chuoiMoi));
+            break;
+        case 3:
+            (*qLPhong)[vT].cSoNguoiHienTai(stoi(chuoiMoi));
+            break;
+        case 4:
+            (*qLPhong)[vT].cMoTa(chuoiMoi);
+            break;
+        case 5:
+            soPhong--;
+            soDoiTuongTim--;
+            (*qLPhong).xoa(vT);
+            (*table)(h, c).cTranThaiChon(false);
+            capNhatThuTu();
+            break;
+        default:
+            break;
+        }
+    }
+    boxThem->capNhatTT();
     // boxXoaHet->capNhatTT();
     // boxTimKiem->capNhatTT();
 
-    // if (boxThemSinhVien->laDuocChon())
-    // {
-    //     danhSachQLSV->chen(danhSachQLSV->lDCDau(), SinhVien());
-    //     soSinhVien++;
-    //     soDoiTuongTim++;
-    //     boxThemSinhVien->cTranThaiChon(false);
-    //     capNhatThuTu();
-    // }
+    if (boxThem->laDuocChon())
+    {
+        qLPhong->chen(qLPhong->lDCDau(), Phong());
+        soPhong++;
+        soDoiTuongTim++;
+        boxThem->cTranThaiChon(false);
+        capNhatThuTu();
+    }
     // if (boxXoaHet->laDuocChon())
     // {
     //     danhSachQLSV->xoa(danhSachQLSV->lDCDau(), danhSachQLSV->lDCCuoi());
-    //     soSinhVien = 0;
+    //     soPhong = 0;
     //     soDoiTuongTim = 0;
     //     boxXoaHet->cTranThaiChon(false);
     //     capNhatThuTu();
@@ -135,8 +138,8 @@ void giaoDienPhong::capNhatTT()
     // {
     //     soDoiTuongTim = 0;
     //     chuoiTimSoSanh = boxTimKiem->layChu();
-    
-    //     for (int i = 0; i < soSinhVien; i++)
+
+    //     for (int i = 0; i < soPhong; i++)
     //     {
     //         if ((*danhSachQLSV)[i].lHoVaTen().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
     //         {
@@ -148,9 +151,9 @@ void giaoDienPhong::capNhatTT()
 }
 void giaoDienPhong::bieuDien()
 {
-    table->bieuDien(0, 0, sohangBD + 1, 6);
+    table->bieuDien(0, 0, sohangBD, 5);
     boxTimKiem->bieuDien();
-    boxThemSinhVien->bieuDien();
+    boxThem->bieuDien();
     boxXoaHet->bieuDien();
 }
 // void giaoDienPhong::luuDuLieu() const
@@ -166,35 +169,30 @@ void giaoDienPhong::bieuDien()
 // }
 giaoDienPhong::~giaoDienPhong()
 {
-    // luuDuLieu();
-
-    // delete[] viTriLuu;
-    // delete boxThemSinhVien;
-    // delete boxXoaHet;
-    // delete boxTimKiem;
-    // delete danhSachQLSV;
-    // delete table;
+    delete[] viTriLuu;
+    delete boxThem;
+    delete boxXoaHet;
+    delete boxTimKiem;
+    delete table;
 }
 void giaoDienPhong::capNhatThuTu()
 {
-    // if (flagTimKiem)
-    //     sohangBD = soDoiTuongTim;
-    // else
-    //     sohangBD = soSinhVien;
-    // int vT;
+    int vT;
+    if (flagTimKiem)
+        sohangBD = soDoiTuongTim;
+    else
+        sohangBD = soPhong;
     for (int i = 1; i <= sohangBD; i++)
     {
-        // if (flagTimKiem)
-        //     vT = viTriLuu[i - 1];
-        // else
-        //     vT = i - 1;
+        if (flagTimKiem)
+            vT = viTriLuu[i - 1];
+        else
+            vT = i - 1;
         (*table)(i, 0).cNoiDung(to_string(i));
-        // (*table)(i, 1).cNoiDung((*danhSachQLSV)[vT].lHoVaTen());
-        // (*table)(i, 2).cNoiDung((*danhSachQLSV)[vT].lngaySinh());
-        // (*table)(i, 3).cNoiDung((*danhSachQLSV)[vT].lMa());
-        // (*table)(i, 4).cNoiDung((*danhSachQLSV)[vT].lNgayBatDauO());
-        // (*table)(i, 5).cNoiDung((*danhSachQLSV)[vT].lThoiGianO());
-        // (*table)(i, 6).cNoiDung((*danhSachQLSV)[vT].lMaPhong());
+        (*table)(i, 1).cNoiDung((*qLPhong)[vT].lMaPhong());
+        (*table)(i, 2).cNoiDung(to_string((*qLPhong)[vT].lSoNguoiToiDa()));
+        (*table)(i, 3).cNoiDung(to_string((*qLPhong)[vT].lSoNguoiHienTai()));
+        (*table)(i, 4).cNoiDung((*qLPhong)[vT].lMoTa());
         (*table)(i, 5).cNoiDung("Xóa");
     }
     table->cMauTheoHang(0, {65, 105, 225, 255});

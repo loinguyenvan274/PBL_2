@@ -8,10 +8,11 @@ class giaoDienPhong : public giaoDien
 {
 private:
     void capNhatThuTu();
+
 public:
-    giaoDienPhong(quanLyGiaoDien &);
+    giaoDienPhong(QuanLy<Phong> *);
     void capNhatTT() override;
-    void bieuDien() override; 
+    void bieuDien() override;
     ~giaoDienPhong();
-}; 
+};
 #endif

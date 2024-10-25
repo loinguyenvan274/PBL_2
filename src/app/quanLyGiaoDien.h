@@ -1,28 +1,36 @@
 #ifndef _QUANLYGIAODIEN
 #define _QUANLYGIAODIEN
+
 #include "raylib.h"
 #include "nganXep.h"
 #include "giaoDien.h"
+
+enum flagGiaoDien
+{
+    FGD_SINH_VIEN,
+    FGD_PHONG,
+    FGD_DIEN_NUOC
+};
+
 class quanLyGiaoDien
 {
 private:
-    NganXep<giaoDien *> trangThai; // Sử dụng con trỏ giaoDien
+    enum flagGiaoDien flagGD;
+    enum flagGiaoDien flagGDMoi;
+    
+    QuanLy<SinhVien> *qLSV;
+    QuanLy<Phong> *qLPhong;
+    giaoDien *gDHienThi;
+
+    Bang *thanhChuyen;
+
 public:
-    void bieuDien()
-    {
-        trangThai.layDinh()->bieuDien(); // Truy cập con trỏ
-    }
-    void capNhatTT()
-    {
-        trangThai.layDinh()->capNhatTT(); // Truy cập con trỏ
-    }
-    void xoa()
-    {
-        trangThai.xoaDinh();
-    }
-    void them(giaoDien *dD) // Nhận con trỏ
-    {
-        trangThai.dayLen(dD);
-    }
+    quanLyGiaoDien(QuanLy<SinhVien> *, QuanLy<Phong> *);
+    void bieuDien();
+    void capNhatTT();
+    void xoa();
+    void doi(giaoDien *gDHienThi); // Nhận con trỏ
+    ~quanLyGiaoDien();
 };
+
 #endif

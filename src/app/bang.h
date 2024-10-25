@@ -29,7 +29,7 @@ public:
 
     void cGioHanBD(const int &, const int &); // chỉnh giới hạn trên và giới hạn dưới tức có nghĩa là xác định vùng vẽ, vùng cập nhật trạng thái 
     void cTieuDe(const bool &); 
-    void cDangHangCot(const int &, const int &);
+    void cGianHangCot(const int &, const int &); // giãn hàng côt  tăng khoảng cách giữa các ô (tức là độ hở của các ô nếu = 0 tức hai ô liền với nhau nhìn như 1)
     hopChu &operator()(const int &, const int &); // overload truy xuất ô
     void capNhatTT();
     void bieuDien(const int &, const int &, const int &, const int &) const;// vẽ
