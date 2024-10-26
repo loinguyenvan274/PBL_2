@@ -1,6 +1,7 @@
 #include "quanLyGiaoDien.h"
 #include "giaoDienChinh.h"
 #include "giaoDienPhong.h"
+#include "gDDienNuoc.h"
 
 #define oSinhVien (*thanhChuyen)(0, 0)
 #define oPhong (*thanhChuyen)(0, 1)
@@ -41,6 +42,11 @@ void quanLyGiaoDien::capNhatTT()
         flagGDMoi = FGD_SINH_VIEN;
         oSinhVien.cTranThaiChon(false);
     }
+    if (oDienNuoc.laDuocChon())
+    {
+        flagGDMoi = FGD_DIEN_NUOC;
+        oDienNuoc.cTranThaiChon(false);
+    }
 
     if (flagGDMoi != flagGD)
     {
@@ -53,7 +59,7 @@ void quanLyGiaoDien::capNhatTT()
             doi(new giaoDienPhong(qLPhong));
             break;
         case FGD_DIEN_NUOC:
-            /* code */
+            doi(new gDDienNuoc(qLPhong));
             break;
         default:
             break;

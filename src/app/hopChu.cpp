@@ -52,7 +52,7 @@ void hopChu::capNhatTT()
                 chu.pop_back();
             }
         }
-        else if (kyTuVuaNhan != 0 && kyTuVuaNhan != '~' && !((kyTuVuaNhan < '0' || kyTuVuaNhan > '9') && chiNhapSo))
+        else if (kyTuVuaNhan != 0 && kyTuVuaNhan != '~' && !(((kyTuVuaNhan < '0' || kyTuVuaNhan > '9') || chu.size() > 8) && chiNhapSo))
         {
             chu += kyTuVuaNhan;
         }

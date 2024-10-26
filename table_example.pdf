@@ -1,0 +1,52 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 1 /Kids [3 0 R] >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 385 >>
+stream
+q
+100 700 m 400 700 l S
+100 650 m 400 650 l S
+100 600 m 400 600 l S
+100 550 m 400 550 l S
+100 700 m 100 550 l S
+200 700 m 200 550 l S
+300 700 m 300 550 l S
+400 700 m 400 550 l S
+BT /F1 12 Tf
+110 670 Td (R1C1) Tj
+210 670 Td (R1C2) Tj
+310 670 Td (R1C3) Tj
+110 620 Td (R2C1) Tj
+210 620 Td (R2C2) Tj
+310 620 Td (R2C3) Tj
+110 570 Td (R3C1) Tj
+210 570 Td (R3C2) Tj
+310 570 Td (R3C3) Tj
+ET
+Q
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000010 00000 n 
+0000000079 00000 n 
+0000000178 00000 n 
+0000000293 00000 n 
+0000000376 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+707
+%%EOF

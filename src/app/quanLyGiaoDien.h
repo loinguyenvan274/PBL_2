@@ -2,7 +2,6 @@
 #define _QUANLYGIAODIEN
 
 #include "raylib.h"
-#include "nganXep.h"
 #include "giaoDien.h"
 
 enum flagGiaoDien
@@ -17,7 +16,7 @@ class quanLyGiaoDien
 private:
     enum flagGiaoDien flagGD;
     enum flagGiaoDien flagGDMoi;
-    
+
     QuanLy<SinhVien> *qLSV;
     QuanLy<Phong> *qLPhong;
     giaoDien *gDHienThi;

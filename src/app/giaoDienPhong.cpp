@@ -13,7 +13,7 @@ giaoDienPhong ::giaoDienPhong(QuanLy<Phong> *qLPhongDV)
     int soDongToiDA = 1000;
     viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
     flagTimKiem = false;
-    // chuoiTimSoSanh = "";
+    chuoiTimSoSanh = "";
 
     table = new Bang({10, 200}, 6, soDongToiDA + 1, {250, 36});
     table->cTieuDe(true);
@@ -25,7 +25,7 @@ giaoDienPhong ::giaoDienPhong(QuanLy<Phong> *qLPhongDV)
     (*table)(0, 0).cNoiDung("STT");
     (*table)(0, 1).cNoiDung("Phòng");
     (*table)(0, 2).cNoiDung("Tối đa");
-    (*table)(0, 3).cNoiDung("Hiện tại");
+    (*table)(0, 3).cNoiDung("Hiện tại"); 
     (*table)(0, 4).cNoiDung("Mô tả");
     (*table)(0, 5).cNoiDung("Xóa");
 
@@ -104,8 +104,8 @@ void giaoDienPhong::capNhatTT()
         }
     }
     boxThem->capNhatTT();
-    // boxXoaHet->capNhatTT();
-    // boxTimKiem->capNhatTT();
+    boxXoaHet->capNhatTT();
+    boxTimKiem->capNhatTT();
 
     if (boxThem->laDuocChon())
     {
@@ -115,39 +115,39 @@ void giaoDienPhong::capNhatTT()
         boxThem->cTranThaiChon(false);
         capNhatThuTu();
     }
-    // if (boxXoaHet->laDuocChon())
-    // {
-    //     danhSachQLSV->xoa(danhSachQLSV->lDCDau(), danhSachQLSV->lDCCuoi());
-    //     soPhong = 0;
-    //     soDoiTuongTim = 0;
-    //     boxXoaHet->cTranThaiChon(false);
-    //     capNhatThuTu();
-    // }
-    // if (boxTimKiem->laDuocChon() && !flagTimKiem)
-    // {
-    //     boxTimKiem->cNoiDung("");
-    //     flagTimKiem = true;
-    // }
-    // if (!boxTimKiem->laDuocChon() && boxTimKiem->layChu() == "")
-    // {
-    //     boxTimKiem->cNoiDung("          Tìm kiếm");
-    //     flagTimKiem = false;
-    // }
-    // // tìm kiếm
-    // if (boxTimKiem->laDuocChon() && chuoiTimSoSanh != boxTimKiem->layChu())
-    // {
-    //     soDoiTuongTim = 0;
-    //     chuoiTimSoSanh = boxTimKiem->layChu();
+    if (boxXoaHet->laDuocChon())
+    {
+        qLPhong->xoa(qLPhong->lDCDau(), qLPhong->lDCCuoi());
+        soPhong = 0;
+        soDoiTuongTim = 0;
+        boxXoaHet->cTranThaiChon(false);
+        capNhatThuTu();
+    }
+    if (boxTimKiem->laDuocChon() && !flagTimKiem)
+    {
+        boxTimKiem->cNoiDung("");
+        flagTimKiem = true;
+    }
+    if (!boxTimKiem->laDuocChon() && boxTimKiem->layChu() == "")
+    {
+        boxTimKiem->cNoiDung("          Tìm kiếm");
+        flagTimKiem = false;
+    }
+    // tìm kiếm
+    if (boxTimKiem->laDuocChon() && chuoiTimSoSanh != boxTimKiem->layChu())
+    {
+        soDoiTuongTim = 0;
+        chuoiTimSoSanh = boxTimKiem->layChu();
 
-    //     for (int i = 0; i < soPhong; i++)
-    //     {
-    //         if ((*danhSachQLSV)[i].lHoVaTen().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos || (*danhSachQLSV)[i].lMa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
-    //         {
-    //             viTriLuu[soDoiTuongTim++] = i;
-    //         }
-    //     }
-    //     capNhatThuTu();
-    // }
+        for (int i = 0; i < soPhong; i++)
+        {
+            if ((*qLPhong)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos ||  (*qLPhong)[i].lMoTa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
+            {
+                viTriLuu[soDoiTuongTim++] = i;
+            }
+        }
+        capNhatThuTu();
+    }
 }
 void giaoDienPhong::bieuDien()
 {

@@ -16,9 +16,9 @@ const QuanLy<QuanLy<string>> &docGhiFile::docData()
         string token;
         while (getline(ss, token, '~'))
         {
-
             doiTuong.them(token);
         }
+        doiTuong.xoa(doiTuong.lDCCuoi());
         dSDoiTuong->them(doiTuong);
     }
 
@@ -38,7 +38,7 @@ void docGhiFile::ghiData(const QuanLy<QuanLy<string>> &dSDoiTuong)
             if (j < cot - 1)
                 ghiFile << '~';
         }
-        ghiFile << "\n";
+        ghiFile << "~ ;\n";
     }
     ghiFile.close();
 }
