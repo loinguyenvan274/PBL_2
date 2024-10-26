@@ -45,10 +45,10 @@ giaoDienChinh ::giaoDienChinh(QuanLy<SinhVien> *qLSinhVienDV)
     (*boxThem).cKieuChu(font28);
     (*boxThem).cCoChu(26);
     (*boxThem).cDoDayVien(3);
-    boxXoaHet = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
-    (*boxXoaHet).cKieuChu(font28);
-    (*boxXoaHet).cCoChu(26);
-    (*boxXoaHet).cDoDayVien(3);
+    boxXoa = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
+    (*boxXoa).cKieuChu(font28);
+    (*boxXoa).cCoChu(26);
+    (*boxXoa).cDoDayVien(3);
     boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
     (*boxTimKiem).cKieuChu(font28);
     (*boxTimKiem).cCoChu(26);
@@ -93,7 +93,7 @@ void giaoDienChinh::capNhatTT()
             soSinhVien--;
             soDoiTuongTim--;
             (*qLSV).xoa(vT);
-            (*table)(h, c).cTranThaiChon(false);
+            (*table)(h, c).cTrangThaiChon(false);
             capNhatThuTu();
             break;
         default:
@@ -101,7 +101,7 @@ void giaoDienChinh::capNhatTT()
         }
     }
     boxThem->capNhatTT();
-    boxXoaHet->capNhatTT();
+    boxXoa->capNhatTT();
     boxTimKiem->capNhatTT();
 
     if (boxThem->laDuocChon())
@@ -109,15 +109,15 @@ void giaoDienChinh::capNhatTT()
         qLSV->chen(qLSV->lDCDau(), SinhVien());
         soSinhVien++;
         soDoiTuongTim++;
-        boxThem->cTranThaiChon(false);
+        boxThem->cTrangThaiChon(false);
         capNhatThuTu();
     }
-    if (boxXoaHet->laDuocChon())
+    if (boxXoa->laDuocChon())
     {
         qLSV->xoa(qLSV->lDCDau(), qLSV->lDCCuoi());
         soSinhVien = 0;
         soDoiTuongTim = 0;
-        boxXoaHet->cTranThaiChon(false);
+        boxXoa->cTrangThaiChon(false);
         capNhatThuTu();
     }
     if (boxTimKiem->laDuocChon() && !flagTimKiem)
@@ -152,7 +152,7 @@ void giaoDienChinh::bieuDien()
     table->bieuDien(0, 0, sohangBD, 7);
     boxTimKiem->bieuDien();
     boxThem->bieuDien();
-    boxXoaHet->bieuDien();
+    boxXoa->bieuDien();
 }
 // void giaoDienChinh::luuDuLieu() const
 // {
@@ -171,7 +171,7 @@ giaoDienChinh::~giaoDienChinh()
 
     delete[] viTriLuu;
     delete boxThem;
-    delete boxXoaHet;
+    delete boxXoa;
     delete boxTimKiem;
     delete table;
 }

@@ -7,8 +7,11 @@ lInclude = -lraylib -lwinmm -lgdi32 -lopengl32
 path_build = ./build/index.exe
 
 compile:
-	$(cc) -g  $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
+	$(cc) $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
 	$(path_build)
+debug:
+	$(cc) -g  $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
+	gdb $(path_build)
 run:
 	$(path_build)
 git_push:
@@ -16,5 +19,5 @@ git_push:
 	git commit -m "m"
 	git push
 t:
-	g++ ./test/main.cpp -o ./test/main
+	g++ ./test/main.cpp -o ./test/main -L$(path_lib)  -I$(path_include) $(lInclude)
 	./test/main

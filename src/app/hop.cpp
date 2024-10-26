@@ -27,7 +27,7 @@ const bool &hop::laDuocChon()
 {
     return tTchon;
 }
-void hop::cTranThaiChon(const bool &TTChon) { tTchon = TTChon; }
+void hop::cTrangThaiChon(const bool &TTChon) { tTchon = TTChon; }
 
 void hop::bieuDien()
 {

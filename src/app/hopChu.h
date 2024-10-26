@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 class hopChu : public hop
 {
     string chu;   // text trong ô
@@ -15,9 +14,10 @@ class hopChu : public hop
     Font kieuChu;
     static double tGBatDauNhan;
     static double tGTamThoi;
-    bool chiNhapSo; // chỉ cho phép nhập số 
+    bool chiNhapSo; // chỉ cho phép nhập số
 
 public:
+    // (vị trí, chuôi , màu nên, màu viền, màu chữ )
     hopChu(Rectangle = {0, 0, 0, 0}, const string = "", Color = WHITE, Color = RED, Color = BLACK);
 
     void cNoiDung(const string chu);
@@ -27,7 +27,7 @@ public:
     void capNhatTT();
     void cKieuChu(const Font &);
     void bieuDien();
-    void cChiNhapSo(const bool&);
+    void cChiNhapSo(const bool &);
 
     string layChu();
 

@@ -25,7 +25,7 @@ giaoDienPhong ::giaoDienPhong(QuanLy<Phong> *qLPhongDV)
     (*table)(0, 0).cNoiDung("STT");
     (*table)(0, 1).cNoiDung("Phòng");
     (*table)(0, 2).cNoiDung("Tối đa");
-    (*table)(0, 3).cNoiDung("Hiện tại"); 
+    (*table)(0, 3).cNoiDung("Hiện tại");
     (*table)(0, 4).cNoiDung("Mô tả");
     (*table)(0, 5).cNoiDung("Xóa");
 
@@ -46,10 +46,10 @@ giaoDienPhong ::giaoDienPhong(QuanLy<Phong> *qLPhongDV)
     (*boxThem).cCoChu(26);
     (*boxThem).cDoDayVien(3);
 
-    boxXoaHet = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
-    (*boxXoaHet).cKieuChu(font28);
-    (*boxXoaHet).cCoChu(26);
-    (*boxXoaHet).cDoDayVien(3);
+    boxXoa = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
+    (*boxXoa).cKieuChu(font28);
+    (*boxXoa).cCoChu(26);
+    (*boxXoa).cDoDayVien(3);
 
     boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
     (*boxTimKiem).cKieuChu(font28);
@@ -96,7 +96,7 @@ void giaoDienPhong::capNhatTT()
             soPhong--;
             soDoiTuongTim--;
             (*qLPhong).xoa(vT);
-            (*table)(h, c).cTranThaiChon(false);
+            (*table)(h, c).cTrangThaiChon(false);
             capNhatThuTu();
             break;
         default:
@@ -104,7 +104,7 @@ void giaoDienPhong::capNhatTT()
         }
     }
     boxThem->capNhatTT();
-    boxXoaHet->capNhatTT();
+    boxXoa->capNhatTT();
     boxTimKiem->capNhatTT();
 
     if (boxThem->laDuocChon())
@@ -112,15 +112,15 @@ void giaoDienPhong::capNhatTT()
         qLPhong->chen(qLPhong->lDCDau(), Phong());
         soPhong++;
         soDoiTuongTim++;
-        boxThem->cTranThaiChon(false);
+        boxThem->cTrangThaiChon(false);
         capNhatThuTu();
     }
-    if (boxXoaHet->laDuocChon())
+    if (boxXoa->laDuocChon())
     {
         qLPhong->xoa(qLPhong->lDCDau(), qLPhong->lDCCuoi());
         soPhong = 0;
         soDoiTuongTim = 0;
-        boxXoaHet->cTranThaiChon(false);
+        boxXoa->cTrangThaiChon(false);
         capNhatThuTu();
     }
     if (boxTimKiem->laDuocChon() && !flagTimKiem)
@@ -141,7 +141,7 @@ void giaoDienPhong::capNhatTT()
 
         for (int i = 0; i < soPhong; i++)
         {
-            if ((*qLPhong)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos ||  (*qLPhong)[i].lMoTa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
+            if ((*qLPhong)[i].lMaPhong().find(boxTimKiem->layChu()) != string::npos || (*qLPhong)[i].lMoTa().find(boxTimKiem->layChu()) != string::npos || boxTimKiem->layChu() == "")
             {
                 viTriLuu[soDoiTuongTim++] = i;
             }
@@ -154,7 +154,7 @@ void giaoDienPhong::bieuDien()
     table->bieuDien(0, 0, sohangBD, 5);
     boxTimKiem->bieuDien();
     boxThem->bieuDien();
-    boxXoaHet->bieuDien();
+    boxXoa->bieuDien();
 }
 // void giaoDienPhong::luuDuLieu() const
 // {
@@ -171,7 +171,7 @@ giaoDienPhong::~giaoDienPhong()
 {
     delete[] viTriLuu;
     delete boxThem;
-    delete boxXoaHet;
+    delete boxXoa;
     delete boxTimKiem;
     delete table;
 }

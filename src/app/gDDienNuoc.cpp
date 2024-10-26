@@ -1,5 +1,24 @@
 #include "gDDienNuoc.h"
 
+enum cotBang
+{
+    C_STT,
+    C_M_PHONG,
+    C_CS_DIEN_DT,
+    C_CS_DIEN_CT,
+    C_L_DIEN_TT,
+    C_TIEN_DIEN,
+    C_CS_NUOC_DT,
+    C_CS_NUOC_CT,
+    C_L_NUOC_TT,
+    C_TIEN_NUOC,
+    C_TONG_NOP,
+    C_DA_NOP
+
+};
+
+#define SO_COT_BANG 12
+
 gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV, QuanLy<QuanLy<string>> &heThong)
 {
     qLPhong = qLPhongDV;
@@ -19,72 +38,15 @@ gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV, QuanLy<QuanLy<string>> &heThon
 }
 void gDDienNuoc::capNhatTT()
 {
-    table->capNhatTT();
-    table->vungHoatDong(1, 2, sohangBD, 3);
-    table->vungHoatDong(1, 6, sohangBD, 7);
-    table->vungHoatDong(1, 11, sohangBD, 11);
-    Vector2 dCLay = table->oHoatDong();
-    int c = dCLay.y, h = dCLay.x, vT = h - 1;
-    if (h != -1)
+    capNhatBang();
+    if (boxReset->laDuocChon())
     {
-        string chuoiMoi = (*table)(h, c).layChu();
-        if (chuoiMoi == "")
-            chuoiMoi += '0';
-        cout
-            << h << " ---- " << c;
-        if (flagTimKiem)
-            vT = viTriLuu[h - 1];
-        switch (c)
-        {
-        case 2:
-            (*qLPhong)[vT].cDienCSDT(stof(chuoiMoi));
-            break;
-        case 3:
-            (*qLPhong)[vT].cDienCSCT(stof(chuoiMoi));
-            break;
-        case 6:
-            (*qLPhong)[vT].cNuocCSDT(stof(chuoiMoi));
-            break;
-        case 7:
-            (*qLPhong)[vT].cNuocCSCT(stof(chuoiMoi));
-            break;
-        case 11:
-            if ((*qLPhong)[vT].daNopTienDN())
-            {
-                (*qLPhong)[vT].cNopTienDN(false);
-                (*table)(h, c).cNoiDung("Chưa");
-            }
-            else
-            {
-                (*qLPhong)[vT].cNopTienDN(true);
-                (*table)(h, c).cNoiDung("Rồi");
-            }
-            (*table)(h, c).cTranThaiChon(false);
-            break;
-        default:
-            break;
-        }
+        boxResetHet.capNhatTT();
+        boxResetCoLay.capNhatTT();
     }
-    //     boxThem->capNhatTT();
-    //     boxXoaHet->capNhatTT();
-    //     boxTimKiem->capNhatTT();
+    resetCapNhat();
+    boxTimKiem->capNhatTT();
 
-    //     if (boxThem->laDuocChon())
-    //     {
-    //         qLPhong->chen(qLPhong->lDCDau(), Phong());
-    //         soPhong++;
-    //         soDoiTuongTim++;
-    //         boxThem->cTranThaiChon(false);
-    //         capNhatThuTu();
-    //     }
-    //     if (boxXoaHet->laDuocChon())
-    //     {
-    //         qLPhong->xoa(qLPhong->lDCDau(), qLPhong->lDCCuoi());
-    //         soPhong = 0;
-    //         soDoiTuongTim = 0;
-    //         boxXoaHet->cTranThaiChon(false);
-    //         capNhatThuTu();
-    //     }
     //     if (boxTimKiem->laDuocChon() && !flagTimKiem)
     //     {
     //         boxTimKiem->cNoiDung("");
@@ -116,13 +78,15 @@ void gDDienNuoc::bieuDien()
     table->bieuDien(0, 0, sohangBD, 11);
     thanhDienNuoc->bieuDien(0, 0, 0, 5);
     boxTimKiem->bieuDien();
-    boxXoaHet->bieuDien();
+    boxReset->bieuDien();
+    if (boxReset->laDuocChon())
+        cuaSoReset();
 }
 gDDienNuoc::~gDDienNuoc()
 {
     delete[] viTriLuu;
     delete thanhDienNuoc;
-    delete boxXoaHet;
+
     delete boxTimKiem;
     delete table;
 }
@@ -169,17 +133,17 @@ void gDDienNuoc::capNhatThuTu()
         else
             vTriDanhSach = vTriBang - 1;
 
-        (*table)(vTriBang, 0).cNoiDung(to_string(vTriBang));
-        (*table)(vTriBang, 1).cNoiDung((*qLPhong)[vTriDanhSach].lMaPhong());
-        (*table)(vTriBang, 2).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lDienCSDT()));
-        (*table)(vTriBang, 3).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lDienCSCT()));
-        (*table)(vTriBang, 6).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lNuocCSDT()));
-        (*table)(vTriBang, 7).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lNuocCSCT()));
+        (*table)(vTriBang, C_STT).cNoiDung(to_string(vTriBang));
+        (*table)(vTriBang, C_M_PHONG).cNoiDung((*qLPhong)[vTriDanhSach].lMaPhong());
+        (*table)(vTriBang, C_CS_DIEN_DT).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lDienCSDT()));
+        (*table)(vTriBang, C_CS_DIEN_CT).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lDienCSCT()));
+        (*table)(vTriBang, C_CS_NUOC_DT).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lNuocCSDT()));
+        (*table)(vTriBang, C_CS_NUOC_CT).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lNuocCSCT()));
         capNhatTinhToan(vTriBang, vTriDanhSach);
         if ((*qLPhong)[vTriDanhSach].daNopTienDN())
-            (*table)(vTriBang, 11).cNoiDung("Rồi");
+            (*table)(vTriBang, C_DA_NOP).cNoiDung("Rồi");
         else
-            (*table)(vTriBang, 11).cNoiDung("Chưa");
+            (*table)(vTriBang, C_DA_NOP).cNoiDung("Chưa");
     }
 }
 void gDDienNuoc::veKhoiTao()
@@ -210,18 +174,18 @@ void gDDienNuoc::veKhoiTao()
     table = new Bang({10, 236}, 12, soDongToiDA + 1, {250, 36});
     table->cTieuDe(true);
     table->cFlagCuon(true);
-    table->cGianHangCot(3, 0);
+    // table->cGianHangCot(0, 2);
     table->cKieuChu(font28, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight()); // đặt giới hạn vì không thể vẽ hết tất các các ô, nếu vẽ hêt tức những ô ra ngoài vùng cửa sổ vũng vẽ => dư thừa và hiệu suất kém
 
     // Thiết lập tiêu đề cho 13 cột
     (*table)(0, 2).cNoiDung("CSDT");
     (*table)(0, 3).cNoiDung("CSCT");
-    (*table)(0, 4).cNoiDung("Lương TT");
+    (*table)(0, 4).cNoiDung("Lượng.TT");
     (*table)(0, 5).cNoiDung("T.Tiền");
     (*table)(0, 6).cNoiDung("CSDT");
     (*table)(0, 7).cNoiDung("CSCT");
-    (*table)(0, 8).cNoiDung("Lượng TT");
+    (*table)(0, 8).cNoiDung("Lượng.TT");
     (*table)(0, 9).cNoiDung("T.Tiền");
 
     // Thiết lập chiều rộng cho 13 cột
@@ -241,20 +205,131 @@ void gDDienNuoc::veKhoiTao()
     // thiết lập ô chỉ nhập số
     for (int i = 0; i < soDongToiDA; i++)
     {
-        (*table)(i, 2).cChiNhapSo(true);
-        (*table)(i, 3).cChiNhapSo(true);
-        (*table)(i, 6).cChiNhapSo(true);
-        (*table)(i, 7).cChiNhapSo(true);
+        (*table)(i, C_CS_DIEN_DT).cChiNhapSo(true);
+        (*table)(i, C_CS_DIEN_CT).cChiNhapSo(true);
+        (*table)(i, C_CS_NUOC_DT).cChiNhapSo(true);
+        (*table)(i, C_CS_DIEN_CT).cChiNhapSo(true);
     }
+    // chỉnh màu theo cột
+    for (int i = 0; i < SO_COT_BANG; i++)
+    {
+        if (i == C_CS_DIEN_CT || i == C_CS_DIEN_DT || i == C_CS_NUOC_DT || i == C_CS_NUOC_CT || i == C_DA_NOP)
+            table->cMauTheoCot(i, ORANGE);
+        else
+            table->cMauTheoCot(i, YELLOW);
+    }
+    table->cMauTheoHang(0, MAU_LA_CAY);
     capNhatThuTu();
     // hộp xóa
-    boxXoaHet = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
-    (*boxXoaHet).cKieuChu(font28);
-    (*boxXoaHet).cCoChu(26);
-    (*boxXoaHet).cDoDayVien(3);
+    boxReset = new hopChu({1260, 134, 210, 40}, "         Thiết lập lại", RED, YELLOW, BLACK);
+    (*boxReset).cKieuChu(font28);
+    (*boxReset).cCoChu(26);
+    (*boxReset).cDoDayVien(3);
 
     boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
     (*boxTimKiem).cKieuChu(font28);
     (*boxTimKiem).cCoChu(26);
     (*boxTimKiem).cDoDayVien(3);
+
+    boxResetHet.cKichCo(560, 60);
+    boxResetHet.cVitri((GetScreenWidth() - 560) / 2, (GetScreenHeight() - 60) / 2 - 40);
+    boxResetHet.cNoiDung("         Thiết lập lại tất cả");
+    boxResetHet.cKieuChu(font28);
+    boxResetHet.cDoDayVien(2.0f);
+    boxResetCoLay.cKichCo(560, 60);
+    boxResetCoLay.cVitri((GetScreenWidth() - 560) / 2, (GetScreenHeight() - 60) / 2 + 70);
+    boxResetCoLay.cNoiDung("        Giữ cột CSCT và chuyển thành CSDT");
+    boxResetCoLay.cKieuChu(font28);
+    boxResetCoLay.cDoDayVien(2.0f);
+}
+
+void gDDienNuoc::capNhatBang()
+{
+    table->capNhatTT();
+    table->vungHoatDong(1, C_CS_DIEN_DT, sohangBD, C_CS_DIEN_CT);
+    table->vungHoatDong(1, C_CS_NUOC_DT, sohangBD, C_CS_NUOC_CT);
+    table->vungHoatDong(1, C_DA_NOP, sohangBD, C_DA_NOP);
+
+    Vector2 dCLay = table->oHoatDong();
+    int c = dCLay.y, h = dCLay.x, vT = h - 1;
+    if (flagTimKiem)
+        vT = viTriLuu[h - 1];
+    if (h != -1 && chuoiMoi != (*table)(h, c).layChu())
+    {
+        chuoiMoi = (*table)(h, c).layChu();
+        if (chuoiMoi == "") // nếu chuổi rổng thì cộng thêm '0' vì nếu chuổi rổng stof() sẽ không chuyển qua được gây ra lỗi
+            chuoiMoi += '0';
+        switch (c)
+        {
+        case C_CS_DIEN_DT:
+            (*qLPhong)[vT].cDienCSDT(stof(chuoiMoi));
+            break;
+        case C_CS_DIEN_CT:
+            (*qLPhong)[vT].cDienCSCT(stof(chuoiMoi));
+            break;
+        case C_CS_NUOC_DT:
+            (*qLPhong)[vT].cNuocCSDT(stof(chuoiMoi));
+            break;
+        case C_CS_NUOC_CT:
+            (*qLPhong)[vT].cNuocCSCT(stof(chuoiMoi));
+            break;
+        }
+        capNhatTinhToan(h, vT);
+    }
+    if (c == C_DA_NOP)
+    {
+        if ((*qLPhong)[vT].daNopTienDN())
+        {
+            (*qLPhong)[vT].cNopTienDN(false);
+            (*table)(h, c).cNoiDung("Chưa");
+        }
+        else
+        {
+            (*qLPhong)[vT].cNopTienDN(true);
+            (*table)(h, c).cNoiDung("Rồi");
+        }
+        (*table)(h, c).cTrangThaiChon(false);
+    }
+}
+void gDDienNuoc::resetCapNhat()
+{
+    boxReset->capNhatTT();
+    if (boxResetHet.laDuocChon())
+    {
+        for (int i = 0; i < (*qLPhong).lSoPhanTu(); i++)
+        {
+            (*qLPhong)[i].cDienCSDT(0.0f);
+            (*qLPhong)[i].cNuocCSDT(0.0f);
+            (*qLPhong)[i].cDienCSCT(0.0f);
+            (*qLPhong)[i].cNuocCSCT(0.0f);
+            (*qLPhong)[i].cNopTienDN(false);
+        }
+        capNhatThuTu();
+        boxResetHet.cTrangThaiChon(false);
+    }
+    else if (boxResetCoLay.laDuocChon())
+    {
+        for (int i = 0; i < (*qLPhong).lSoPhanTu(); i++)
+        {
+            (*qLPhong)[i].cDienCSDT((*qLPhong)[i].lDienCSCT());
+            (*qLPhong)[i].cNuocCSDT((*qLPhong)[i].lNuocCSCT());
+            (*qLPhong)[i].cDienCSCT(0.0f);
+            (*qLPhong)[i].cNuocCSCT(0.0f);
+            (*qLPhong)[i].cNopTienDN(false);
+        }
+        capNhatThuTu();
+        boxResetCoLay.cTrangThaiChon(false);
+    }
+}
+void gDDienNuoc::cuaSoReset()
+{
+    hopChu tieuDe({(GetScreenWidth() - 700) / 2, (GetScreenHeight() - 350) / 2, 700, 40}, "            Thiết lập lại", MAU_XANH);
+    tieuDe.cKieuChu(font28);
+
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), MAU_DEN_MO);
+    DrawRectangle((GetScreenWidth() - 700) / 2, (GetScreenHeight() - 350) / 2, 700, 350, MAU_LA_CAY);
+
+    tieuDe.bieuDien();
+    boxResetHet.bieuDien();
+    boxResetCoLay.bieuDien();
 }

@@ -1,39 +1,53 @@
-#include <fstream>
-#include <string>
-#include <sstream>
+#include "../include/raylib.h"
 #include <iostream>
 using namespace std;
-int main()
+int main(void)
 {
+    // Khởi tạo cửa sổ
+    InitWindow(800, 600, "Màng phủ màu với RGB");
 
-    float tienDien = 0;
-    float mucBacDien[] = {50, 100, 200,300,400,500};
-    float luongDienTT = 500;
-    float giaTienDien[] = {1678, 1734, 2014, 2536, 2834, 2834};
+    // Biến màu cho lớp phủ
+    Color overlayColor = (Color){255, 0, 0, 128}; // Màu đỏ trong suốt
 
-    if (mucBacDien[0] < luongDienTT)
+    // Biến để lưu giá trị RGB
+    int r = 255, g = 0, b = 0, mm = 0; // Mặc định màu đỏ
+
+    while (!WindowShouldClose())
     {
-        int j;
-        tienDien += mucBacDien[0] * giaTienDien[0];
-        for (j = 1; j < 5 && mucBacDien[j] < luongDienTT; j++)
+        // Kiểm tra phím để thay đổi giá trị RGB
+        if (IsKeyPressed(KEY_R))
+            r = (r + 2) % 256; // Tăng giá trị đỏ
+        if (IsKeyPressed(KEY_G))
+            g = (g + 2) % 256; // Tăng giá trị xanh
+        if (IsKeyPressed(KEY_B))
+            b = (b + 2) % 256; // Tăng giá trị
+        if (IsKeyPressed(KEY_M))
+            mm = (mm + 2) % 256; // Tăng giá trị lam
+        if (IsKeyPressed(KEY_N))
+            cout << r << " " << g << " " << b << " " << mm << endl;
+        // Cập nhật màu lớp phủ với kiểu chuyển đổi
+        overlayColor = (Color){(unsigned char)r, (unsigned char)g, (unsigned char)b, 128}; // Độ trong suốt 128
+
+        // Bắt đầu vẽ
+        BeginDrawing();
+        ClearBackground(RAYWHITE); // Làm sạch nền
+
+        // Vẽ nhiều hình chữ nhật với màu khác nhau
+        for (int i = 0; i < 5; i++)
         {
-            tienDien += (mucBacDien[j] - mucBacDien[j - 1]) * giaTienDien[j];
+            DrawRectangle(100, 100 + i * 80, 600, 70, (Color){0, 0, (unsigned char)(i * 50), mm});
         }
-        tienDien += (luongDienTT - mucBacDien[j - 1]) * giaTienDien[j];
-    }
-    else
-    {
-        tienDien = luongDienTT * giaTienDien[0];
+
+        // Vẽ lớp phủ màu
+        DrawRectangle(100, 100, 600, 400, overlayColor);
+
+        DrawText("Nhấn R, G, B để thay đổi màu lớp phủ", 100, 20, 20, DARKGRAY);
+
+        EndDrawing();
     }
 
-    // tienDien += (mucBacDien[0] < luongDienTT) ? mucBacDien[0] * giaTienDien[0] : luongDienTT * giaTienDien[0];
-    // for (j = 1; j < 5; j++)
-    // {
-    //     if (mucBacDien[j] < luongDienTT)
-    //         tienDien += (mucBacDien[j] - mucBacDien[j - 1]) * giaTienDien[j];
-    // }
-    // tienDien += (j == 1) ? 0 : (luongDienTT - mucBacDien[j - 1]) * giaTienDien[j];
+    // Giải phóng tài nguyên
+    CloseWindow();
 
-    cout << tienDien;
     return 0;
 }

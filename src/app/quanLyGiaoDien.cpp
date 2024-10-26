@@ -38,17 +38,17 @@ void quanLyGiaoDien::capNhatTT()
     if (oPhong.laDuocChon())
     {
         flagGDMoi = FGD_PHONG;
-        oPhong.cTranThaiChon(false);
+        oPhong.cTrangThaiChon(false);
     }
     if (oSinhVien.laDuocChon())
     {
         flagGDMoi = FGD_SINH_VIEN;
-        oSinhVien.cTranThaiChon(false);
+        oSinhVien.cTrangThaiChon(false);
     }
     if (oDienNuoc.laDuocChon())
     {
         flagGDMoi = FGD_DIEN_NUOC;
-        oDienNuoc.cTranThaiChon(false);
+        oDienNuoc.cTrangThaiChon(false);
     }
 
     if (flagGDMoi != flagGD)
