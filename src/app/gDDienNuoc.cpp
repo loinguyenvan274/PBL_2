@@ -50,6 +50,13 @@ gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV)
     table->cCot(10, 200); // Tổng Nộp
     table->cCot(11, 100); // Đã Nộp
 
+    for (int i = 0; i < soDongToiDA; i++)
+    {
+        (*table)(i, 2).cChiNhapSo(true);
+        (*table)(i, 3).cChiNhapSo(true);
+        (*table)(i, 6).cChiNhapSo(true);
+        (*table)(i, 7).cChiNhapSo(true);
+    }
     capNhatThuTu();
     // hộp xóa
     boxXoaHet = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
