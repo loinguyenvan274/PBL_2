@@ -11,6 +11,7 @@ private:
     unsigned int soNguoiToiDa;
     unsigned int soNguoiHienTai;
     float dienCSDT, dienCSCT, nuocCSDT, nuocCSCT;
+    bool nopTienDN;
 
 public:
     Phong(string maPhong = "", int soNguoiToiDa = 0, string moTa = "");
@@ -22,6 +23,7 @@ public:
     const float &lDienCSCT() const;
     const float &lNuocCSDT() const;
     const float &lNuocCSCT() const;
+    const bool &daNopTienDN() const;
 
     void cMaPhong(const string &);
     void cMoTa(const string &);
@@ -31,6 +33,7 @@ public:
     void cDienCSCT(const float &);
     void cNuocCSDT(const float &);
     void cNuocCSCT(const float &);
+    void cNopTienDN(const bool &);
 
     // dùng danh mảng chứa các dữ liệu để cập nhật
     void cThongTin(const QuanLy<string> &);

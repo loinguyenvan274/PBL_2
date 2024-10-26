@@ -1,33 +1,31 @@
 #include <iostream>
-
 #include "app/quanLyGiaoDien.h"
 
-#include "app/giaoDienChinh.h"
-#include "app/giaoDienPhong.h"
-// #include "giaoDien.h"
 Font giaoDien::font28;
 
-// đọc dữ liệu từ file và trả về mảng hai chiều (dòng chứa các đối tượng , cột chứa các thuộc tính của đối tương)
-template <typename type>
-QuanLy<type> lay(const char *duongDan)
+const char *dDFileFontChu = "assets/roboto.ttf";
+const char *dDFileSinhVien = "data/sinhVien.csv";
+const char *dDFilePhong = "data/Phong.csv";
+
+template <typename Type>
+QuanLy<Type> layDuLieu(const char *duongDan)
 {
     docGhiFile docGhi(duongDan);
-    QuanLy<QuanLy<string>> dSDoc = docGhi.docData();
+    QuanLy<QuanLy<std::string>> dSDoc = docGhi.docData();
 
-    QuanLy<type> qL(dSDoc.lSoPhanTu());
+    QuanLy<Type> qL(dSDoc.lSoPhanTu());
     for (int i = 0; i < dSDoc.lSoPhanTu(); i++)
     {
         qL[i].cThongTin(dSDoc[i]);
     }
     return qL;
 }
-// lưu dữ liệu từ danh sách quản lý
-template <typename type>
-void luu(const char *duongDan, const QuanLy<type> &danhSach)
+
+template <typename Type>
+void luuDuLieu(const char *duongDan, const QuanLy<Type> &danhSach)
 {
     docGhiFile docGhi(duongDan);
-
-    QuanLy<QuanLy<string>> dSGhi(danhSach.lSoPhanTu());
+    QuanLy<QuanLy<std::string>> dSGhi(danhSach.lSoPhanTu());
 
     for (int i = 0; i < dSGhi.lSoPhanTu(); i++)
     {
@@ -37,26 +35,17 @@ void luu(const char *duongDan, const QuanLy<type> &danhSach)
     docGhi.ghiData(dSGhi);
 }
 
-int main()
+void khoiTaoCuaSo()
 {
     const char *tieuDeChuongTrinh = "Quản Lý Sinh Viên Ký Túc Xá [ PBL2 Nguyễn Văn Lợi 102230026 - Nguyễn Thanh Hậu 102230013 ]";
-
-    const char *dDFileFontChu = "assets/roboto.ttf";
-    const char *dDFileSinhVien = "data/sinhVien.csv";
-    const char *dDFilePhong = "data/Phong.csv";
-    const char *dDFileTien = "data/tien.csv";
-
     InitWindow(1480, 880, tieuDeChuongTrinh);
     SetWindowPosition(45, 45);
-
     giaoDien::font28 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
+}
 
-    QuanLy<SinhVien> sinhVienKTX = lay<SinhVien>(dDFileSinhVien);
-    QuanLy<Phong> phongKTX = lay<Phong>(dDFilePhong);
-    cout << "\n\n\n\nhere";
+void runApp(QuanLy<SinhVien> &sinhVienKTX, QuanLy<Phong> &phongKTX)
+{
     quanLyGiaoDien gD(&sinhVienKTX, &phongKTX);
-
-    // thêm giao chính vào ngăn xếp (lớp trên cùng sẽ được biểu diễn)
 
     while (!WindowShouldClose())
     {
@@ -64,15 +53,22 @@ int main()
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
-
         gD.bieuDien();
-
         EndDrawing();
     }
+}
 
-    // lưu file
-    luu(dDFileSinhVien, sinhVienKTX);
-    luu(dDFilePhong, phongKTX);
+int main()
+{
+    khoiTaoCuaSo();
+
+    QuanLy<SinhVien> sinhVienKTX = layDuLieu<SinhVien>(dDFileSinhVien);
+    QuanLy<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
+
+    runApp(sinhVienKTX, phongKTX); // chạy chương trình đồ họa
+
+    luuDuLieu(dDFileSinhVien, sinhVienKTX);
+    luuDuLieu(dDFilePhong, phongKTX);
 
     UnloadFont(giaoDien::font28);
     CloseWindow();

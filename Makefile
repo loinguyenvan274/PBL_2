@@ -8,7 +8,8 @@ path_build = ./build/index.exe
 
 
 compile:
-	$(cc) -g $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
+	$(cc) -g  $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
+	$(path_build)
 run:
 	$(path_build)
 git_push:

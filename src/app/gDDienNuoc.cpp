@@ -2,29 +2,43 @@
 
 gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV)
 {
-
     qLPhong = qLPhongDV;
 
     soPhong = qLPhong->lSoPhanTu();
     sohangBD = soPhong;
-
-    // table
 
     int soDongToiDA = 1000;
     viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
     flagTimKiem = false;
     chuoiTimSoSanh = "";
 
-    table = new Bang({10, 200}, 12, soDongToiDA + 1, {250, 36});
+    // tạo thanh điện nước
+    thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 36});
+    thanhDienNuoc->cKieuChu(font28, 26);
+    thanhDienNuoc->cMauTheoHang(0, MAU_XANH);
+    thanhDienNuoc->cCot(0, 60);  // stt
+    thanhDienNuoc->cCot(1, 120); // phong
+    thanhDienNuoc->cCot(2, 490);
+    thanhDienNuoc->cCot(3, 490);
+    thanhDienNuoc->cCot(4, 200);
+    thanhDienNuoc->cCot(5, 100);
+
+    (*thanhDienNuoc)(0, 0).cNoiDung("STT");
+    (*thanhDienNuoc)(0, 1).cNoiDung("Phòng");
+    (*thanhDienNuoc)(0, 2).cNoiDung("Điện");
+    (*thanhDienNuoc)(0, 3).cNoiDung("Nước");
+    (*thanhDienNuoc)(0, 4).cNoiDung("Tổng nộp");
+    (*thanhDienNuoc)(0, 5).cNoiDung("Đã nộp");
+
+    //{vị trí}, số cột, số dòng + tiêu đề, {kích cở mặt định của các ô} / 12 cot
+    table = new Bang({10, 236}, 12, soDongToiDA + 1, {250, 36});
     table->cTieuDe(true);
     table->cFlagCuon(true);
     table->cGianHangCot(3, 0);
     table->cKieuChu(font28, 26);
-    table->cGioHanBD(table->lViTri().y, GetScreenHeight());
+    table->cGioHanBD(table->lViTri().y, GetScreenHeight()); // đặt giới hạn vì không thể vẽ hết tất các các ô, nếu vẽ hêt tức những ô ra ngoài vùng cửa sổ vũng vẽ => dư thừa và hiệu suất kém
 
     // Thiết lập tiêu đề cho 13 cột
-    (*table)(0, 0).cNoiDung("STT");
-    (*table)(0, 1).cNoiDung("Phòng");
     (*table)(0, 2).cNoiDung("CSDT");
     (*table)(0, 3).cNoiDung("CSCT");
     (*table)(0, 4).cNoiDung("Lương TT");
@@ -33,8 +47,6 @@ gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV)
     (*table)(0, 7).cNoiDung("CSCT");
     (*table)(0, 8).cNoiDung("Lượng TT");
     (*table)(0, 9).cNoiDung("T.Tiền");
-    (*table)(0, 10).cNoiDung("Tổng Nộp");
-    (*table)(0, 11).cNoiDung("Đã Nộp");
 
     // Thiết lập chiều rộng cho 13 cột
     table->cCot(0, 60);   // STT
@@ -50,6 +62,7 @@ gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV)
     table->cCot(10, 200); // Tổng Nộp
     table->cCot(11, 100); // Đã Nộp
 
+    // thiết lập ô chỉ nhập số
     for (int i = 0; i < soDongToiDA; i++)
     {
         (*table)(i, 2).cChiNhapSo(true);
@@ -77,45 +90,51 @@ void gDDienNuoc::capNhatTT()
     //     //     cout << GetMouseY() << "  ---  " << GetMouseX() << endl;
 
     table->capNhatTT();
-    // table->vungHoatDong(1, 1, sohangBD, 2);
-    // table->vungHoatDong(1, 4, sohangBD, 5);
-    //     Vector2 dCLay = table->oHoatDong();
-    //     int c = dCLay.y, h = dCLay.x, vT = h - 1;
-    //     if (h != -1)
-    //     {
-    //         string chuoiMoi = (*table)(h, c).layChu();
-
-    //         cout
-    //             << h << " ---- " << c;
-    //         if (flagTimKiem)
-    //             vT = viTriLuu[h - 1];
-    //         switch (c)
-    //         {
-    //         case 1:
-    //             (*qLPhong)[vT].cMaPhong(chuoiMoi);
-    //             break;
-    //         case 2:
-    //             if (chuoiMoi == "")
-    //                 chuoiMoi += '0';
-    //             (*qLPhong)[vT].cSoNguoiToiDa(stoi(chuoiMoi));
-    //             break;
-    //         case 3:
-    //             (*qLPhong)[vT].cSoNguoiHienTai(stoi(chuoiMoi));
-    //             break;
-    //         case 4:
-    //             (*qLPhong)[vT].cMoTa(chuoiMoi);
-    //             break;
-    //         case 5:
-    //             soPhong--;
-    //             soDoiTuongTim--;
-    //             (*qLPhong).xoa(vT);
-    //             (*table)(h, c).cTranThaiChon(false);
-    //             capNhatThuTu();
-    //             break;
-    //         default:
-    //             break;
-    //         }
-    //     }
+    table->vungHoatDong(1, 2, sohangBD, 3);
+    table->vungHoatDong(1, 6, sohangBD, 7);
+    table->vungHoatDong(1, 11, sohangBD, 11);
+    Vector2 dCLay = table->oHoatDong();
+    int c = dCLay.y, h = dCLay.x, vT = h - 1;
+    if (h != -1)
+    {
+        string chuoiMoi = (*table)(h, c).layChu();
+        if (chuoiMoi == "")
+            chuoiMoi += '0';
+        cout
+            << h << " ---- " << c;
+        if (flagTimKiem)
+            vT = viTriLuu[h - 1];
+        switch (c)
+        {
+        case 2:
+            (*qLPhong)[vT].cDienCSDT(stof(chuoiMoi));
+            break;
+        case 3:
+            (*qLPhong)[vT].cDienCSCT(stof(chuoiMoi));
+            break;
+        case 6:
+            (*qLPhong)[vT].cNuocCSDT(stof(chuoiMoi));
+            break;
+        case 7:
+            (*qLPhong)[vT].cNuocCSCT(stof(chuoiMoi));
+            break;
+        case 11:
+            if ((*qLPhong)[vT].daNopTienDN())
+            {
+                (*qLPhong)[vT].cNopTienDN(false);
+                (*table)(h, c).cNoiDung("Chưa");
+            }
+            else
+            {
+                (*qLPhong)[vT].cNopTienDN(true);
+                (*table)(h, c).cNoiDung("Rồi");
+            }
+            (*table)(h, c).cTranThaiChon(false);
+            break;
+        default:
+            break;
+        }
+    }
     //     boxThem->capNhatTT();
     //     boxXoaHet->capNhatTT();
     //     boxTimKiem->capNhatTT();
@@ -165,6 +184,7 @@ void gDDienNuoc::capNhatTT()
 void gDDienNuoc::bieuDien()
 {
     table->bieuDien(0, 0, sohangBD, 11);
+    thanhDienNuoc->bieuDien(0, 0, 0, 5);
     boxTimKiem->bieuDien();
     boxXoaHet->bieuDien();
 }
@@ -182,9 +202,14 @@ void gDDienNuoc::bieuDien()
 gDDienNuoc::~gDDienNuoc()
 {
     delete[] viTriLuu;
+    delete thanhDienNuoc;
     delete boxXoaHet;
     delete boxTimKiem;
     delete table;
+}
+void gDDienNuoc::capNhatTinhToan(int i)
+{
+
 }
 void gDDienNuoc::capNhatThuTu()
 {
@@ -205,8 +230,12 @@ void gDDienNuoc::capNhatThuTu()
         (*table)(i, 3).cNoiDung(float_string((*qLPhong)[vT].lDienCSCT()));
         (*table)(i, 6).cNoiDung(float_string((*qLPhong)[vT].lNuocCSDT()));
         (*table)(i, 7).cNoiDung(float_string((*qLPhong)[vT].lNuocCSCT()));
+        if ((*qLPhong)[vT].daNopTienDN())
+            (*table)(i, 11).cNoiDung("Rồi");
+        else
+            (*table)(i, 11).cNoiDung("Chưa");
     }
-    table->cMauTheoHang(0, {65, 105, 225, 255});
+    table->cMauTheoHang(0, MAU_LA_CAY);
     for (int i = 1; i <= sohangBD; i++)
     {
         if (i % 2 == 0)

@@ -10,6 +10,9 @@
 #include "../utils/Phong.h"
 #include "../utils/docGhiFile.h"
 
+#define MAU_XANH {65, 105, 225, 255}
+#define MAU_LA_CAY {0, 128, 128,255}
+
 class giaoDien
 {
 protected:
