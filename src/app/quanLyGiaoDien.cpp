@@ -10,6 +10,9 @@
 quanLyGiaoDien::quanLyGiaoDien(QuanLy<SinhVien> *qLSVDV, QuanLy<Phong> *qLPhongDV) : qLSV(qLSVDV), qLPhong(qLPhongDV)
 {
 
+    docGhiFile docTep("data/heThong.csv");
+    heThong = docTep.docData();
+
     thanhChuyen = new Bang({0, 0}, 5, 1, {250, 36});
     thanhChuyen->cKieuChu(giaoDien::font28, 26);
 
@@ -59,7 +62,7 @@ void quanLyGiaoDien::capNhatTT()
             doi(new giaoDienPhong(qLPhong));
             break;
         case FGD_DIEN_NUOC:
-            doi(new gDDienNuoc(qLPhong));
+            doi(new gDDienNuoc(qLPhong, heThong));
             break;
         default:
             break;
@@ -85,5 +88,7 @@ void quanLyGiaoDien::doi(giaoDien *gDHienThi) // Nhận con trỏ
 quanLyGiaoDien::~quanLyGiaoDien()
 {
     xoa();
+    docGhiFile ghiTep("data/heThong.csv");
+    ghiTep.ghiData(heThong);
     delete thanhChuyen;
 }

@@ -1,94 +1,24 @@
 #include "gDDienNuoc.h"
 
-gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV)
+gDDienNuoc ::gDDienNuoc(QuanLy<Phong> *qLPhongDV, QuanLy<QuanLy<string>> &heThong)
 {
     qLPhong = qLPhongDV;
+    this->heThong = &heThong;
+
+    const int soMucDien = 6, hMucBacDien = 0, hGiaDien = 1, hGiaNuoc = 2;
+    for (int i = 0; i < soMucDien; i++)
+    {
+        mucBacDien[i] = stoi(heThong[hMucBacDien][i]);
+        giaTienDien[i] = stod(heThong[hGiaDien][i]);
+    }
+    giaTienNuoc = stod(heThong[hGiaNuoc][0]); // hang 2 : hàng giá nước tức là chỉ hàng đó chỉ có một cái giá trị lưu giá tien nước;
 
     soPhong = qLPhong->lSoPhanTu();
     sohangBD = soPhong;
-
-    int soDongToiDA = 1000;
-    viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
-    flagTimKiem = false;
-    chuoiTimSoSanh = "";
-
-    // tạo thanh điện nước
-    thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 36});
-    thanhDienNuoc->cKieuChu(font28, 26);
-    thanhDienNuoc->cMauTheoHang(0, MAU_XANH);
-    thanhDienNuoc->cCot(0, 60);  // stt
-    thanhDienNuoc->cCot(1, 120); // phong
-    thanhDienNuoc->cCot(2, 490);
-    thanhDienNuoc->cCot(3, 490);
-    thanhDienNuoc->cCot(4, 200);
-    thanhDienNuoc->cCot(5, 100);
-
-    (*thanhDienNuoc)(0, 0).cNoiDung("STT");
-    (*thanhDienNuoc)(0, 1).cNoiDung("Phòng");
-    (*thanhDienNuoc)(0, 2).cNoiDung("Điện");
-    (*thanhDienNuoc)(0, 3).cNoiDung("Nước");
-    (*thanhDienNuoc)(0, 4).cNoiDung("Tổng nộp");
-    (*thanhDienNuoc)(0, 5).cNoiDung("Đã nộp");
-
-    //{vị trí}, số cột, số dòng + tiêu đề, {kích cở mặt định của các ô} / 12 cot
-    table = new Bang({10, 236}, 12, soDongToiDA + 1, {250, 36});
-    table->cTieuDe(true);
-    table->cFlagCuon(true);
-    table->cGianHangCot(3, 0);
-    table->cKieuChu(font28, 26);
-    table->cGioHanBD(table->lViTri().y, GetScreenHeight()); // đặt giới hạn vì không thể vẽ hết tất các các ô, nếu vẽ hêt tức những ô ra ngoài vùng cửa sổ vũng vẽ => dư thừa và hiệu suất kém
-
-    // Thiết lập tiêu đề cho 13 cột
-    (*table)(0, 2).cNoiDung("CSDT");
-    (*table)(0, 3).cNoiDung("CSCT");
-    (*table)(0, 4).cNoiDung("Lương TT");
-    (*table)(0, 5).cNoiDung("T.Tiền");
-    (*table)(0, 6).cNoiDung("CSDT");
-    (*table)(0, 7).cNoiDung("CSCT");
-    (*table)(0, 8).cNoiDung("Lượng TT");
-    (*table)(0, 9).cNoiDung("T.Tiền");
-
-    // Thiết lập chiều rộng cho 13 cột
-    table->cCot(0, 60);   // STT
-    table->cCot(1, 120);  // Phòng
-    table->cCot(2, 110);  // CSDT
-    table->cCot(3, 110);  // CSCT
-    table->cCot(4, 120);  // Lương TT
-    table->cCot(5, 150);  // T.Tiền
-    table->cCot(6, 110);  // CSDT
-    table->cCot(7, 110);  // CSCT
-    table->cCot(8, 120);  // Lượng TT
-    table->cCot(9, 150);  // T.Tiền
-    table->cCot(10, 200); // Tổng Nộp
-    table->cCot(11, 100); // Đã Nộp
-
-    // thiết lập ô chỉ nhập số
-    for (int i = 0; i < soDongToiDA; i++)
-    {
-        (*table)(i, 2).cChiNhapSo(true);
-        (*table)(i, 3).cChiNhapSo(true);
-        (*table)(i, 6).cChiNhapSo(true);
-        (*table)(i, 7).cChiNhapSo(true);
-    }
-    capNhatThuTu();
-    // hộp xóa
-    boxXoaHet = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
-    (*boxXoaHet).cKieuChu(font28);
-    (*boxXoaHet).cCoChu(26);
-    (*boxXoaHet).cDoDayVien(3);
-
-    boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
-    (*boxTimKiem).cKieuChu(font28);
-    (*boxTimKiem).cCoChu(26);
-    (*boxTimKiem).cDoDayVien(3);
+    veKhoiTao();
 }
 void gDDienNuoc::capNhatTT()
 {
-
-    //     // // check
-    //     // if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-    //     //     cout << GetMouseY() << "  ---  " << GetMouseX() << endl;
-
     table->capNhatTT();
     table->vungHoatDong(1, 2, sohangBD, 3);
     table->vungHoatDong(1, 6, sohangBD, 7);
@@ -188,17 +118,6 @@ void gDDienNuoc::bieuDien()
     boxTimKiem->bieuDien();
     boxXoaHet->bieuDien();
 }
-// // void giaoDienPhong::luuDuLieu() const
-// // {
-// //     docGhiFile docGhi("data/sinhVien.csv");
-// //     QuanLy<QuanLy<string>> dSSVBK((*danhSachQLSV).lSoPhanTu());
-// //     for (int i = 0; i < (*danhSachQLSV).lSoPhanTu(); i++)
-// //     {
-// //         dSSVBK[i] = (*danhSachQLSV)[i].lThongTin();
-// //     }
-
-// //     docGhi.ghiData(dSSVBK);
-// // }
 gDDienNuoc::~gDDienNuoc()
 {
     delete[] viTriLuu;
@@ -207,40 +126,135 @@ gDDienNuoc::~gDDienNuoc()
     delete boxTimKiem;
     delete table;
 }
-void gDDienNuoc::capNhatTinhToan(int i)
+void gDDienNuoc::capNhatTinhToan(const int &vTriBang, const int &vTriDanhSach)
 {
+    float luongDienTT, luongNuocTT, tienDien = 0, tienNuoc = 0;
+    luongDienTT = (*qLPhong)[vTriDanhSach].lDienCSCT() - (*qLPhong)[vTriDanhSach].lDienCSDT();
+    luongNuocTT = (*qLPhong)[vTriDanhSach].lNuocCSCT() - (*qLPhong)[vTriDanhSach].lNuocCSDT();
+    // chuổi có 6 chữa số tương ứng với 6 bậc điện
+    if (mucBacDien[0] < luongDienTT)
+    {
+        int j;
+        tienDien += mucBacDien[0] * giaTienDien[0];
+        for (j = 1; j < 5 && mucBacDien[j] < luongDienTT; j++)
+        {
+            tienDien += (mucBacDien[j] - mucBacDien[j - 1]) * giaTienDien[j];
+        }
+        tienDien += (luongDienTT - mucBacDien[j - 1]) * giaTienDien[j];
+    }
+    else
+    {
+        tienDien = luongDienTT * giaTienDien[0];
+    }
+    tienNuoc = giaTienNuoc * luongNuocTT;
 
+    (*table)(vTriBang, 4).cNoiDung(float_string(luongDienTT));
+    (*table)(vTriBang, 5).cNoiDung(float_string(tienDien));
+    (*table)(vTriBang, 8).cNoiDung(float_string(luongNuocTT));
+    (*table)(vTriBang, 9).cNoiDung(float_string(tienNuoc));
+    (*table)(vTriBang, 10).cNoiDung(float_string(tienNuoc + tienDien));
 }
 void gDDienNuoc::capNhatThuTu()
 {
-    int vT;
+    int vTriDanhSach;
     if (flagTimKiem)
         sohangBD = soDoiTuongTim;
     else
         sohangBD = soPhong;
-    for (int i = 1; i <= sohangBD; i++)
+
+    for (int vTriBang = 1; vTriBang <= sohangBD; vTriBang++)
     {
         if (flagTimKiem)
-            vT = viTriLuu[i - 1];
+            vTriDanhSach = viTriLuu[vTriBang - 1];
         else
-            vT = i - 1;
-        (*table)(i, 0).cNoiDung(to_string(i));
-        (*table)(i, 1).cNoiDung((*qLPhong)[vT].lMaPhong());
-        (*table)(i, 2).cNoiDung(float_string((*qLPhong)[vT].lDienCSDT()));
-        (*table)(i, 3).cNoiDung(float_string((*qLPhong)[vT].lDienCSCT()));
-        (*table)(i, 6).cNoiDung(float_string((*qLPhong)[vT].lNuocCSDT()));
-        (*table)(i, 7).cNoiDung(float_string((*qLPhong)[vT].lNuocCSCT()));
-        if ((*qLPhong)[vT].daNopTienDN())
-            (*table)(i, 11).cNoiDung("Rồi");
+            vTriDanhSach = vTriBang - 1;
+
+        (*table)(vTriBang, 0).cNoiDung(to_string(vTriBang));
+        (*table)(vTriBang, 1).cNoiDung((*qLPhong)[vTriDanhSach].lMaPhong());
+        (*table)(vTriBang, 2).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lDienCSDT()));
+        (*table)(vTriBang, 3).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lDienCSCT()));
+        (*table)(vTriBang, 6).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lNuocCSDT()));
+        (*table)(vTriBang, 7).cNoiDung(float_string((*qLPhong)[vTriDanhSach].lNuocCSCT()));
+        capNhatTinhToan(vTriBang, vTriDanhSach);
+        if ((*qLPhong)[vTriDanhSach].daNopTienDN())
+            (*table)(vTriBang, 11).cNoiDung("Rồi");
         else
-            (*table)(i, 11).cNoiDung("Chưa");
+            (*table)(vTriBang, 11).cNoiDung("Chưa");
     }
-    table->cMauTheoHang(0, MAU_LA_CAY);
-    for (int i = 1; i <= sohangBD; i++)
+}
+void gDDienNuoc::veKhoiTao()
+{
+    // tạo thanh điện nước
+    thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 36});
+    thanhDienNuoc->cKieuChu(font28, 26);
+    thanhDienNuoc->cMauTheoHang(0, MAU_XANH);
+    thanhDienNuoc->cCot(0, 60);  // stt
+    thanhDienNuoc->cCot(1, 120); // phong
+    thanhDienNuoc->cCot(2, 490);
+    thanhDienNuoc->cCot(3, 490);
+    thanhDienNuoc->cCot(4, 200);
+    thanhDienNuoc->cCot(5, 100);
+
+    (*thanhDienNuoc)(0, 0).cNoiDung("STT");
+    (*thanhDienNuoc)(0, 1).cNoiDung("Phòng");
+    (*thanhDienNuoc)(0, 2).cNoiDung("Điện");
+    (*thanhDienNuoc)(0, 3).cNoiDung("Nước");
+    (*thanhDienNuoc)(0, 4).cNoiDung("Tổng nộp");
+    (*thanhDienNuoc)(0, 5).cNoiDung("Đã nộp");
+
+    int soDongToiDA = 10000;
+    viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
+    flagTimKiem = false;
+    chuoiTimSoSanh = "";
+    //{vị trí}, số cột, số dòng + tiêu đề, {kích cở mặt định của các ô} / 12 cot
+    table = new Bang({10, 236}, 12, soDongToiDA + 1, {250, 36});
+    table->cTieuDe(true);
+    table->cFlagCuon(true);
+    table->cGianHangCot(3, 0);
+    table->cKieuChu(font28, 26);
+    table->cGioHanBD(table->lViTri().y, GetScreenHeight()); // đặt giới hạn vì không thể vẽ hết tất các các ô, nếu vẽ hêt tức những ô ra ngoài vùng cửa sổ vũng vẽ => dư thừa và hiệu suất kém
+
+    // Thiết lập tiêu đề cho 13 cột
+    (*table)(0, 2).cNoiDung("CSDT");
+    (*table)(0, 3).cNoiDung("CSCT");
+    (*table)(0, 4).cNoiDung("Lương TT");
+    (*table)(0, 5).cNoiDung("T.Tiền");
+    (*table)(0, 6).cNoiDung("CSDT");
+    (*table)(0, 7).cNoiDung("CSCT");
+    (*table)(0, 8).cNoiDung("Lượng TT");
+    (*table)(0, 9).cNoiDung("T.Tiền");
+
+    // Thiết lập chiều rộng cho 13 cột
+    table->cCot(0, 60);   // STT
+    table->cCot(1, 120);  // Phòng
+    table->cCot(2, 110);  // CSDT
+    table->cCot(3, 110);  // CSCT
+    table->cCot(4, 120);  // Lương TT
+    table->cCot(5, 150);  // T.Tiền
+    table->cCot(6, 110);  // CSDT
+    table->cCot(7, 110);  // CSCT
+    table->cCot(8, 120);  // Lượng TT
+    table->cCot(9, 150);  // T.Tiền
+    table->cCot(10, 200); // Tổng Nộp
+    table->cCot(11, 100); // Đã Nộp
+
+    // thiết lập ô chỉ nhập số
+    for (int i = 0; i < soDongToiDA; i++)
     {
-        if (i % 2 == 0)
-            table->cMauTheoHang(i, {135, 206, 235, 255});
-        else
-            table->cMauTheoHang(i, {173, 216, 230, 255});
+        (*table)(i, 2).cChiNhapSo(true);
+        (*table)(i, 3).cChiNhapSo(true);
+        (*table)(i, 6).cChiNhapSo(true);
+        (*table)(i, 7).cChiNhapSo(true);
     }
+    capNhatThuTu();
+    // hộp xóa
+    boxXoaHet = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
+    (*boxXoaHet).cKieuChu(font28);
+    (*boxXoaHet).cCoChu(26);
+    (*boxXoaHet).cDoDayVien(3);
+
+    boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
+    (*boxTimKiem).cKieuChu(font28);
+    (*boxTimKiem).cCoChu(26);
+    (*boxTimKiem).cDoDayVien(3);
 }

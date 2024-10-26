@@ -20,7 +20,8 @@ private:
     QuanLy<SinhVien> *qLSV;
     QuanLy<Phong> *qLPhong;
     giaoDien *gDHienThi;
-
+    QuanLy<QuanLy<string>> heThong; // lưu giá tiền điện / tiền nước / bật tiền điện tiền, biến hệ thông...
+    
     Bang *thanhChuyen;
 
 public:

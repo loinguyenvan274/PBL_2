@@ -6,7 +6,6 @@ path_lib = ./lib
 lInclude = -lraylib -lwinmm -lgdi32 -lopengl32
 path_build = ./build/index.exe
 
-
 compile:
 	$(cc) -g  $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
 	$(path_build)
@@ -16,3 +15,6 @@ git_push:
 	git add .
 	git commit -m "m"
 	git push
+t:
+	g++ ./test/main.cpp -o ./test/main
+	./test/main
