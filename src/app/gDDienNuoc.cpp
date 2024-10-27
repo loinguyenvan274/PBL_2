@@ -418,4 +418,7 @@ void gDDienNuoc::veKhoiTao()
     nutTat = hop({0, 0, 60, 40}, YELLOW);
 
     BangSetGiaTienDien = nullptr;
+
+    boxXuatFile = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f - 40, 560, 60}, "         Thiết lập lại tất cả");
+    boxXuatFile.cKieuChu(font28);
 }

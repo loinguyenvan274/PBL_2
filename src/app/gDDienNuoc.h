@@ -17,6 +17,7 @@ private:
     hopChu boxSetGiaTien;
     hop nutTat; // tắt ô cửa sổ con
     Bang *BangSetGiaTienDien;
+    hopChu boxXuatFile;
 
     int mucBacDien[6];
     double giaTienDien[6]; // theo các tính tiền điện của bậc điện (tiền điện được tính theo 6 bật)
