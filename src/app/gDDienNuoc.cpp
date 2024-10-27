@@ -1,5 +1,5 @@
 #include "gDDienNuoc.h"
-
+#include "tinyfiledialogs.h"
 enum cotBang
 {
     C_STT,
@@ -40,6 +40,36 @@ void gDDienNuoc::initDienNuoc()
     }
     giaTienNuoc = stod((*heThong)[hGiaNuoc][0]);
 }
+void gDDienNuoc::XuatFile()
+{
+    const char *filters[] = {"*.txt", "*.cpp", "*.h", 0};
+    const char *tenMatDinh = "Tien_Dien_Nuoc.txt";
+    const char *tieuDe = "Lưu file";
+    char *duongDan = tinyfd_saveFileDialog(tieuDe, tenMatDinh, 1, filters, NULL);
+    if (duongDan != NULL)
+    {
+        ghiFileVaoDiaChi(duongDan);
+    }
+}
+void gDDienNuoc::ghiFileVaoDiaChi(const char *duongDan)
+{
+    ofstream ghiFile(duongDan, ios::out);
+
+    cout << duongDan;
+    ghiFile << "\t\t\tBan Kí túc xá xin Thông báo Tiền điện nước\n\n";
+
+    for (int i = 0; i <= sohangBD; i++)
+    {
+        for (int j = 0; j < 12; j++)
+        {
+            ghiFile << (*table)(i, j).layChu() << "\t";
+        }
+        ghiFile << "\n";
+    }
+
+    ghiFile.close();
+}
+
 void gDDienNuoc::capNhatTT()
 {
 
@@ -60,6 +90,13 @@ void gDDienNuoc::capNhatTT()
     }
     if (boxSetGiaTien.laRangBuoc())
         cSTLGiaTienCapNhatTT();
+
+    boxXuatFile.capNhatTT();
+    if (boxXuatFile.laDuocChon())
+    {
+        XuatFile();
+        boxXuatFile.cTrangThaiChon(false);
+    }
 
     boxTimKiem->capNhatTT();
     if (boxTimKiem->laDuocChon() && !flagTimKiem)
@@ -94,7 +131,9 @@ void gDDienNuoc::bieuDien()
     thanhDienNuoc->bieuDien(0, 0, 0, 5);
     boxTimKiem->bieuDien();
     boxReset->bieuDien();
+    boxXuatFile.bieuDien();
     boxSetGiaTien.bieuDien();
+
     if (boxReset->laRangBuoc())
         cSResetBieuDien();
     if (boxSetGiaTien.laRangBuoc())
@@ -419,6 +458,6 @@ void gDDienNuoc::veKhoiTao()
 
     BangSetGiaTienDien = nullptr;
 
-    boxXuatFile = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f - 40, 560, 60}, "         Thiết lập lại tất cả");
+    boxXuatFile = hopChu({800, 134, 210, 40}, " Xuất file", BLUE, YELLOW);
     boxXuatFile.cKieuChu(font28);
 }

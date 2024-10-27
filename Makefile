@@ -1,9 +1,9 @@
 #./src/utils/*.cpp
 cc = g++
-all_file_compile = ./src/main.cpp ./src/app/*.cpp ./src/utils/*.cpp
+all_file_compile = ./src/main.cpp ./src/app/*.cpp ./src/utils/*.cpp ./src/app/*.c
 path_include = ./include
 path_lib = ./lib
-lInclude = -lraylib -lwinmm -lgdi32 -lopengl32
+lInclude = -lraylib -lwinmm -lgdi32 -lopengl32 -lole32 -lcomdlg32
 path_build = ./build/index.exe
 
 compile:

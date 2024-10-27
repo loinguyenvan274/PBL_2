@@ -39,6 +39,9 @@ private:
 
     void kTBangNhapGia();
 
+    void XuatFile();
+    void ghiFileVaoDiaChi(const char *);
+
 public:
     gDDienNuoc(QuanLy<Phong> *, QuanLy<QuanLy<string>> &);
     void capNhatTT() override;
