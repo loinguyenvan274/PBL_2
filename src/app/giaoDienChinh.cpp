@@ -10,11 +10,11 @@ giaoDienChinh ::giaoDienChinh(QuanLy<SinhVien> *qLSinhVienDV)
 
     // table ;
 
-    int soDongToiDA = 1000;
+    int soDongToiDA = 10000;
     viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
     flagTimKiem = false;
     chuoiTimSoSanh = "";
-    
+
     table = new Bang({10, 200}, 8, soDongToiDA, {250, 36});
     table->cTieuDe(true);
     table->cFlagCuon(true);
@@ -32,8 +32,8 @@ giaoDienChinh ::giaoDienChinh(QuanLy<SinhVien> *qLSinhVienDV)
     }
     capNhatThuTu();
     // hộp xóa
-    boxThem = new hopChu({1030, 134, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK);
-    (*boxThem).cKieuChu(font28);
+    boxThem = hopChu({1030, 134, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK);
+    boxThem.cKieuChu(font28);
     boxXoa = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     (*boxXoa).cKieuChu(font28);
     boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
@@ -84,16 +84,16 @@ void giaoDienChinh::capNhatTT()
             break;
         }
     }
-    boxThem->capNhatTT();
+    boxThem.capNhatTT();
     boxXoa->capNhatTT();
     boxTimKiem->capNhatTT();
 
-    if (boxThem->laDuocChon())
+    if (boxThem.laDuocChon())
     {
         qLSV->chen(qLSV->lDCDau(), SinhVien());
         soSinhVien++;
         soDoiTuongTim++;
-        boxThem->cTrangThaiChon(false);
+        boxThem.cTrangThaiChon(false);
         capNhatThuTu();
     }
     if (boxXoa->laDuocChon())
@@ -135,13 +135,12 @@ void giaoDienChinh::bieuDien()
 
     table->bieuDien(0, 0, sohangBD, 7);
     boxTimKiem->bieuDien();
-    boxThem->bieuDien();
+    boxThem.bieuDien();
     boxXoa->bieuDien();
 }
 giaoDienChinh::~giaoDienChinh()
 {
     delete[] viTriLuu;
-    delete boxThem;
     delete boxXoa;
     delete boxTimKiem;
     delete table;

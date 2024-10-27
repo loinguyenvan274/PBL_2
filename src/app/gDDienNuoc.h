@@ -10,7 +10,7 @@ class gDDienNuoc : public giaoDien
 private:
     void capNhatThuTu();
     Bang *thanhDienNuoc;
-    hopChu *boxReset;
+    hopChu boxReset;
 
     hopChu boxResetHet;
     hopChu boxResetCoLay; // sao  chỉ số cột chỉ số điện nước tháng này làm tháng sau ;
@@ -30,7 +30,7 @@ private:
     void initDienNuoc();
     void resetCapNhatTT();
     QuanLy<QuanLy<string>> *heThong;
-    void cuaSoCon(const int &, const int &, const string &);
+    void cuaSoCon(const float &, const float &, const string &);
 
     void cSResetBieuDien();
     void cSResetCapNhatTT();

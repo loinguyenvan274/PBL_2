@@ -22,7 +22,7 @@ protected:
     int soSinhVien, soPhong;
 
     Bang *table;
-    hopChu *boxThem, *boxXoa, *boxTimKiem;
+    hopChu boxThem, *boxXoa, *boxTimKiem;
     int sohangBD;
     bool flagTimKiem;
     int *viTriLuu, soDoiTuongTim;                              // dùng để tìm kiếm

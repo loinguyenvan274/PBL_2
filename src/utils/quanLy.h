@@ -9,35 +9,6 @@
 // typedef unsigned long long size_t;
 using namespace std;
 
-struct NC
-{
-    bool nghi = true;
-    double thoiGianLam;
-    string duocPhanCong;
-};
-struct dienNuoc
-{
-    double dien;
-    double nuoc;
-};
-struct thoiGianNT
-{
-    int ngay;
-    int thang;
-};
-struct thoiGianNTN
-{
-    int ngay;
-    int thang;
-    int nam;
-};
-struct thoiGianGPG
-{
-    int gio;
-    int phut;
-    int giay;
-};
-
 template <typename T>
 class QuanLy
 {

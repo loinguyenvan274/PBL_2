@@ -76,10 +76,10 @@ void gDDienNuoc::capNhatTT()
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         cout << GetMouseY() << " ----- " << GetMouseX() << endl;
     capNhatBang();
-    boxReset->capNhatTT();
-    if (boxReset->laDuocChon())
-        boxReset->cRangBuoc(true);
-    if (boxReset->laRangBuoc())
+    boxReset.capNhatTT();
+    if (boxReset.laDuocChon())
+        boxReset.cRangBuoc(true);
+    if (boxReset.laRangBuoc())
         cSResetCapNhatTT();
 
     boxSetGiaTien.capNhatTT();
@@ -130,11 +130,11 @@ void gDDienNuoc::bieuDien()
     table->bieuDien(0, 0, sohangBD, 11);
     thanhDienNuoc->bieuDien(0, 0, 0, 5);
     boxTimKiem->bieuDien();
-    boxReset->bieuDien();
+    boxReset.bieuDien();
     boxXuatFile.bieuDien();
     boxSetGiaTien.bieuDien();
 
-    if (boxReset->laRangBuoc())
+    if (boxReset.laRangBuoc())
         cSResetBieuDien();
     if (boxSetGiaTien.laRangBuoc())
         cSTLGiaTienBieuDien();
@@ -286,7 +286,7 @@ void gDDienNuoc::resetCapNhatTT()
     }
 }
 // tạo ra của sổ nhỏ phái sau tái sử dụng cho nhiều mục khác
-void gDDienNuoc::cuaSoCon(const int &chieuDai, const int &chieuRong, const string &tenTieuDe)
+void gDDienNuoc::cuaSoCon(const float &chieuDai, const float &chieuRong, const string &tenTieuDe)
 {
     hopChu tieuDe({(GetScreenWidth() - chieuDai) / 2.0f, (GetScreenHeight() - chieuRong) / 2.0f, chieuDai, nutTat.layKichCo().y}, tenTieuDe, MAU_XANH);
     nutTat.cVitri((GetScreenWidth() - chieuDai) / 2.0f + chieuDai - nutTat.layKichCo().x, (GetScreenHeight() - chieuRong) / 2.0f);
@@ -310,7 +310,7 @@ void gDDienNuoc::cSResetCapNhatTT()
     nutTat.capNhatTT();
     if (nutTat.laDuocChon())
     {
-        boxReset->cRangBuoc(false);
+        boxReset.cRangBuoc(false);
     }
 }
 void gDDienNuoc::cSTLGiaTienBieuDien()
@@ -439,8 +439,8 @@ void gDDienNuoc::veKhoiTao()
     table->cMauTheoHang(0, MAU_LA_CAY);
     capNhatThuTu();
     // hộp xóa
-    boxReset = new hopChu({1260, 134, 210, 40}, "         Thiết lập lại", RED, YELLOW);
-    (*boxReset).cKieuChu(font28);
+    boxReset = hopChu({1260, 134, 210, 40}, "         Thiết lập lại", RED, YELLOW);
+    boxReset.cKieuChu(font28);
 
     boxSetGiaTien = hopChu({1030, 134, 210, 40}, "Giá điện nước", BLUE, YELLOW);
     boxSetGiaTien.cKieuChu(font28);
@@ -454,7 +454,7 @@ void gDDienNuoc::veKhoiTao()
     boxResetCoLay = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f + 70, 560, 60}, "        Giữ cột CSCT và chuyển sang CSDT");
     boxResetCoLay.cKieuChu(font28);
 
-    nutTat = hop({0, 0, 60, 40}, YELLOW);
+    nutTat = hop({0, 0, 60, 30}, RED);
 
     BangSetGiaTienDien = nullptr;
 

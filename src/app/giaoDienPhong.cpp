@@ -41,20 +41,14 @@ giaoDienPhong ::giaoDienPhong(QuanLy<Phong> *qLPhongDV)
     }
     capNhatThuTu();
     // hộp xóa
-    boxThem = new hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
-    (*boxThem).cKieuChu(font28);
-    (*boxThem).cCoChu(26);
-    (*boxThem).cDoDayVien(3);
+    boxThem = hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
+    boxThem.cKieuChu(font28);
 
     boxXoa = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     (*boxXoa).cKieuChu(font28);
-    (*boxXoa).cCoChu(26);
-    (*boxXoa).cDoDayVien(3);
 
     boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
     (*boxTimKiem).cKieuChu(font28);
-    (*boxTimKiem).cCoChu(26);
-    (*boxTimKiem).cDoDayVien(3);
 }
 void giaoDienPhong::capNhatTT()
 {
@@ -103,16 +97,16 @@ void giaoDienPhong::capNhatTT()
             break;
         }
     }
-    boxThem->capNhatTT();
+    boxThem.capNhatTT();
     boxXoa->capNhatTT();
     boxTimKiem->capNhatTT();
 
-    if (boxThem->laDuocChon())
+    if (boxThem.laDuocChon())
     {
         qLPhong->chen(qLPhong->lDCDau(), Phong());
         soPhong++;
         soDoiTuongTim++;
-        boxThem->cTrangThaiChon(false);
+        boxThem.cTrangThaiChon(false);
         capNhatThuTu();
     }
     if (boxXoa->laDuocChon())
@@ -153,7 +147,7 @@ void giaoDienPhong::bieuDien()
 {
     table->bieuDien(0, 0, sohangBD, 5);
     boxTimKiem->bieuDien();
-    boxThem->bieuDien();
+    boxThem.bieuDien();
     boxXoa->bieuDien();
 }
 // void giaoDienPhong::luuDuLieu() const
@@ -170,7 +164,6 @@ void giaoDienPhong::bieuDien()
 giaoDienPhong::~giaoDienPhong()
 {
     delete[] viTriLuu;
-    delete boxThem;
     delete boxXoa;
     delete boxTimKiem;
     delete table;
