@@ -13,6 +13,7 @@
 #define MAU_XANH {65, 105, 225, 255}
 #define MAU_LA_CAY {0, 128, 128, 255}
 #define MAU_DEN_MO {255,255,255,80}
+
 class giaoDien
 {
 protected:

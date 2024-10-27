@@ -64,7 +64,7 @@ int main()
     QuanLy<SinhVien> sinhVienKTX = layDuLieu<SinhVien>(dDFileSinhVien);
     QuanLy<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
 
-    runApp(sinhVienKTX, phongKTX); // chạy chương trình đồ họa
+    runApp(sinhVienKTX, phongKTX); 
 
     luuDuLieu(dDFileSinhVien, sinhVienKTX);
     luuDuLieu(dDFilePhong, phongKTX);

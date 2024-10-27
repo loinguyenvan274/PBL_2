@@ -16,6 +16,10 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLy<SinhVien> *qLSVDV, QuanLy<Phong> *qLPhongD
     thanhChuyen = new Bang({0, 0}, 5, 1, {250, 36});
     thanhChuyen->cKieuChu(giaoDien::font28, 26);
 
+    oSinhVien.cDoBoVien(0.2);
+    oPhong.cDoBoVien(0.2);
+    oDienNuoc.cDoBoVien(0.2);
+
     oSinhVien.cNoiDung("          Sinh viên");
     oPhong.cNoiDung("          Phòng");
     oDienNuoc.cNoiDung("          Điện nước");
@@ -30,7 +34,7 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLy<SinhVien> *qLSVDV, QuanLy<Phong> *qLPhongD
 }
 void quanLyGiaoDien::bieuDien()
 {
-    thanhChuyen->bieuDien(0, 0, 0, 4);
+    thanhChuyen->bieuDien(0, 0, 0, 2);
     gDHienThi->bieuDien(); // Truy cập con trỏ
 }
 void quanLyGiaoDien::capNhatTT()
@@ -69,7 +73,7 @@ void quanLyGiaoDien::capNhatTT()
         }
         flagGD = flagGDMoi;
     }
-    thanhChuyen->vungHoatDong(0, 0, 0, 4);
+    thanhChuyen->vungHoatDong(0, 0, 0, 2);
     gDHienThi->capNhatTT(); // Truy cập con trỏ
 }
 void quanLyGiaoDien::xoa()
