@@ -14,7 +14,7 @@ giaoDienChinh ::giaoDienChinh(QuanLy<SinhVien> *qLSinhVienDV)
     viTriLuu = new int[soDongToiDA]; // dùng để tìm kiếm
     flagTimKiem = false;
     chuoiTimSoSanh = "";
-
+    
     table = new Bang({10, 200}, 8, soDongToiDA, {250, 36});
     table->cTieuDe(true);
     table->cFlagCuon(true);
@@ -22,41 +22,25 @@ giaoDienChinh ::giaoDienChinh(QuanLy<SinhVien> *qLSinhVienDV)
     table->cKieuChu(font28, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight());
 
-    (*table)(0, 0).cNoiDung("STT");
-    (*table)(0, 1).cNoiDung("Họ và tên");
-    (*table)(0, 2).cNoiDung("Ngày sinh");
-    (*table)(0, 3).cNoiDung("MSV");
-    (*table)(0, 4).cNoiDung("Ngày ở");
-    (*table)(0, 5).cNoiDung("Số Tháng");
-    (*table)(0, 6).cNoiDung("Mã phòng");
-    (*table)(0, 7).cNoiDung("Xóa");
-
-    table->cCot(0, 60);
-    table->cCot(1, 280);
-    table->cCot(2, 250);
-    table->cCot(3, 200);
-    table->cCot(4, 210);
-    table->cCot(5, 160);
-    table->cCot(6, 240);
-    table->cCot(7, 60);
+    const string tieuDe[] = {"STT", "Họ và tên", "Ngày sinh", "MSV", "Ngày ở", "Số Tháng", "Mã phòng", "Xóa"};
+    const int doDai[] = {60, 280, 250, 200, 210, 160, 240, 60};
+    // Đặt nội dung  và chiều dài cho các cột
+    for (int i = 0; i < 8; ++i)
+    {
+        (*table)(0, i).cNoiDung(tieuDe[i]);
+        table->cCot(i, doDai[i]);
+    }
     capNhatThuTu();
     // hộp xóa
     boxThem = new hopChu({1030, 134, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK);
     (*boxThem).cKieuChu(font28);
-    (*boxThem).cCoChu(26);
-    (*boxThem).cDoDayVien(3);
     boxXoa = new hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     (*boxXoa).cKieuChu(font28);
-    (*boxXoa).cCoChu(26);
-    (*boxXoa).cDoDayVien(3);
     boxTimKiem = new hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
     (*boxTimKiem).cKieuChu(font28);
-    (*boxTimKiem).cCoChu(26);
-    (*boxTimKiem).cDoDayVien(3);
 }
 void giaoDienChinh::capNhatTT()
 {
-
     // check
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         cout << GetMouseY() << "  ---  " << GetMouseX() << endl;
@@ -154,21 +138,8 @@ void giaoDienChinh::bieuDien()
     boxThem->bieuDien();
     boxXoa->bieuDien();
 }
-// void giaoDienChinh::luuDuLieu() const
-// {
-//     docGhiFile docGhi("data/sinhVien.csv");
-//     QuanLy<QuanLy<string>> dSSVBK((*qLSV).lSoPhanTu());
-//     for (int i = 0; i < (*qLSV).lSoPhanTu(); i++)
-//     {
-//         dSSVBK[i] = (*qLSV)[i].lThongTin();
-//     }
-
-//     docGhi.ghiData(dSSVBK);
-// }
 giaoDienChinh::~giaoDienChinh()
 {
-    // luuDuLieu();
-
     delete[] viTriLuu;
     delete boxThem;
     delete boxXoa;

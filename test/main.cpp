@@ -1,52 +1,39 @@
-#include "../include/raylib.h"
-#include <iostream>
-using namespace std;
-int main(void)
+#include "raylib.h"
+
+int main()
 {
-    // Khởi tạo cửa sổ
-    InitWindow(800, 600, "Màng phủ màu với RGB");
+    const int screenWidth = 800;
+    const int screenHeight = 600;
+    InitWindow(screenWidth, screenHeight, "Gán hình ảnh với chiều rộng cố định");
 
-    // Biến màu cho lớp phủ
-    Color overlayColor = (Color){255, 0, 0, 128}; // Màu đỏ trong suốt
+    // Tải ảnh từ file
+    Texture2D texture = LoadTexture("./test/close.png");
 
-    // Biến để lưu giá trị RGB
-    int r = 255, g = 0, b = 0, mm = 0; // Mặc định màu đỏ
+    // Đặt chiều rộng cố định cho ô
+    float fixedWidth = 20;                                    // Chiều rộng mong muốn cho ô
+    float aspectRatio = (float)texture.height / texture.width; // Tỷ lệ chiều cao / chiều rộng của ảnh
+
+    // Tính chiều cao tự khớp với tỷ lệ
+    float calculatedHeight = fixedWidth * aspectRatio;
+
+    // Định nghĩa vùng đích
+    Rectangle targetRect = {100, 100, fixedWidth, calculatedHeight}; // Ô với chiều rộng cố định và chiều cao tự khớp
 
     while (!WindowShouldClose())
     {
-        // Kiểm tra phím để thay đổi giá trị RGB
-        if (IsKeyPressed(KEY_R))
-            r = (r + 2) % 256; // Tăng giá trị đỏ
-        if (IsKeyPressed(KEY_G))
-            g = (g + 2) % 256; // Tăng giá trị xanh
-        if (IsKeyPressed(KEY_B))
-            b = (b + 2) % 256; // Tăng giá trị
-        if (IsKeyPressed(KEY_M))
-            mm = (mm + 2) % 256; // Tăng giá trị lam
-        if (IsKeyPressed(KEY_N))
-            cout << r << " " << g << " " << b << " " << mm << endl;
-        // Cập nhật màu lớp phủ với kiểu chuyển đổi
-        overlayColor = (Color){(unsigned char)r, (unsigned char)g, (unsigned char)b, 128}; // Độ trong suốt 128
-
-        // Bắt đầu vẽ
         BeginDrawing();
-        ClearBackground(RAYWHITE); // Làm sạch nền
+        ClearBackground(RAYWHITE);
 
-        // Vẽ nhiều hình chữ nhật với màu khác nhau
-        for (int i = 0; i < 5; i++)
-        {
-            DrawRectangle(100, 100 + i * 80, 600, 70, (Color){0, 0, (unsigned char)(i * 50), mm});
-        }
-
-        // Vẽ lớp phủ màu
-        DrawRectangle(100, 100, 600, 400, overlayColor);
-
-        DrawText("Nhấn R, G, B để thay đổi màu lớp phủ", 100, 20, 20, DARKGRAY);
+        // Vẽ ảnh vào ô
+        DrawTexturePro(texture,
+                       (Rectangle){0, 0, texture.width, texture.height}, // Kích thước nguồn (toàn bộ ảnh)
+                       targetRect,                                       // Kích thước đích (ô với chiều rộng cố định)
+                       (Vector2){0, 0}, 0.0f, WHITE);                    // Không dịch chuyển và xoay
 
         EndDrawing();
     }
 
-    // Giải phóng tài nguyên
+    UnloadTexture(texture);
     CloseWindow();
 
     return 0;

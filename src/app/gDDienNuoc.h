@@ -16,6 +16,7 @@ private:
     hopChu boxResetCoLay; // sao  chỉ số cột chỉ số điện nước tháng này làm tháng sau ;
     hopChu boxSetGiaTien;
     hop nutTat; // tắt ô cửa sổ con
+    Bang *BangSetGiaTienDien;
 
     int mucBacDien[6];
     double giaTienDien[6]; // theo các tính tiền điện của bậc điện (tiền điện được tính theo 6 bật)
@@ -25,13 +26,17 @@ private:
     void capNhatTinhToan(const int &, const int &);
     void veKhoiTao();
     void capNhatBang();
-    void initDienNuoc(QuanLy<QuanLy<string>> &);
+    void initDienNuoc();
     void resetCapNhatTT();
     QuanLy<QuanLy<string>> *heThong;
     void cuaSoCon(const int &, const int &, const string &);
 
-    void cuaSoResetBieuDien();
-    void cuaSoResetCapNhatTT();
+    void cSResetBieuDien();
+    void cSResetCapNhatTT();
+    void cSTLGiaTienBieuDien();
+    void cSTLGiaTienCapNhatTT();
+
+    void kTBangNhapGia();
 
 public:
     gDDienNuoc(QuanLy<Phong> *, QuanLy<QuanLy<string>> &);

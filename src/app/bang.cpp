@@ -44,6 +44,9 @@ Bang::~Bang()
     }
     delete[] hop;
 }
+const int &Bang::lSoHang() const { return soHang; }
+const int &Bang ::lSoCot() const { return soCot; }
+
 void Bang::cCot(const int &cot, const double &cDai)
 {
     double doDai = cDai - hop[0][cot].layKichCo().x;

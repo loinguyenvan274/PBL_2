@@ -39,7 +39,7 @@ void khoiTaoCuaSo()
 {
     const char *tieuDeChuongTrinh = "Quản Lý Sinh Viên Ký Túc Xá [ PBL2 Nguyễn Văn Lợi 102230026 - Nguyễn Thanh Hậu 102230013 ]";
     InitWindow(1480, 880, tieuDeChuongTrinh);
-    SetWindowPosition(45, 45);
+    SetWindowPosition(400, 200);
     giaoDien::font28 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
 }
 
