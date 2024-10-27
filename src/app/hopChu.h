@@ -23,12 +23,10 @@ public:
     void cNoiDung(const string chu);
     void cMauChu(const Color &);
     void cCoChu(int);
-
     void capNhatTT();
     void cKieuChu(const Font &);
     void bieuDien();
     void cChiNhapSo(const bool &);
-
     string layChu();
 
     ~hopChu();

@@ -4,7 +4,9 @@ hop::hop(Rectangle hinhThai, Color mauNen, Color mauVien) : hinhThai(hinhThai), 
 {
     tTchon = false;
     coChuotChi = false;
-    doDayVien = 0;
+    rangBuoc = false;
+    doDayVien = 2.0;
+    doBoVien = 0;
 }
 
 hop::~hop() {}
@@ -23,10 +25,12 @@ void hop::cMauVien(const Color &mauVienDV) { mauNen = mauVienDV; }
 Vector2 hop::layViTri() { return Vector2{hinhThai.x, hinhThai.y}; }
 Vector2 hop::layKichCo() { return Vector2{hinhThai.width, hinhThai.height}; }
 void hop::cDoDayVien(float doDayDV) { doDayVien = doDayDV; }
-const bool &hop::laDuocChon()
-{
-    return tTchon;
-}
+void hop::cDoBoVien(const float &doBoVienDV) { doBoVien = doBoVienDV; };
+void hop::cRangBuoc(const bool &rangBuocDV) { rangBuoc = rangBuocDV; };
+
+const bool &hop::laDuocChon() { return tTchon; }
+const bool &hop::laRangBuoc() { return rangBuoc; }
+
 void hop::cTrangThaiChon(const bool &TTChon) { tTchon = TTChon; }
 
 void hop::bieuDien()
@@ -36,8 +40,12 @@ void hop::bieuDien()
         doDayVien = this->doDayVien;
     else
         doDayVien = 0;
-    DrawRectangle(hinhThai.x, hinhThai.y, hinhThai.width, hinhThai.height, mauVien);
-    DrawRectangle(hinhThai.x + doDayVien, hinhThai.y + doDayVien, hinhThai.width - doDayVien * 2, hinhThai.height - doDayVien * 2, mauNen);
+
+    int phanDoan = 30; // Số lượng phân đoạn cho bo góc
+    // Vẽ viền bên ngoài
+    DrawRectangleRounded((Rectangle){hinhThai.x, hinhThai.y, hinhThai.width, hinhThai.height}, doBoVien, phanDoan, mauVien);
+    // Vẽ hình chữ nhật bên trong với độ bo và trừ đi độ dày viền
+    DrawRectangleRounded((Rectangle){hinhThai.x + doDayVien, hinhThai.y + doDayVien, hinhThai.width - doDayVien * 2, hinhThai.height - doDayVien * 2}, doBoVien, phanDoan, mauNen);
 }
 void hop::capNhatTT()
 {
