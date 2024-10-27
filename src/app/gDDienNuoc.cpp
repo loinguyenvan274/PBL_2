@@ -60,7 +60,7 @@ void gDDienNuoc::ghiFileVaoDiaChi(const char *duongDan)
 
     for (int i = 0; i <= sohangBD; i++)
     {
-        for (int j = 0; j < 12; j++)
+        for (int j = 0; j < 11; j++)
         {
             ghiFile << (*table)(i, j).layChu() << "\t";
         }
