@@ -77,7 +77,7 @@ void giaoDienChinh::capNhatDanhSachSV()
     static bool flagDoiSinhVien = false;
 
     static Vector2 viTriCu = {-2, -2}; // cho số âm , và tại sao không -1 -1 đi thì -1 -1 là giá trị ô không hoạt đông bên kia trả về
-    if ((viTriCu.x != dCLay.x || viTriCu.y != dCLay.y) && flagDoiSinhVien == true)
+    if (( viTriCu.x != dCLay.x) && flagDoiSinhVien == true)
     {
         cout << "here" << endl;
         if (sinhVienCu.lMa() == "")

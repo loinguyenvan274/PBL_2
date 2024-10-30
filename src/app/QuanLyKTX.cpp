@@ -7,7 +7,7 @@ QuanLyKTX::~QuanLyKTX() {}
 bool QuanLyKTX::themSinhVien(const SinhVien &sinhVien)
 {
     SinhVien sinhVienThem = sinhVien;
-    if ("" == sinhVien.lMa() || dSSinhVien.tim(sinhVien) != KHONG_TIM_THAY)
+    if ("" == sinhVien.lMa() || dSSinhVien.tim(sinhVien) != KHONG_TIM_THAY || dSPhong.tim(Phong(sinhVien.lMaPhong())) == KHONG_TIM_THAY)
         return false;
     dSSinhVien.chen(dSSinhVien.lDCDau(), sinhVienThem);
     return true;
@@ -54,7 +54,7 @@ const Vector<Phong> QuanLyKTX::timPhongGiong(const string &chuoiCon)
 
 bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVienMoi)
 {
-    if (((sinhVienCu == sinhVienMoi) || (dSSinhVien.soPhanTuTrung(sinhVienMoi) == 0) && sinhVienMoi.lMa() != ""))
+    if ((sinhVienCu == sinhVienMoi) || (dSSinhVien.soPhanTuTrung(sinhVienMoi) == 0) && sinhVienMoi.lMa() != "" && dSPhong.tim(Phong(sinhVienMoi.lMaPhong())) != KHONG_TIM_THAY)
     {
         SinhVien *viTriSV = dSSinhVien.tim(sinhVienCu);
         if (viTriSV != nullptr)
@@ -65,6 +65,10 @@ bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVien
 }
 bool QuanLyKTX::doiPhong(const Phong &phongCu, const Phong &phongMoi)
 {
+    if (!(phongCu == phongMoi))
+    {
+        
+    }
     if (((phongCu == phongMoi) || (dSPhong.soPhanTuTrung(phongMoi) == 0) && phongMoi.lMaPhong() != ""))
     {
         Phong *viTriPhong = dSPhong.tim(phongCu);
