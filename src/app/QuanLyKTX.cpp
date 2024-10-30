@@ -81,6 +81,10 @@ void QuanLyKTX::xoaTatCaPhong()
     dSPhong.xoa(dSPhong.lDCDau(), dSPhong.lDCCuoi());
     xoaTatCaSinhVien();
 }
+const Phong *QuanLyKTX::timPhong(const string &maPhong) const
+{
+    return dSPhong.tim(Phong(maPhong));
+}
 
 const Vector<SinhVien> &QuanLyKTX::lDanhSachSinhVien() { return dSSinhVien; };
 

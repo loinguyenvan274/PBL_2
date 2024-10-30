@@ -151,12 +151,8 @@ void giaoDienPhong::capNhatTT()
 
     if (boxTimKiem.laDuocChon() && chuoiTimSoSanh != boxTimKiem.layChu())
     {
-
         chuoiTimSoSanh = boxTimKiem.layChu();
-        if (chuoiTimSoSanh == "")
-            capNhatBang(quanLyKTX.lDanhSachPhong());
-        else
-            capNhatBang(quanLyKTX.timPhongGiong(chuoiTimSoSanh));
+        capNhatBang(quanLyKTX.timPhongGiong(boxTimKiem.layChu()));
     }
 }
 void giaoDienPhong::bieuDien()

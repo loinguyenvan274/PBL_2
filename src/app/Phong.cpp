@@ -24,7 +24,13 @@ void Phong::cDienCSDT(const float &dienCSDT) { this->dienCSDT = dienCSDT; }
 void Phong::cDienCSCT(const float &dienCSCT) { this->dienCSCT = dienCSCT; }
 void Phong::cNuocCSDT(const float &nuocCSDT) { this->nuocCSDT = nuocCSDT; }
 void Phong::cNuocCSCT(const float &nuocCSCT) { this->nuocCSCT = nuocCSCT; }
-void Phong::cNopTienDN(const bool &nopTienDN) { this->nopTienDN = nopTienDN; }
+void Phong::cNopTienDN()
+{
+    if (this->nopTienDN)
+        this->nopTienDN = false;
+    else
+        this->nopTienDN = true;
+}
 
 Vector<string> Phong::lThongTin()
 {
@@ -81,5 +87,10 @@ Phong &Phong::operator=(const Phong &phong1)
     moTa = phong1.moTa;
     soNguoiHienTai = phong1.soNguoiHienTai;
     soNguoiToiDa = phong1.soNguoiToiDa;
+    dienCSCT = phong1.dienCSCT;
+    dienCSDT = phong1.dienCSDT;
+    nuocCSCT = phong1.nuocCSCT;
+    nuocCSDT = phong1.nuocCSDT;
+    nopTienDN = phong1.nopTienDN;
     return *this;
 }

@@ -25,7 +25,7 @@ public:
     const SinhVien &timSinhVien(const string &);
     const Vector<SinhVien> timSinhVienGiong(const string &);
     const Vector<Phong> timPhongGiong(const string &);
-    const Phong &timPhong(const string &);
+    const Phong *timPhong(const string &) const;
     const Vector<Phong> &lDanhSachPhong();
     const Vector<SinhVien> &lDanhSachSinhVien();
     const Vector<SinhVien> lSinhVien();

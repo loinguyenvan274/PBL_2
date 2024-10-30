@@ -35,7 +35,7 @@ public:
     void cDienCSCT(const float &);
     void cNuocCSDT(const float &);
     void cNuocCSCT(const float &);
-    void cNopTienDN(const bool &);
+    void cNopTienDN();
 
     // dùng danh mảng chứa các dữ liệu để cập nhật
     void cThongTin(const Vector<string> &);

@@ -72,8 +72,11 @@ void gDDienNuoc::capNhatTT()
 
     // if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     //     cout << GetMouseY() << " ----- " << GetMouseX() << endl;
-
-    capNhatBang();
+    table->capNhatTT();
+    table->vungHoatDong(1, C_CS_DIEN_DT, sohangBD, C_CS_DIEN_CT);
+    table->vungHoatDong(1, C_CS_NUOC_DT, sohangBD, C_CS_NUOC_CT);
+    table->vungHoatDong(1, C_DA_NOP, sohangBD, C_DA_NOP);
+    capNhatDanhSach(); // cap lai nhung gi nguoi dung nhap vao vao danh sach
     // boxReset.capNhatTT();
     // if (boxReset.laDuocChon())
     //     boxReset.cRangBuoc(true);
@@ -96,32 +99,51 @@ void gDDienNuoc::capNhatTT()
     //     boxXuatFile.cTrangThaiChon(false);
     // }
 
-    // boxTimKiem.capNhatTT();
-    // if (boxTimKiem.laDuocChon() && !flagTimKiem)
-    // {
-    //     boxTimKiem.cNoiDung("");
-    //     flagTimKiem = true;
-    // }
-    // if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
-    // {
-    //     boxTimKiem.cNoiDung("          Tìm kiếm");
-    //     flagTimKiem = false;
-    // }
-    // // tìm kiếm
-    // if (boxTimKiem.laDuocChon() && chuoiTimSoSanh != boxTimKiem.layChu())
-    // {
-    //     soDoiTuongTim = 0;
-    //     chuoiTimSoSanh = boxTimKiem.layChu();
+    boxTimKiem.capNhatTT();
+    if (boxTimKiem.laDuocChon() && !flagTimKiem)
+    {
+        boxTimKiem.cNoiDung("");
+        flagTimKiem = true;
+    }
+    if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
+    {
+        boxTimKiem.cNoiDung("          Tìm kiếm");
+        flagTimKiem = false;
+    }
+    // tìm kiếm
+    if (boxTimKiem.laDuocChon() && chuoiTimSoSanh != boxTimKiem.layChu())
+    {
 
-    //     for (int i = 0; i < soPhong; i++)
-    //     {
-    //         if ((*qLPhong)[i].lMaPhong().find(boxTimKiem.layChu()) != string::npos || boxTimKiem.layChu() == "")
-    //         {
-    //             viTriLuu[soDoiTuongTim++] = i;
-    //         }
-    //     }
-    //     capNhatThuTu();
-    // }
+        chuoiTimSoSanh = boxTimKiem.layChu();
+        capNhatBang(quanLyKTX.timPhongGiong(boxTimKiem.layChu()));
+    }
+}
+void gDDienNuoc::capNhatDanhSach()
+{
+    Vector2 viTriMoi = table->oHoatDong();
+    int cot = viTriMoi.y, hang = viTriMoi.x;
+    static Vector2 viTriCu = {-2, -2};
+    if (hang != -1)
+    {
+        cout << "here";
+        Phong phongChinhSua = *quanLyKTX.timPhong((*table)(hang, C_M_PHONG).layChu());
+        phongChinhSua.cDienCSDT(stof((*table)(hang, C_CS_DIEN_DT).layChu()));
+        phongChinhSua.cDienCSCT(stof((*table)(hang, C_CS_DIEN_CT).layChu()));
+        phongChinhSua.cNuocCSDT(stof((*table)(hang, C_CS_NUOC_DT).layChu()));
+        phongChinhSua.cNuocCSCT(stof((*table)(hang, C_CS_NUOC_CT).layChu()));
+        if (cot == C_DA_NOP)
+        {
+            string daNopTien = "Rồi";
+            if (phongChinhSua.daNopTienDN())
+                daNopTien = "Chưa";
+            phongChinhSua.cNopTienDN();
+            (*table)(hang, C_DA_NOP).cNoiDung(daNopTien);
+            (*table)(hang, C_DA_NOP).cTrangThaiChon(false);
+        }
+        phongChinhSua.hienThiThongTin();
+        quanLyKTX.doiPhong(phongChinhSua, phongChinhSua); // tham số dầu chỉ cần lấy mã phòng từ đó ma phòng truy ra phòng và được gán lại  bởi tham số thứ hai
+        // viTriCu = viTriMoi;
+    }
 }
 void gDDienNuoc::bieuDien()
 {
@@ -146,8 +168,8 @@ gDDienNuoc::~gDDienNuoc()
 void gDDienNuoc::capNhatTinhToan(const int &vTriBang, const Phong &phong)
 {
     float luongDienTT, luongNuocTT, tienDien = 0, tienNuoc = 0;
-    luongDienTT = (*qLPhong)[vTriDanhSach].lDienCSCT() - (*qLPhong)[vTriDanhSach].lDienCSDT();
-    luongNuocTT = (*qLPhong)[vTriDanhSach].lNuocCSCT() - (*qLPhong)[vTriDanhSach].lNuocCSDT();
+    luongDienTT = phong.lDienCSCT() - phong.lDienCSDT();
+    luongNuocTT = phong.lNuocCSCT() - phong.lNuocCSDT();
     // chuổi có 6 chữa số tương ứng với 6 bậc điện
     if (mucBacDien[0] < luongDienTT)
     {
@@ -212,49 +234,13 @@ void gDDienNuoc::capNhatDong(const int &viTri, const Phong &phong)
     (*table)(viTri, C_DA_NOP).cNoiDung(nopTien);
     capNhatTinhToan(viTri, phong);
 }
-void gDDienNuoc::capNhatBang(const Vector<Phong> &phong)
+void gDDienNuoc::capNhatBang(const Vector<Phong> &dSPhong)
 {
-
-    //     Vector2 dCLay = table->oHoatDong();
-    //     int c = dCLay.y, h = dCLay.x, vT = h - 1;
-    //     if (flagTimKiem)
-    //         vT = viTriLuu[h - 1];
-    //     if (h != -1 && chuoiMoi != (*table)(h, c).layChu())
-    //     {
-    //         chuoiMoi = (*table)(h, c).layChu();
-    //         if (chuoiMoi == "") // nếu chuổi rổng thì cộng thêm '0' vì nếu chuổi rổng stof() sẽ không chuyển qua được gây ra lỗi
-    //             chuoiMoi += '0';
-    //         switch (c)
-    //         {
-    //         case C_CS_DIEN_DT:
-    //             (*qLPhong)[vT].cDienCSDT(stof(chuoiMoi));
-    //             break;
-    //         case C_CS_DIEN_CT:
-    //             (*qLPhong)[vT].cDienCSCT(stof(chuoiMoi));
-    //             break;
-    //         case C_CS_NUOC_DT:
-    //             (*qLPhong)[vT].cNuocCSDT(stof(chuoiMoi));
-    //             break;
-    //         case C_CS_NUOC_CT:
-    //             (*qLPhong)[vT].cNuocCSCT(stof(chuoiMoi));
-    //             break;
-    //         }
-    //         capNhatTinhToan(h, vT);
-    //     }
-    //     if (c == C_DA_NOP)
-    //     {
-    //         if ((*qLPhong)[vT].daNopTienDN())
-    //         {
-    //             (*qLPhong)[vT].cNopTienDN(false);
-    //             (*table)(h, c).cNoiDung("Chưa");
-    //         }
-    //         else
-    //         {
-    //             (*qLPhong)[vT].cNopTienDN(true);
-    //             (*table)(h, c).cNoiDung("Rồi");
-    //         }
-    //         (*table)(h, c).cTrangThaiChon(false);
-    //     }
+    sohangBD = dSPhong.lSoPhanTu();
+    for (int i = 1; i <= sohangBD; i++)
+    {
+        capNhatDong(i, dSPhong[i - 1]);
+    }
 }
 
 // void gDDienNuoc::resetCapNhatTT()
@@ -442,8 +428,7 @@ void gDDienNuoc::veKhoiTao()
     }
     table->cMauTheoHang(0, MAU_LA_CAY);
     capNhatBang(quanLyKTX.lDanhSachPhong());
-    // capNhatThuTu(); "this edit"
-    // hộp xóa
+
     boxReset = hopChu({1260, 134, 210, 40}, "         Thiết lập lại", RED, YELLOW);
     boxReset.cKieuChu(font28);
 
