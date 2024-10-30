@@ -1,7 +1,7 @@
 #include "quanLyGiaoDien.h"
 #include "giaoDienChinh.h"
 #include "giaoDienPhong.h"
-#include "gDDienNuoc.h"
+// #include "gDDienNuoc.h"
 
 #define oSinhVien (*thanhChuyen)(0, 0)
 #define oPhong (*thanhChuyen)(0, 1)
@@ -66,7 +66,7 @@ void quanLyGiaoDien::capNhatTT()
             doi(new giaoDienPhong(quanLyKTX));
             break;
         case FGD_DIEN_NUOC:
-            doi(new gDDienNuoc(quanLyKTX, heThong));
+            // doi(new gDDienNuoc(quanLyKTX, heThong));
             break;
         default:
             break;

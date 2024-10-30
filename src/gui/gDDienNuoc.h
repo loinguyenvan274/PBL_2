@@ -10,6 +10,8 @@ class gDDienNuoc : public giaoDien
 private:
     void capNhatThuTu();
     void capNhatDong(const int &, const Phong &);
+    void capNhatBang(const Vector<Phong> &);
+
     Bang *thanhDienNuoc;
     hopChu boxReset;
 
@@ -25,9 +27,8 @@ private:
     double giaTienNuoc;
     string chuoiMoi; // dùng để so sánh và cập nhật nếu có thay đổi khi nhập để gọi void capNhatTinhToan(const int &, const int &) lúc cần thiết
 
-    void capNhatTinhToan(const int &, const int &);
+    void capNhatTinhToan(const int &, const Phong &);
     void veKhoiTao();
-    void capNhatBang();
     void initDienNuoc();
     void resetCapNhatTT();
     Vector<Vector<string>> *heThong;
