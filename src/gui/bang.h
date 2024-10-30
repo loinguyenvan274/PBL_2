@@ -16,7 +16,6 @@ private:
     hopChu **hop;      // này là  cấp pháp ra nhiều hộp
     bool flagCuonBang; // là flag cuộn bản
     void cuon();       // cập nhật ví trí cuộn khi lăng con
-
 public:
     Bang(const Vector2 & = {0, 0}, const int & = 2, const int & = 2, const Vector2 & = {20, 10});
     void cKieuChu(const Font &, const int & = 26);

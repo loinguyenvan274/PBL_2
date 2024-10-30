@@ -4,7 +4,7 @@ class cuaSoCon
 {
     Bang *table;
     hop nutat;
-    QuanLy<hopChu> nutBam;
+    Vector<hopChu> nutBam;
     int chieuDai, chieuCao;
     int viTrix, viTriy;
 

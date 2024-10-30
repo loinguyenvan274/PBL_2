@@ -2,25 +2,31 @@
 #define _SINHVIEN
 #include <string>
 #include "Nguoi.h"
-#include "QuanLy.h"
+#include "Vector.h"
 class SinhVien : public Nguoi
 {
 private:
     string ngayBatDauO;
     string thoiGianO;
     string maPhong;
+    bool sinhVienHopLe;
 
 public:
     SinhVien(const string & = "", const string & = "", const string & = "");
     void cNgayBatDauO(const string &);
     void cMaPhong(const string &);
     void cThoiGianO(const string &);
-    string lNgayBatDauO();
-    string lMaPhong();
-    string lThoiGianO();
-    void bieuDien();
-    void cThongTin(const QuanLy<string> &);
-    QuanLy<string> lThongTin();
+    bool laSinhVienHopLe();
+    void cSinhVienHopLe(const bool &);
+
+    string lNgayBatDauO() const;
+    string lMaPhong() const;
+    string lThoiGianO() const;
+    void bieuDien() const;
+    void cThongTin(const Vector<string> &);
+    SinhVien &operator=(const SinhVien &);
+    Vector<string> lThongTin() const;
     ~SinhVien();
 };
+
 #endif

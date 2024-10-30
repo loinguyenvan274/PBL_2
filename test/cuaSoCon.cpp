@@ -2,7 +2,7 @@
 
 cuaSoCon::cuaSoCon(const int &chieuDai, const int &chieuCao, const int &soNut) : chieuDai(chieuDai), chieuCao(chieuCao)
 {
-    nutBam = QuanLy<hopChu>(soNut);
+    nutBam = Vector<hopChu>(soNut);
     viTrix = (GetScreenWidth() - chieuDai) / 2;
     viTriy = (GetScreenHeight() - chieuCao) / 2;
     table = nullptr;
@@ -26,10 +26,9 @@ void cuaSoCon::capNhatTT()
 }
 void cuaSoCon::bieuDien()
 {
-    
+
     if (table != nullptr)
         table->bieuDien(0, 0, table->lSoHang(), table->lSoCot());
-    
 }
 
 cuaSoCon::~cuaSoCon()

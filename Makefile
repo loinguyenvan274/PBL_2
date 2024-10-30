@@ -1,6 +1,8 @@
 #./src/utils/*.cpp
+# all_cpp_app = ./src/app/docGhiFile.cpp ./src/app/nguoi.cpp ./src/app/Phong.cpp ./src/app/sinhVien.cpp ./src/app/Vector.cpp  ./src/app/QuanLyKTX.cpp 
+all_cpp_app = ./src/app/*.cpp
 cc = g++
-all_file_compile = ./src/main.cpp ./src/app/*.cpp ./src/utils/*.cpp ./src/app/*.c
+all_file_compile = ./src/main.cpp $(all_cpp_app) ./src/gui/*.cpp ./src/gui/*.c
 path_include = ./include
 path_lib = ./lib
 lInclude = -lraylib -lwinmm -lgdi32 -lopengl32 -lole32 -lcomdlg32

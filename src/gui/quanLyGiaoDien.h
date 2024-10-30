@@ -17,14 +17,16 @@ private:
     enum flagGiaoDien flagGD;
     enum flagGiaoDien flagGDMoi;
 
-    QuanLy<SinhVien> *qLSV;
-    QuanLy<Phong> *qLPhong;
+    // Vector<SinhVien> *qLSV;
+    // Vector<Phong> *qLPhong;
+    QuanLyKTX &quanLyKTX;
+    
     giaoDien *gDHienThi;
-    QuanLy<QuanLy<string>> heThong; // lưu giá tiền điện / tiền nước / bật tiền điện tiền, biến hệ thông...
+    Vector<Vector<string>> heThong; // lưu giá tiền điện / tiền nước / bật tiền điện tiền, biến hệ thông...
     Bang *thanhChuyen;
 
 public:
-    quanLyGiaoDien(QuanLy<SinhVien> *, QuanLy<Phong> *);
+    quanLyGiaoDien(QuanLyKTX &);
     void bieuDien();
     void capNhatTT();
     void xoa();

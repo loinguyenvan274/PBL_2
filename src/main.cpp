@@ -1,5 +1,6 @@
 #include <iostream>
-#include "app/quanLyGiaoDien.h"
+#include "gui/quanLyGiaoDien.h"
+#include "app/QuanLyKTX.h"
 
 Font giaoDien::font28;
 
@@ -8,12 +9,12 @@ const char *dDFileSinhVien = "data/sinhVien.csv";
 const char *dDFilePhong = "data/Phong.csv";
 
 template <typename Type>
-QuanLy<Type> layDuLieu(const char *duongDan)
+const Vector<Type> layDuLieu(const char *duongDan)
 {
     docGhiFile docGhi(duongDan);
-    QuanLy<QuanLy<std::string>> dSDoc = docGhi.docData();
+    Vector<Vector<std::string>> dSDoc = docGhi.docData();
 
-    QuanLy<Type> qL(dSDoc.lSoPhanTu());
+    Vector<Type> qL(dSDoc.lSoPhanTu());
     for (int i = 0; i < dSDoc.lSoPhanTu(); i++)
     {
         qL[i].cThongTin(dSDoc[i]);
@@ -22,10 +23,10 @@ QuanLy<Type> layDuLieu(const char *duongDan)
 }
 
 template <typename Type>
-void luuDuLieu(const char *duongDan, const QuanLy<Type> &danhSach)
+void luuDuLieu(const char *duongDan, const Vector<Type> &danhSach)
 {
     docGhiFile docGhi(duongDan);
-    QuanLy<QuanLy<std::string>> dSGhi(danhSach.lSoPhanTu());
+    Vector<Vector<std::string>> dSGhi(danhSach.lSoPhanTu());
 
     for (int i = 0; i < dSGhi.lSoPhanTu(); i++)
     {
@@ -43,9 +44,9 @@ void khoiTaoCuaSo()
     giaoDien::font28 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
 }
 
-void runApp(QuanLy<SinhVien> &sinhVienKTX, QuanLy<Phong> &phongKTX)
+void runApp(QuanLyKTX &quanLyKTX)
 {
-    quanLyGiaoDien gD(&sinhVienKTX, &phongKTX);
+    quanLyGiaoDien gD(quanLyKTX);
 
     while (!WindowShouldClose())
     {
@@ -61,13 +62,24 @@ int main()
 {
     khoiTaoCuaSo();
 
-    QuanLy<SinhVien> sinhVienKTX = layDuLieu<SinhVien>(dDFileSinhVien);
-    QuanLy<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
+    Vector<SinhVien> sinhVienKTX = layDuLieu<SinhVien>(dDFileSinhVien);
+    Vector<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
 
-    runApp(sinhVienKTX, phongKTX); 
+    QuanLyKTX quanLyKTX;
+    for (int i = 0; i < sinhVienKTX.lSoPhanTu(); i++)
+    {
+        // cout <<  << endl;
+        quanLyKTX.themSinhVien(sinhVienKTX[i]);
+    }
+ for (int i = 0; i < phongKTX.lSoPhanTu(); i++)
+    {
+        // cout <<  << endl;
+        quanLyKTX.themPhong(phongKTX[i]);
+    }
+    runApp(quanLyKTX);
 
-    luuDuLieu(dDFileSinhVien, sinhVienKTX);
-    luuDuLieu(dDFilePhong, phongKTX);
+    luuDuLieu(dDFileSinhVien, quanLyKTX.lDanhSachSinhVien());
+    luuDuLieu(dDFilePhong, quanLyKTX.lDanhSachPhong());
 
     UnloadFont(giaoDien::font28);
     CloseWindow();

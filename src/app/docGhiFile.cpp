@@ -2,15 +2,15 @@
 
 docGhiFile::docGhiFile(const string &tenPath) : duongDan(tenPath) {}
 
-const QuanLy<QuanLy<string>> &docGhiFile::docData()
+const Vector<Vector<string>> &docGhiFile::docData()
 {
     fstream docFile(duongDan, ios::in | ios::app);
     string line;
-    QuanLy<QuanLy<string>> *dSDoiTuong = new QuanLy<QuanLy<string>>();
+    Vector<Vector<string>> *dSDoiTuong = new Vector<Vector<string>>();
 
     while (getline(docFile, line))
     {
-        QuanLy<string> doiTuong;
+        Vector<string> doiTuong;
         std::stringstream ss(line);
 
         string token;
@@ -25,7 +25,7 @@ const QuanLy<QuanLy<string>> &docGhiFile::docData()
     docFile.close();
     return *dSDoiTuong;
 }
-void docGhiFile::ghiData(const QuanLy<QuanLy<string>> &dSDoiTuong)
+void docGhiFile::ghiData(const Vector<Vector<string>> &dSDoiTuong)
 {
     fstream ghiFile(duongDan, ios::out | ios::trunc);
     size_t dong = dSDoiTuong.lSoPhanTu();

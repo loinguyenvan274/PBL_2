@@ -7,10 +7,14 @@
 class giaoDienPhong : public giaoDien
 {
 private:
-    void capNhatThuTu();
+    // void capNhatThuTu();
+    void capNhatDong(const int &, const Phong &);
+    void capNhatBang(const Vector<Phong> &);
+    Phong lPhongTuBang(const int &) const;
+    void capNhatDanhSachPhong();
 
 public:
-    giaoDienPhong(QuanLy<Phong> *);
+    giaoDienPhong(QuanLyKTX &quanLyKTX);
     void capNhatTT() override;
     void bieuDien() override;
     ~giaoDienPhong();

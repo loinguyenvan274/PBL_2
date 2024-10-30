@@ -1,50 +1,9 @@
-// QuanLy.h
-#ifndef _QUANLY
-#define _QUANLY
-
-#include <iostream>
-#include <string.h>
-#define KHONG_TIM_THAY nullptr
-
-// typedef unsigned long long size_t;
-using namespace std;
+#ifndef _VECTOR_CPP
+#define _VECTOR_CPP
+#include "Vector.h"
 
 template <typename T>
-class QuanLy
-{
-private:
-    size_t doLon;
-    size_t soPhanTu;
-    T *conTro;
-    void keoLui(const size_t &);
-    void dayToi(const size_t &);
-    void doi(T &, T &);
-    void capPhat();
-
-public:
-    QuanLy(const size_t & = 0);
-    QuanLy(const size_t &, const T &);
-    T &operator[](size_t) const;
-    T &operator=(const T &);
-    QuanLy<T> &operator=(const QuanLy<T> &);
-    const T *lDCDau() const;
-    const T *lDCCuoi() const;
-
-    size_t lDoLon() const;
-    size_t lSoPhanTu() const;
-
-    const T *tim(const T &) const;
-
-    void xoa(const T *);
-    void xoa(const size_t &);
-    void xoa(const T *, const T *);
-    void chen(const T *, const T &);
-    void them(const T &);
-    ~QuanLy();
-};
-
-template <typename T>
-QuanLy<T>::QuanLy(const size_t &doLon) : doLon(doLon), soPhanTu(doLon)
+Vector<T>::Vector(const size_t &doLon) : doLon(doLon), soPhanTu(doLon)
 {
     conTro = nullptr;
     if (this->doLon > 0)
@@ -56,7 +15,7 @@ QuanLy<T>::QuanLy(const size_t &doLon) : doLon(doLon), soPhanTu(doLon)
 }
 
 template <typename T>
-QuanLy<T>::QuanLy(const size_t &doLon, const T &gT) : doLon(doLon), soPhanTu(doLon)
+Vector<T>::Vector(const size_t &doLon, const T &gT) : doLon(doLon), soPhanTu(doLon)
 {
     conTro = new T[this->doLon];
     for (size_t i = 0; i < this->doLon; i++)
@@ -68,7 +27,7 @@ QuanLy<T>::QuanLy(const size_t &doLon, const T &gT) : doLon(doLon), soPhanTu(doL
 }
 
 template <typename T>
-T &QuanLy<T>::operator[](size_t i) const
+T &Vector<T>::operator[](size_t i) const
 {
     if (i >= soPhanTu)
         throw -1;
@@ -76,31 +35,31 @@ T &QuanLy<T>::operator[](size_t i) const
 }
 
 template <typename T>
-QuanLy<T>::~QuanLy()
+Vector<T>::~Vector()
 {
     delete[] conTro;
 }
 
 template <typename T>
-const T *QuanLy<T>::lDCDau() const
+const T *Vector<T>::lDCDau() const
 {
     return conTro;
 }
 
 template <typename T>
-const T *QuanLy<T>::lDCCuoi() const
+const T *Vector<T>::lDCCuoi() const
 {
     return conTro + soPhanTu - 1;
 }
 
 template <typename T>
-size_t QuanLy<T>::lDoLon() const { return doLon; }
+size_t Vector<T>::lDoLon() const { return doLon; }
 
 template <typename T>
-size_t QuanLy<T>::lSoPhanTu() const { return soPhanTu; }
+size_t Vector<T>::lSoPhanTu() const { return soPhanTu; }
 
 template <typename T>
-void QuanLy<T>::doi(T &phanTu_1, T &phanTu_2)
+void Vector<T>::doi(T &phanTu_1, T &phanTu_2)
 {
     T tamThoi = phanTu_1;
     phanTu_1 = phanTu_2;
@@ -108,7 +67,7 @@ void QuanLy<T>::doi(T &phanTu_1, T &phanTu_2)
 }
 
 template <typename T>
-void QuanLy<T>::capPhat()
+void Vector<T>::capPhat()
 {
     if (doLon == 0)
         doLon = 1;
@@ -125,7 +84,7 @@ void QuanLy<T>::capPhat()
 }
 
 template <typename T>
-void QuanLy<T>::keoLui(const size_t &viTri)
+void Vector<T>::keoLui(const size_t &viTri)
 {
     for (size_t i = viTri; i < soPhanTu - 1; i++)
     {
@@ -134,7 +93,7 @@ void QuanLy<T>::keoLui(const size_t &viTri)
 }
 
 template <typename T>
-void QuanLy<T>::dayToi(const size_t &viTri)
+void Vector<T>::dayToi(const size_t &viTri)
 {
     if (soPhanTu == doLon)
         capPhat();
@@ -145,7 +104,7 @@ void QuanLy<T>::dayToi(const size_t &viTri)
 }
 
 template <typename T>
-const T *QuanLy<T>::tim(const T &phanTuTim) const
+T *Vector<T>::tim(const T &phanTuTim) const
 {
     for (size_t i = 0; i < soPhanTu; i++)
     {
@@ -156,7 +115,7 @@ const T *QuanLy<T>::tim(const T &phanTuTim) const
 }
 
 template <typename T>
-void QuanLy<T>::xoa(const T *dCXoa)
+void Vector<T>::xoa(const T *dCXoa)
 {
     if (lDCDau() <= dCXoa && dCXoa <= lDCCuoi())
     {
@@ -165,7 +124,7 @@ void QuanLy<T>::xoa(const T *dCXoa)
     }
 }
 template <typename T>
-void QuanLy<T>::xoa(const size_t &viTriXoa)
+void Vector<T>::xoa(const size_t &viTriXoa)
 {
     if (0 <= viTriXoa && viTriXoa <= soPhanTu - 1)
     {
@@ -174,7 +133,7 @@ void QuanLy<T>::xoa(const size_t &viTriXoa)
     }
 }
 template <typename T>
-void QuanLy<T>::xoa(const T *dCXoaBatDau, const T *dCXoaKetThuc)
+void Vector<T>::xoa(const T *dCXoaBatDau, const T *dCXoaKetThuc)
 {
     size_t KhoangCach = dCXoaKetThuc - dCXoaBatDau + 1;
     size_t viTriBatDauX = dCXoaBatDau - lDCDau();
@@ -190,7 +149,7 @@ void QuanLy<T>::xoa(const T *dCXoaBatDau, const T *dCXoaKetThuc)
 }
 
 template <typename T>
-void QuanLy<T>::chen(const T *dCChen, const T &phanTuThem)
+void Vector<T>::chen(const T *dCChen, const T &phanTuThem)
 {
     size_t viTri = dCChen - lDCDau();
     if (soPhanTu == doLon)
@@ -200,7 +159,7 @@ void QuanLy<T>::chen(const T *dCChen, const T &phanTuThem)
     soPhanTu++;
 }
 template <typename T>
-void QuanLy<T>::them(const T &phanTuThem)
+void Vector<T>::them(const T &phanTuThem)
 {
     if (soPhanTu == doLon)
         capPhat();
@@ -209,7 +168,7 @@ void QuanLy<T>::them(const T &phanTuThem)
 }
 
 template <typename T>
-QuanLy<T> &QuanLy<T>::operator=(const QuanLy<T> &doiTuongCP)
+Vector<T> &Vector<T>::operator=(const Vector<T> &doiTuongCP)
 {
 
     size_t sPhanTuDTCP = doiTuongCP.lSoPhanTu();
@@ -223,5 +182,30 @@ QuanLy<T> &QuanLy<T>::operator=(const QuanLy<T> &doiTuongCP)
     }
     return *this;
 }
-
-#endif // _QUANLY
+template <typename T>
+Vector<T> Vector<T>::operator+(const Vector<T> &doiTuongCong) const
+{
+    Vector<T> doiTuongTraVe(soPhanTu + doiTuongCong.soPhanTu);
+    size_t j = 0;
+    for (size_t i = 0; i < soPhanTu; i++)
+    {
+        doiTuongTraVe.conTro[j++] = conTro[i];
+    }
+    for (size_t i = 0; i < doiTuongCong.soPhanTu; i++)
+    {
+        doiTuongTraVe.conTro[j++] = doiTuongCong.conTro[i];
+    }
+    return doiTuongTraVe;
+}
+template <typename T>
+size_t Vector<T>::soPhanTuTrung(const T & phanTuKiemTra) const
+{
+    size_t dem = 0;
+    for (size_t i = 0; i < soPhanTu; i++)
+    {
+        if (conTro[i] == phanTuKiemTra)
+            dem++;
+    }
+    return dem;
+}
+#endif

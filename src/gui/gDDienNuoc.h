@@ -9,6 +9,7 @@ class gDDienNuoc : public giaoDien
 {
 private:
     void capNhatThuTu();
+    void capNhatDong(const int &, const Phong &);
     Bang *thanhDienNuoc;
     hopChu boxReset;
 
@@ -29,7 +30,7 @@ private:
     void capNhatBang();
     void initDienNuoc();
     void resetCapNhatTT();
-    QuanLy<QuanLy<string>> *heThong;
+    Vector<Vector<string>> *heThong;
     void cuaSoCon(const float &, const float &, const string &);
 
     void cSResetBieuDien();
@@ -43,7 +44,7 @@ private:
     void ghiFileVaoDiaChi(const char *);
 
 public:
-    gDDienNuoc(QuanLy<Phong> *, QuanLy<QuanLy<string>> &);
+    gDDienNuoc(QuanLyKTX &, Vector<Vector<string>> &);
     void capNhatTT() override;
     void bieuDien() override;
     ~gDDienNuoc();

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include "quanLy.h"
+#include "Vector.h"
 
 using namespace std;
 class docGhiFile
@@ -13,7 +13,7 @@ class docGhiFile
 private:
 public:
     docGhiFile(const string &);
-    const QuanLy<QuanLy<string>> &docData();
-    void ghiData(const QuanLy<QuanLy<string>> &);
+    const Vector<Vector<string>> &docData();
+    void ghiData(const Vector<Vector<string>> &);
     ~docGhiFile();
 };

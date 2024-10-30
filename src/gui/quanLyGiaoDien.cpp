@@ -7,7 +7,7 @@
 #define oPhong (*thanhChuyen)(0, 1)
 #define oDienNuoc (*thanhChuyen)(0, 2)
 
-quanLyGiaoDien::quanLyGiaoDien(QuanLy<SinhVien> *qLSVDV, QuanLy<Phong> *qLPhongDV) : qLSV(qLSVDV), qLPhong(qLPhongDV)
+quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
 {
 
     docGhiFile docTep("data/heThong.csv");
@@ -60,13 +60,13 @@ void quanLyGiaoDien::capNhatTT()
         switch (flagGDMoi)
         {
         case FGD_SINH_VIEN:
-            doi(new giaoDienChinh(qLSV));
+            doi(new giaoDienChinh(quanLyKTX));
             break;
         case FGD_PHONG:
-            doi(new giaoDienPhong(qLPhong));
+            doi(new giaoDienPhong(quanLyKTX));
             break;
         case FGD_DIEN_NUOC:
-            doi(new gDDienNuoc(qLPhong, heThong));
+            doi(new gDDienNuoc(quanLyKTX, heThong));
             break;
         default:
             break;

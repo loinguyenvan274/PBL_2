@@ -1,7 +1,7 @@
 #ifndef _PHONG
 #define _PHONG
 #include <string>
-#include "QuanLy.h"
+#include "Vector.h"
 using namespace std;
 class Phong
 {
@@ -24,6 +24,8 @@ public:
     const float &lNuocCSDT() const;
     const float &lNuocCSCT() const;
     const bool &daNopTienDN() const;
+    bool operator==(const Phong &) const;
+    Phong &operator=(const Phong &);
 
     void cMaPhong(const string &);
     void cMoTa(const string &);
@@ -36,8 +38,8 @@ public:
     void cNopTienDN(const bool &);
 
     // dùng danh mảng chứa các dữ liệu để cập nhật
-    void cThongTin(const QuanLy<string> &);
-    QuanLy<string> lThongTin();
+    void cThongTin(const Vector<string> &);
+    Vector<string> lThongTin();
 
     void hienThiThongTin() const; // hiển thị thông tin ra màng hình console
 };

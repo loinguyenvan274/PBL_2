@@ -26,12 +26,12 @@ void Phong::cNuocCSDT(const float &nuocCSDT) { this->nuocCSDT = nuocCSDT; }
 void Phong::cNuocCSCT(const float &nuocCSCT) { this->nuocCSCT = nuocCSCT; }
 void Phong::cNopTienDN(const bool &nopTienDN) { this->nopTienDN = nopTienDN; }
 
-QuanLy<string> Phong::lThongTin()
+Vector<string> Phong::lThongTin()
 {
     /*
     list theo theo thứ tự :họ và tên , ngày sinh, mã ,ngày bắt đầu ỏ,thời gian ở, mã phòng
     */
-    QuanLy<string> thuocTinh(9);
+    Vector<string> thuocTinh(9);
     thuocTinh[0] = maPhong;
     thuocTinh[1] = to_string(soNguoiToiDa);
     thuocTinh[2] = to_string(soNguoiHienTai);
@@ -46,7 +46,7 @@ QuanLy<string> Phong::lThongTin()
         thuocTinh[8] = "0";
     return thuocTinh;
 }
-void Phong::cThongTin(const QuanLy<string> &thuocTinhDV)
+void Phong::cThongTin(const Vector<string> &thuocTinhDV)
 {
     maPhong = thuocTinhDV[0];
     soNguoiToiDa = stoi(thuocTinhDV[1]);
@@ -68,4 +68,18 @@ void Phong::hienThiThongTin() const
     cout << "Mo ta: " << moTa << endl;
     cout << "So nguoi toi da: " << soNguoiToiDa << endl;
     cout << "so nguoi hien tai: " << soNguoiHienTai << endl;
+}
+bool Phong::operator==(const Phong &phong1) const
+{
+    if (this->maPhong == phong1.maPhong)
+        return true;
+    return false;
+}
+Phong &Phong::operator=(const Phong &phong1)
+{
+    maPhong = phong1.maPhong;
+    moTa = phong1.moTa;
+    soNguoiHienTai = phong1.soNguoiHienTai;
+    soNguoiToiDa = phong1.soNguoiToiDa;
+    return *this;
 }
