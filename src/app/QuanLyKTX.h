@@ -23,6 +23,7 @@ public:
     void xoaPhong(const string &);
     void xoaTatCaPhong();
     void xoaTatCaSinhVien();
+    void xoaSinhVienOPhong(const string &);
     void cThonTinSinhVien(const SinhVien &);
     bool doiSinhVien(const SinhVien &, const SinhVien &);
     bool doiPhong(const Phong &, const Phong &);

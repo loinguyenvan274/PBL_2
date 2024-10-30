@@ -126,10 +126,10 @@ void gDDienNuoc::capNhatDanhSach()
     if (hang != -1)
     {
         Phong phongChinhSua = *quanLyKTX.timPhong((*table)(hang, C_M_PHONG).layChu());
-        phongChinhSua.cDienCSDT(stof((*table)(hang, C_CS_DIEN_DT).layChu()));
-        phongChinhSua.cDienCSCT(stof((*table)(hang, C_CS_DIEN_CT).layChu()));
-        phongChinhSua.cNuocCSDT(stof((*table)(hang, C_CS_NUOC_DT).layChu()));
-        phongChinhSua.cNuocCSCT(stof((*table)(hang, C_CS_NUOC_CT).layChu()));
+        phongChinhSua.cDienCSDT(stringSangFloat((*table)(hang, C_CS_DIEN_DT).layChu()));
+        phongChinhSua.cDienCSCT(stringSangFloat((*table)(hang, C_CS_DIEN_CT).layChu()));
+        phongChinhSua.cNuocCSDT(stringSangFloat((*table)(hang, C_CS_NUOC_DT).layChu()));
+        phongChinhSua.cNuocCSCT(stringSangFloat((*table)(hang, C_CS_NUOC_CT).layChu()));
         if (cot == C_DA_NOP)
         {
             string daNopTien = "Rồi";
@@ -188,11 +188,11 @@ void gDDienNuoc::capNhatTinhToan(const int &vTriBang, const Phong &phong)
         tienDien = luongDienTT * giaTienDien[0];
     }
     tienNuoc = giaTienNuoc * luongNuocTT;
-    (*table)(vTriBang, 4).cNoiDung(float_string(luongDienTT));
-    (*table)(vTriBang, 5).cNoiDung(float_string(tienDien));
-    (*table)(vTriBang, 8).cNoiDung(float_string(luongNuocTT));
-    (*table)(vTriBang, 9).cNoiDung(float_string(tienNuoc));
-    (*table)(vTriBang, 10).cNoiDung(float_string(tienNuoc + tienDien));
+    (*table)(vTriBang, 4).cNoiDung(floatSangString(luongDienTT));
+    (*table)(vTriBang, 5).cNoiDung(floatSangString(tienDien));
+    (*table)(vTriBang, 8).cNoiDung(floatSangString(luongNuocTT));
+    (*table)(vTriBang, 9).cNoiDung(floatSangString(tienNuoc));
+    (*table)(vTriBang, 10).cNoiDung(floatSangString(tienNuoc + tienDien));
 }
 void gDDienNuoc::capNhatDong(const int &viTri, const Phong &phong)
 {
@@ -201,10 +201,10 @@ void gDDienNuoc::capNhatDong(const int &viTri, const Phong &phong)
         nopTien = "Rồi";
     (*table)(viTri, C_STT).cNoiDung(to_string(viTri));
     (*table)(viTri, C_M_PHONG).cNoiDung(phong.lMaPhong());
-    (*table)(viTri, C_CS_DIEN_DT).cNoiDung(float_string(phong.lDienCSDT()));
-    (*table)(viTri, C_CS_DIEN_CT).cNoiDung(float_string(phong.lDienCSCT()));
-    (*table)(viTri, C_CS_NUOC_DT).cNoiDung(float_string(phong.lNuocCSDT()));
-    (*table)(viTri, C_CS_NUOC_CT).cNoiDung(float_string(phong.lNuocCSCT()));
+    (*table)(viTri, C_CS_DIEN_DT).cNoiDung(floatSangString(phong.lDienCSDT()));
+    (*table)(viTri, C_CS_DIEN_CT).cNoiDung(floatSangString(phong.lDienCSCT()));
+    (*table)(viTri, C_CS_NUOC_DT).cNoiDung(floatSangString(phong.lNuocCSDT()));
+    (*table)(viTri, C_CS_NUOC_CT).cNoiDung(floatSangString(phong.lNuocCSCT()));
     (*table)(viTri, C_DA_NOP).cNoiDung(nopTien);
     capNhatTinhToan(viTri, phong);
 }
@@ -279,9 +279,9 @@ void gDDienNuoc::cSTLGiaTienCapNhatTT()
     if (dCLay.x != -1)
     {
         string chuoiVuaNhap = (*BangSetGiaTienDien)(hang, cot).layChu();
-        if (chuoiVuaNhap == "") // nếu chuổi rổng thì cộng thêm '0' vì nếu chuổi rổng stof() sẽ không chuyển qua được gây ra lỗi
+        if (chuoiVuaNhap == "") // nếu chuổi rổng thì cộng thêm '0' vì nếu chuổi rổng stringSangFloat() sẽ không chuyển qua được gây ra lỗi
             chuoiVuaNhap += '0';
-        float soVuaNhap = stof(chuoiVuaNhap);
+        float soVuaNhap = stringSangFloat(chuoiVuaNhap);
         switch (int(dCLay.y))
         {
         case 1:
@@ -325,15 +325,15 @@ void gDDienNuoc::kTBangNhapGia()
         for (int i = 1; i <= 6; i++)
         {
             (*BangSetGiaTienDien)(i, 0).cNoiDung(vietVaoO + to_string(i));
-            (*BangSetGiaTienDien)(i, 1).cNoiDung(float_string(mucBacDien[i - 1]));
-            (*BangSetGiaTienDien)(i, 2).cNoiDung(float_string(giaTienDien[i - 1]));
+            (*BangSetGiaTienDien)(i, 1).cNoiDung(floatSangString(mucBacDien[i - 1]));
+            (*BangSetGiaTienDien)(i, 2).cNoiDung(floatSangString(giaTienDien[i - 1]));
             (*BangSetGiaTienDien)(i, 1).cChiNhapSo(true);
             (*BangSetGiaTienDien)(i, 2).cChiNhapSo(true);
         }
         (*BangSetGiaTienDien)(0, 1).cNoiDung("Mức bật điện");
         (*BangSetGiaTienDien)(0, 2).cNoiDung("  Giá điện");
         (*BangSetGiaTienDien)(0, 4).cNoiDung("  Giá nước");
-        (*BangSetGiaTienDien)(1, 4).cNoiDung(float_string(giaTienNuoc));
+        (*BangSetGiaTienDien)(1, 4).cNoiDung(floatSangString(giaTienNuoc));
         (*BangSetGiaTienDien)(1, 4).cMauNen(WHITE);
         (*BangSetGiaTienDien)(1, 4).cChiNhapSo(true);
     }

@@ -64,7 +64,10 @@ void giaoDienPhong::capNhatDong(const int &viTri, const Phong &phong)
 }
 Phong giaoDienPhong::lPhongTuBang(const int &viTri) const
 {
-    Phong phong((*table)(viTri, 1).layChu(), stoi((*table)(viTri, 2).layChu()), (*table)(viTri, 4).layChu());
+    string oSo = (*table)(viTri, 2).layChu();
+    if (oSo == "")
+        oSo += '0';
+    Phong phong((*table)(viTri, 1).layChu(), stoi(oSo), (*table)(viTri, 4).layChu());
     return phong;
 }
 void giaoDienPhong::capNhatDanhSachPhong()

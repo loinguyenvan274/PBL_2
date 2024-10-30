@@ -30,9 +30,11 @@ protected:
     Bang *table;
     hopChu boxThem, boxXoa, boxTimKiem;
     int sohangBD;
-    bool flagTimKiem;                                          // dùng để tìm kiếm
-    string chuoiTimSoSanh;                                     // dung để kiểm tra cập nhật tìm kiếm nếu chuổi vừa mới nhật khác chuổi vừa nảy thì sẽ tìm kiếm lại
-    const string float_string(const float &, const int & = 4); // loai bỏ số 000 dư thừa phía sau;
+    bool flagTimKiem;                                             // dùng để tìm kiếm
+    string chuoiTimSoSanh;                                        // dung để kiểm tra cập nhật tìm kiếm nếu chuổi vừa mới nhật khác chuổi vừa nảy thì sẽ tìm kiếm lại
+    const string floatSangString(const float &, const int & = 4); // loai bỏ số 000 dư thừa phía sau;
+    const float stringSangFloat(const string &);
+
 public:
     static Font font28;
     giaoDien(QuanLyKTX &);

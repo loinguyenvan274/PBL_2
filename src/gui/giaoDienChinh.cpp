@@ -83,7 +83,7 @@ void giaoDienChinh::capNhatDanhSachSV()
         if (sinhVienCu.lMa() == "")
         {
             if (!quanLyKTX.themSinhVien(sinhVien))
-                cout << "sinh Vien khong hop le" << endl;
+                cout << "sinh Vien khong hop le" << endl; // "edit"
         }
         else if (!quanLyKTX.doiSinhVien(sinhVienCu, sinhVien))
         {

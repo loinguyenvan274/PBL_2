@@ -66,19 +66,21 @@ int main()
     Vector<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
 
     QuanLyKTX quanLyKTX;
-    for (int i = 0; i < sinhVienKTX.lSoPhanTu(); i++)
-    {
-        // cout <<  << endl;
-        quanLyKTX.themSinhVien(sinhVienKTX[i]);
-    }
  for (int i = 0; i < phongKTX.lSoPhanTu(); i++)
     {
         // cout <<  << endl;
         quanLyKTX.themPhong(phongKTX[i]);
     }
+    for (int i = 0; i < sinhVienKTX.lSoPhanTu(); i++)
+    {
+        // cout <<  << endl;
+        quanLyKTX.themSinhVien(sinhVienKTX[i]);
+    }
     runApp(quanLyKTX);
 
+
     luuDuLieu(dDFileSinhVien, quanLyKTX.lDanhSachSinhVien());
+
     luuDuLieu(dDFilePhong, quanLyKTX.lDanhSachPhong());
 
     UnloadFont(giaoDien::font28);

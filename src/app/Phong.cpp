@@ -34,7 +34,7 @@ Vector<string> Phong::lThongTin()
     Vector<string> thuocTinh(9);
     thuocTinh[0] = maPhong;
     thuocTinh[1] = to_string(soNguoiToiDa);
-    thuocTinh[2] = to_string(soNguoiHienTai);
+    thuocTinh[2] = "0";
     thuocTinh[3] = moTa;
     thuocTinh[4] = to_string(dienCSDT);
     thuocTinh[5] = to_string(dienCSCT);
