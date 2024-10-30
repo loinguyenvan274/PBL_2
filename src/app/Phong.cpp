@@ -24,13 +24,7 @@ void Phong::cDienCSDT(const float &dienCSDT) { this->dienCSDT = dienCSDT; }
 void Phong::cDienCSCT(const float &dienCSCT) { this->dienCSCT = dienCSCT; }
 void Phong::cNuocCSDT(const float &nuocCSDT) { this->nuocCSDT = nuocCSDT; }
 void Phong::cNuocCSCT(const float &nuocCSCT) { this->nuocCSCT = nuocCSCT; }
-void Phong::cNopTienDN()
-{
-    if (this->nopTienDN)
-        this->nopTienDN = false;
-    else
-        this->nopTienDN = true;
-}
+void Phong::cNopTienDN(const bool &boolean) { this->nopTienDN = boolean; }
 
 Vector<string> Phong::lThongTin()
 {

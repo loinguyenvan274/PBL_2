@@ -4,7 +4,11 @@
 #include "Vector.h"
 #include "sinhVien.h"
 #include "Phong.h"
-
+enum ThietLapCSDN
+{
+    THIET_LAP_TAT_CA,
+    CHUYEN_CSCT_SANG_CSDT
+};
 class QuanLyKTX
 {
 private:
@@ -29,6 +33,7 @@ public:
     const Vector<Phong> &lDanhSachPhong();
     const Vector<SinhVien> &lDanhSachSinhVien();
     const Vector<SinhVien> lSinhVien();
+    void resetChiSoDienNuoc(ThietLapCSDN);
     ~QuanLyKTX();
 };
 

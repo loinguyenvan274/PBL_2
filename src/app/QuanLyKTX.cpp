@@ -89,3 +89,23 @@ const Phong *QuanLyKTX::timPhong(const string &maPhong) const
 const Vector<SinhVien> &QuanLyKTX::lDanhSachSinhVien() { return dSSinhVien; };
 
 const Vector<Phong> &QuanLyKTX::lDanhSachPhong() { return dSPhong; }
+
+void QuanLyKTX::resetChiSoDienNuoc(ThietLapCSDN thietLap)
+{
+    for (int i = 0; i < dSPhong.lSoPhanTu(); i++)
+    {
+        if (thietLap == CHUYEN_CSCT_SANG_CSDT)
+        {
+            dSPhong[i].cDienCSDT(dSPhong[i].lDienCSCT());
+            dSPhong[i].cNuocCSDT(dSPhong[i].lNuocCSCT());
+        }
+        else
+        {
+            dSPhong[i].cDienCSDT(0.0f);
+            dSPhong[i].cNuocCSDT(0.0f);
+        }
+        dSPhong[i].cDienCSCT(0.0f);
+        dSPhong[i].cNuocCSCT(0.0f);
+        dSPhong[i].cNopTienDN(false);
+    }
+}

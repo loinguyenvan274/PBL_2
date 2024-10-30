@@ -8,7 +8,6 @@
 class gDDienNuoc : public giaoDien
 {
 private:
-    void capNhatThuTu();
     void capNhatDong(const int &, const Phong &);
     void capNhatBang(const Vector<Phong> &);
     void capNhatDanhSach();
