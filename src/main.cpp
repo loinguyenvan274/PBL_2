@@ -52,7 +52,7 @@ void runApp(QuanLyKTX &quanLyKTX)
     {
         gD.capNhatTT();
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(Color{224, 255, 255, 255});
         gD.bieuDien();
         EndDrawing();
     }

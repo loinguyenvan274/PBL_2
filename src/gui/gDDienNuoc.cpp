@@ -232,7 +232,7 @@ void gDDienNuoc::resetCapNhatTT()
     {
         quanLyKTX.resetChiSoDienNuoc(CHUYEN_CSCT_SANG_CSDT);
         boxResetCoLay.cTrangThaiChon(false);
-    capNhatBang(quanLyKTX.lDanhSachPhong());
+        capNhatBang(quanLyKTX.lDanhSachPhong());
     }
 }
 // tạo ra của sổ nhỏ phái sau tái sử dụng cho nhiều mục khác
@@ -391,18 +391,23 @@ void gDDienNuoc::veKhoiTao()
 
     boxReset = hopChu({1260, 134, 210, 40}, "         Thiết lập lại", RED, YELLOW);
     boxReset.cKieuChu(font28);
+    boxReset.cDoBoVien(0.3f);
 
     boxSetGiaTien = hopChu({1030, 134, 210, 40}, "Giá điện nước", BLUE, YELLOW);
     boxSetGiaTien.cKieuChu(font28);
+    boxSetGiaTien.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
+    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
     boxTimKiem.cKieuChu(font28);
+    boxTimKiem.cDoBoVien(0.3f);
 
     boxResetHet = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f - 40, 560, 60}, "         Thiết lập lại tất cả");
     boxResetHet.cKieuChu(font28);
+    boxResetHet.cDoBoVien(0.3f);
 
     boxResetCoLay = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f + 70, 560, 60}, "        Giữ cột CSCT và chuyển sang CSDT");
     boxResetCoLay.cKieuChu(font28);
+    boxResetCoLay.cDoBoVien(0.3f);
 
     nutTat = hop({0, 0, 60, 30}, RED);
 
@@ -410,4 +415,5 @@ void gDDienNuoc::veKhoiTao()
 
     boxXuatFile = hopChu({800, 134, 210, 40}, " Xuất file", BLUE, YELLOW);
     boxXuatFile.cKieuChu(font28);
+    boxXuatFile.cDoBoVien(0.3f);
 }

@@ -20,6 +20,11 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     table->cGianHangCot(3, 0);
     table->cKieuChu(font28, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight());
+    table->cMauTheoHang(0, {46, 139, 87, 255});
+    for (int i = 1; i < soDongToiDa; i++)
+    {
+        table->cMauTheoHang(i, {32, 178, 170, 255});
+    }
 
     const string tieuDe[] = {"STT", "Họ và tên", "Ngày sinh", "MSV", "Ngày ở", "Số Tháng", "Mã phòng", "Xóa"};
     const int doDai[] = {60, 280, 250, 200, 210, 160, 240, 60};
@@ -33,10 +38,13 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     // hộp xóa
     boxThem = hopChu({1030, 134, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK);
     boxThem.cKieuChu(font28);
+    boxThem.cDoBoVien(0.3f);
     boxXoa = hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     boxXoa.cKieuChu(font28);
-    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
+    boxXoa.cDoBoVien(0.3f);
+    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
     boxTimKiem.cKieuChu(font28);
+    boxTimKiem.cDoBoVien(0.3f);
 }
 void giaoDienChinh::capNhatDong(const int &viTri, const SinhVien &sinhVien)
 {
@@ -77,7 +85,7 @@ void giaoDienChinh::capNhatDanhSachSV()
     static bool flagDoiSinhVien = false;
 
     static Vector2 viTriCu = {-2, -2}; // cho số âm , và tại sao không -1 -1 đi thì -1 -1 là giá trị ô không hoạt đông bên kia trả về
-    if (( viTriCu.x != dCLay.x) && flagDoiSinhVien == true)
+    if ((viTriCu.x != dCLay.x) && flagDoiSinhVien == true)
     {
         cout << "here" << endl;
         if (sinhVienCu.lMa() == "")

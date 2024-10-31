@@ -14,6 +14,11 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     table->cGianHangCot(3, 0);
     table->cKieuChu(font28, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight());
+    table->cMauTheoHang(0, {46, 139, 87, 255});
+    for (int i = 1; i < soDongToiDa; i++)
+    {
+        table->cMauTheoHang(i, {32, 178, 170, 255});
+    }
 
     (*table)(0, 0).cNoiDung("STT");
     (*table)(0, 1).cNoiDung("Phòng");
@@ -36,12 +41,15 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     // hộp xóa
     boxThem = hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
     boxThem.cKieuChu(font28);
+    boxThem.cDoBoVien(0.3f);
 
     boxXoa = hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     boxXoa.cKieuChu(font28);
+    boxXoa.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", {173, 216, 230, 255}, YELLOW, BLACK);
+    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
     boxTimKiem.cKieuChu(font28);
+    boxTimKiem.cDoBoVien(0.3f);
 }
 void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
 {

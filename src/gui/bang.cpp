@@ -115,8 +115,8 @@ void Bang::cuon()
     if (gTCuon > 0 && hop[1][0].layViTri().y > chanTren + hop[0][0].layKichCo().y + cachHang)
         gTCuon = 0;
     /* chỉnh vị trí khi cuộc nếu con trỏ nằm ở vị trí bản , có điều viết hơi ngu là tại sao ta
-    phải cập nhật cả đống đó ta chỉ cập nhật vị trí được xacs định hiển thị lên thôi mà // nhưng mà nhát quá mà thấy
-    chương trình vẫn mược nên để đó khi lào lag thì sữa :))
+    phải cập nhật cả đống đó ta chỉ cập nhật vị trí được xác định hiển thị lên thôi mà // nhưng mà nhát quá mà thấy
+    chương trình vẫn mược nên để đó khi n lag thì sữa :))
     */
     if (GetMouseX() > chanTRai && GetMouseX() < chanPhai && GetMouseY() > chanTren && GetMouseY() < chanDuoi && gTCuon != 0)
     {

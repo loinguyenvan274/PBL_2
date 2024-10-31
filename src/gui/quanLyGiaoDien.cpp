@@ -13,7 +13,7 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
     docGhiFile docTep("data/heThong.csv");
     heThong = docTep.docData();
 
-    thanhChuyen = new Bang({0, 0}, 5, 1, {250, 36});
+    thanhChuyen = new Bang({10, 5}, 5, 1, {250, 36});
     thanhChuyen->cKieuChu(giaoDien::font28, 26);
 
     oSinhVien.cDoBoVien(0.2);
@@ -34,6 +34,8 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
 }
 void quanLyGiaoDien::bieuDien()
 {
+    hop boxKhung({0, 0, GetScreenWidth(), 46}, {0, 128, 128, 255});
+    boxKhung.bieuDien();
     thanhChuyen->bieuDien(0, 0, 0, 2);
     gDHienThi->bieuDien(); // Truy cập con trỏ
 }
