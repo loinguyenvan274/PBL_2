@@ -18,9 +18,6 @@
 class giaoDien
 {
 protected:
-    Vector<SinhVien> qLSV;
-    Vector<Phong> *qLPhong;
-
     // bool flagNhap;
 
     QuanLyKTX &quanLyKTX;

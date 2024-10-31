@@ -34,7 +34,7 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
 }
 void quanLyGiaoDien::bieuDien()
 {
-    hop boxKhung({0, 0, GetScreenWidth(), 46}, {0, 128, 128, 255});
+    hop boxKhung({0, 0, float(GetScreenWidth()), 46}, {0, 128, 128, 255});
     boxKhung.bieuDien();
     thanhChuyen->bieuDien(0, 0, 0, 2);
     gDHienThi->bieuDien(); // Truy cập con trỏ

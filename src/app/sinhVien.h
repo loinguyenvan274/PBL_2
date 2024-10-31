@@ -9,7 +9,6 @@ private:
     string ngayBatDauO;
     string thoiGianO;
     string maPhong;
-    bool sinhVienHopLe;
 
 public:
     SinhVien(const string & = "", const string & = "", const string & = "");

@@ -2,11 +2,6 @@
 
 giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
 {
-
-    // qLSV = quanLyKTX.lDanhSachSinhVien();
-
-    soSinhVien = qLSV.lSoPhanTu();
-
     sohangBD = soSinhVien;
 
     // table ;

@@ -5,16 +5,13 @@ SinhVien::SinhVien(const string &hoVaTenDV, const string &maDV, const string &ng
     ngayBatDauO = "";
     maPhong = "";
     thoiGianO = "";
-    sinhVienHopLe = false;
 }
 void SinhVien::cNgayBatDauO(const string &thoiGianDV) { ngayBatDauO = thoiGianDV; }
 void SinhVien::cMaPhong(const string &maPhongDV) { maPhong = maPhongDV; }
 void SinhVien::cThoiGianO(const string &thoiGianODV) { thoiGianO = thoiGianODV; }
-void SinhVien::cSinhVienHopLe(const bool &hopLe) { sinhVienHopLe = hopLe; }
 string SinhVien::lNgayBatDauO() const { return ngayBatDauO; }
 string SinhVien::lMaPhong() const { return maPhong; }
 string SinhVien::lThoiGianO() const { return thoiGianO; }
-bool SinhVien::laSinhVienHopLe() { return sinhVienHopLe; }
 void SinhVien::bieuDien() const
 {
     cout << "Ten: " << hoVaTen << endl;
