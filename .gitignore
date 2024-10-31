@@ -1,0 +1,5 @@
+include 
+lib
+tinyfiledialogs.c
+tinyfiledialogs.h
+*.csv
