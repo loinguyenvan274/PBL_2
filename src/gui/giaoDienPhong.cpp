@@ -8,7 +8,7 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     flagTimKiem = false;
     chuoiTimSoSanh = "";
 
-    table = new Bang({10, 200}, 6, soDongToiDa + 1, {250, 36});
+    table = new Bang({10, 200}, 6, soDongToiDa + 1, {250, 42});
     table->cTieuDe(true);
     table->cFlagCuon(true);
     table->cGianHangCot(3, 0);

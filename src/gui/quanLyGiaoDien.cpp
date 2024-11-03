@@ -19,7 +19,6 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
     oSinhVien.cDoBoVien(0.2);
     oPhong.cDoBoVien(0.2);
     oDienNuoc.cDoBoVien(0.2);
-
     oSinhVien.cNoiDung("          Sinh viên");
     oPhong.cNoiDung("          Phòng");
     oDienNuoc.cNoiDung("          Điện nước");
@@ -27,6 +26,8 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
     thanhChuyen->cMauTheoHang(0, BLUE);
     thanhChuyen->cGianHangCot(0, 10);
     //
+    logoBachKhoa = LoadTexture("assets/bach_khoa.png");
+    logoKhoaCntt = LoadTexture("assets/khoa_cntt.png");
 
     flagGD = FGD_PHONG;
     flagGDMoi = FGD_SINH_VIEN;
@@ -37,6 +38,9 @@ void quanLyGiaoDien::bieuDien()
     hop boxKhung({0, 0, float(GetScreenWidth()), 46}, {0, 128, 128, 255});
     boxKhung.bieuDien();
     thanhChuyen->bieuDien(0, 0, 0, 2);
+    DrawTextureEx(logoBachKhoa, Vector2{1350, 3}, 0.0f, 0.18f, WHITE);
+    DrawTextureEx(logoKhoaCntt, Vector2{1400, 3}, 0.0f, 0.18f, WHITE);
+
     gDHienThi->bieuDien(); // Truy cập con trỏ
 }
 void quanLyGiaoDien::capNhatTT()
@@ -94,6 +98,9 @@ void quanLyGiaoDien::doi(giaoDien *gDHienThi) // Nhận con trỏ
 quanLyGiaoDien::~quanLyGiaoDien()
 {
     xoa();
+    UnloadTexture(logoKhoaCntt);
+    UnloadTexture(logoBachKhoa);
+
     docGhiFile ghiTep("data/heThong.csv");
     ghiTep.ghiData(heThong);
     delete thanhChuyen;

@@ -2,4 +2,5 @@ include
 lib
 tinyfiledialogs.c
 tinyfiledialogs.h
+data
 *.csv

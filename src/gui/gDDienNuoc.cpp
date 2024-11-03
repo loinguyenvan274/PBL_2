@@ -341,7 +341,7 @@ void gDDienNuoc::kTBangNhapGia()
 void gDDienNuoc::veKhoiTao()
 {
     // tạo thanh điện nước
-    thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 36});
+    thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 42});
     thanhDienNuoc->cKieuChu(font28, 26);
     thanhDienNuoc->cMauTheoHang(0, MAU_XANH);
 
@@ -350,7 +350,7 @@ void gDDienNuoc::veKhoiTao()
     flagTimKiem = false;
     chuoiTimSoSanh = "";
     //{vị trí}, số cột, số dòng + tiêu đề, {kích cở mặt định của các ô} / 12 cot
-    table = new Bang({10, 236}, 12, soDongToiDa, {250, 36});
+    table = new Bang({10, 236}, 12, soDongToiDa, {250, 42});
     table->cTieuDe(true);
     table->cFlagCuon(true);
     // table->cGianHangCot(0, 2);

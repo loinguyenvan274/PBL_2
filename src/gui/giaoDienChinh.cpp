@@ -9,7 +9,7 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     flagTimKiem = false;
     chuoiTimSoSanh = "";
 
-    table = new Bang({10, 200}, 8, soDongToiDa, {250, 36});
+    table = new Bang({10, 200}, 8, soDongToiDa, {250, 42});
     table->cTieuDe(true);
     table->cFlagCuon(true);
     table->cGianHangCot(3, 0);
@@ -21,7 +21,7 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
         table->cMauTheoHang(i, {32, 178, 170, 255});
     }
 
-    const string tieuDe[] = {"STT", "Họ và tên", "Ngày sinh", "MSV", "Ngày ở", "Số Tháng", "Mã phòng", "Xóa"};
+    const string tieuDe[] = {"STT", "Họ và tên", "Ngày sinh", "Mã sinh viên", "Số điện thoại", "Giới tính", "Mã phòng", "Xóa"};
     const int doDai[] = {60, 280, 250, 200, 210, 160, 240, 60};
     // Đặt nội dung  và chiều dài cho các cột
     for (int i = 0; i < 8; ++i)
@@ -47,8 +47,8 @@ void giaoDienChinh::capNhatDong(const int &viTri, const SinhVien &sinhVien)
     (*table)(viTri, 1).cNoiDung(sinhVien.lHoVaTen());
     (*table)(viTri, 2).cNoiDung(sinhVien.lngaySinh());
     (*table)(viTri, 3).cNoiDung(sinhVien.lMa());
-    (*table)(viTri, 4).cNoiDung(sinhVien.lNgayBatDauO());
-    (*table)(viTri, 5).cNoiDung(sinhVien.lThoiGianO());
+    (*table)(viTri, 4).cNoiDung(sinhVien.lSDT());
+    (*table)(viTri, 5).cNoiDung(sinhVien.lGioiTinh());
     (*table)(viTri, 6).cNoiDung(sinhVien.lMaPhong());
     (*table)(viTri, 7).cNoiDung("Xóa");
 }

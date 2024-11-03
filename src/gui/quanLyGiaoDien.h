@@ -17,10 +17,11 @@ private:
     enum flagGiaoDien flagGD;
     enum flagGiaoDien flagGDMoi;
 
-    // Vector<SinhVien> *qLSV;
-    // Vector<Phong> *qLPhong;
-    QuanLyKTX &quanLyKTX;
+    Texture2D logoBachKhoa;
+    Texture2D logoKhoaCntt;
     
+    QuanLyKTX &quanLyKTX;
+
     giaoDien *gDHienThi;
     Vector<Vector<string>> heThong; // lưu giá tiền điện / tiền nước / bật tiền điện tiền, biến hệ thông...
     Bang *thanhChuyen;

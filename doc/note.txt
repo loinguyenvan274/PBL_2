@@ -1,0 +1,4 @@
+Phân tích tình trạng sử dụng phòng và dự báo:
+
+Dự báo tỉ lệ lấp đầy phòng dựa trên xu hướng đăng ký qua các năm, giúp chuẩn bị tốt hơn cho các mùa cao điểm.
+Phân tích nhu cầu để xác định loại phòng nào phổ biến hơn, từ đó điều chỉnh bố trí phòng hoặc cải thiện cơ sở vật chất.

@@ -6,8 +6,9 @@ class Nguoi
 {
 protected:
     string hoVaTen;
-    string gioiTinh;
     string ma;
+    string sDT;
+    string gioiTinh;
     string ngaySinh;
 
 public:

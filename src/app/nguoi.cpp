@@ -1,6 +1,10 @@
 #include "Nguoi.h"
 
-Nguoi::Nguoi(const string &hoVaTenDV, const string &maDV, const string &ngaySinhDV) : hoVaTen(hoVaTenDV), ma(maDV), ngaySinh(ngaySinhDV) {}
+Nguoi::Nguoi(const string &hoVaTenDV, const string &maDV, const string &ngaySinhDV) : hoVaTen(hoVaTenDV), ma(maDV), ngaySinh(ngaySinhDV)
+{
+    sDT = "";
+    gioiTinh = "";
+}
 
 void Nguoi::cDanhTinh(const string &hoVaTenDV, const string &maDV, const string &ngaySinhDV)
 {

@@ -6,8 +6,6 @@
 class SinhVien : public Nguoi
 {
 private:
-    string ngayBatDauO;
-    string thoiGianO;
     string maPhong;
 
 public:
@@ -15,12 +13,10 @@ public:
     void cNgayBatDauO(const string &);
     void cMaPhong(const string &);
     void cThoiGianO(const string &);
-    bool laSinhVienHopLe();
-    void cSinhVienHopLe(const bool &);
 
-    string lNgayBatDauO() const;
+    string lSDT() const;
     string lMaPhong() const;
-    string lThoiGianO() const;
+    string lGioiTinh() const;
     void bieuDien() const;
     void cThongTin(const Vector<string> &);
     SinhVien &operator=(const SinhVien &);
