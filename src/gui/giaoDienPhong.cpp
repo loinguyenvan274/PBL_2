@@ -4,7 +4,7 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
 {
     sohangBD = quanLyKTX.lDanhSachPhong().lSoPhanTu();
     // table
-    int soDongToiDa = 1000;
+    int soDongToiDa = 10000;
     flagTimKiem = false;
     chuoiTimSoSanh = "";
 
