@@ -33,7 +33,7 @@ protected:
     const float stringSangFloat(const string &);
 
 public:
-    static Font font28;
+    static Font font26;
     giaoDien(QuanLyKTX &);
     virtual void capNhatTT() = 0;
     virtual void bieuDien() = 0;

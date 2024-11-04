@@ -240,7 +240,7 @@ void gDDienNuoc::cuaSoCon(const float &chieuDai, const float &chieuRong, const s
 {
     hopChu tieuDe({(GetScreenWidth() - chieuDai) / 2.0f, (GetScreenHeight() - chieuRong) / 2.0f, chieuDai, nutTat.layKichCo().y}, tenTieuDe, MAU_XANH);
     nutTat.cVitri((GetScreenWidth() - chieuDai) / 2.0f + chieuDai - nutTat.layKichCo().x, (GetScreenHeight() - chieuRong) / 2.0f);
-    tieuDe.cKieuChu(font28);
+    tieuDe.cKieuChu(font26);
 
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), MAU_DEN_MO);
     DrawRectangle((GetScreenWidth() - chieuDai) / 2.0f, (GetScreenHeight() - chieuRong) / 2.0f, chieuDai, chieuRong, MAU_LA_CAY);
@@ -315,7 +315,7 @@ void gDDienNuoc::kTBangNhapGia()
         BangSetGiaTienDien = new Bang({281, 221}, 5, 7, {180, 40});
         BangSetGiaTienDien->cGianHangCot(30, 10);
         BangSetGiaTienDien->cCot(0, 90);
-        BangSetGiaTienDien->cKieuChu(font28);
+        BangSetGiaTienDien->cKieuChu(font26);
         BangSetGiaTienDien->cMauTheoCot(0, MAU_LA_CAY);
         BangSetGiaTienDien->cMauTheoCot(3, MAU_LA_CAY);
         BangSetGiaTienDien->cMauTheoCot(4, MAU_LA_CAY);
@@ -342,10 +342,10 @@ void gDDienNuoc::veKhoiTao()
 {
     // tạo thanh điện nước
     thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 42});
-    thanhDienNuoc->cKieuChu(font28, 26);
+    thanhDienNuoc->cKieuChu(font26, 26);
     thanhDienNuoc->cMauTheoHang(0, MAU_XANH);
 
-    int soDongToiDa = 10000;
+    int soDongToiDa = quanLyKTX.lDanhSachPhong().lSoPhanTu() + 1;
 
     flagTimKiem = false;
     chuoiTimSoSanh = "";
@@ -354,7 +354,7 @@ void gDDienNuoc::veKhoiTao()
     table->cTieuDe(true);
     table->cFlagCuon(true);
     // table->cGianHangCot(0, 2);
-    table->cKieuChu(font28, 26);
+    table->cKieuChu(font26, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight()); // đặt giới hạn vì không thể vẽ hết tất các các ô, nếu vẽ hêt tức những ô ra ngoài vùng cửa sổ vũng vẽ => dư thừa và hiệu suất kém
 
     // Thiết lập tiêu đề cho bảng và thanh tiêu đề  cột
@@ -390,23 +390,23 @@ void gDDienNuoc::veKhoiTao()
     capNhatBang(quanLyKTX.lDanhSachPhong());
 
     boxReset = hopChu({1260, 134, 210, 40}, "         Thiết lập lại", RED, YELLOW);
-    boxReset.cKieuChu(font28);
+    boxReset.cKieuChu(font26);
     boxReset.cDoBoVien(0.3f);
 
     boxSetGiaTien = hopChu({1030, 134, 210, 40}, "Giá điện nước", BLUE, YELLOW);
-    boxSetGiaTien.cKieuChu(font28);
+    boxSetGiaTien.cKieuChu(font26);
     boxSetGiaTien.cDoBoVien(0.3f);
 
     boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
-    boxTimKiem.cKieuChu(font28);
+    boxTimKiem.cKieuChu(font26);
     boxTimKiem.cDoBoVien(0.3f);
 
     boxResetHet = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f - 40, 560, 60}, "         Thiết lập lại tất cả");
-    boxResetHet.cKieuChu(font28);
+    boxResetHet.cKieuChu(font26);
     boxResetHet.cDoBoVien(0.3f);
 
     boxResetCoLay = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f + 70, 560, 60}, "        Giữ cột CSCT và chuyển sang CSDT");
-    boxResetCoLay.cKieuChu(font28);
+    boxResetCoLay.cKieuChu(font26);
     boxResetCoLay.cDoBoVien(0.3f);
 
     nutTat = hop({0, 0, 60, 30}, RED);
@@ -414,6 +414,6 @@ void gDDienNuoc::veKhoiTao()
     BangSetGiaTienDien = nullptr;
 
     boxXuatFile = hopChu({800, 134, 210, 40}, " Xuất file", BLUE, YELLOW);
-    boxXuatFile.cKieuChu(font28);
+    boxXuatFile.cKieuChu(font26);
     boxXuatFile.cDoBoVien(0.3f);
 }

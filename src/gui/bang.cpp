@@ -165,8 +165,12 @@ const Vector2 Bang::lViTri() const { return viTri; }
 
 Vector2 Bang::oHoatDong()
 {
+    int vitriDongCuaO;
     for (int i = 0; i < soHang; i++)
     {
+        vitriDongCuaO = hop[i][0].layViTri().y;
+        if (vitriDongCuaO < chanTren || vitriDongCuaO > chanDuoi)
+            continue;
         for (int j = 0; j < soCot; j++)
         {
             if (hop[i][j].laDuocChon())

@@ -7,10 +7,9 @@ QuanLyKTX::~QuanLyKTX() {}
 bool QuanLyKTX::themSinhVien(const SinhVien &sinhVien)
 {
     Phong *phongChuaSinhVien = dSPhong.tim(Phong(sinhVien.lMaPhong()));
-    SinhVien sinhVienThem = sinhVien;
-    if ("" == sinhVien.lMa() || dSSinhVien.tim(sinhVien) != KHONG_TIM_THAY || dSPhong.tim(Phong(sinhVien.lMaPhong())) == KHONG_TIM_THAY || phongChuaSinhVien->lSoNguoiHienTai() >= phongChuaSinhVien->lSoNguoiToiDa())
+    if ("" == sinhVien.lMa() || dSSinhVien.tim(sinhVien) != KHONG_TIM_THAY || dSPhong.tim(Phong(sinhVien.lMaPhong())) == KHONG_TIM_THAY || phongChuaSinhVien->lSoNguoiHienTai() == phongChuaSinhVien->lSoNguoiToiDa())
         return false;
-    dSSinhVien.chen(dSSinhVien.lDCDau(), sinhVienThem);
+    dSSinhVien.chen(dSSinhVien.lDCDau(), sinhVien);
     phongChuaSinhVien->cSoNguoiHienTai(phongChuaSinhVien->lSoNguoiHienTai() + 1);
     return true;
 }
@@ -62,22 +61,46 @@ const Vector<Phong> QuanLyKTX::timPhongGiong(const string &chuoiCon)
 bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVienMoi)
 {
 
-    if ((sinhVienCu == sinhVienMoi) || (dSSinhVien.soPhanTuTrung(sinhVienMoi) == 0) && sinhVienMoi.lMa() != "" && dSPhong.tim(Phong(sinhVienMoi.lMaPhong())) != KHONG_TIM_THAY)
+    sinhVienCu.bieuDien();
+    cout << "748797832483767436743684678\n";
+    sinhVienMoi.bieuDien();
+    if (!(sinhVienCu == sinhVienMoi))
     {
-        Phong *phongSinhVienCu = dSPhong.tim(Phong(sinhVienCu.lMaPhong()));
-        Phong *phongsinhVienMoi = dSPhong.tim(Phong(sinhVienMoi.lMaPhong()));
-        if (phongsinhVienMoi->lSoNguoiHienTai() >= phongsinhVienMoi->lSoNguoiToiDa())
-            return false;
-        if (phongSinhVienCu != nullptr)
-            phongSinhVienCu->cSoNguoiHienTai(phongSinhVienCu->lSoNguoiHienTai() - 1);
-        if (phongsinhVienMoi != nullptr)
-            phongsinhVienMoi->cSoNguoiHienTai(phongsinhVienMoi->lSoNguoiHienTai() + 1);
-        SinhVien *viTriSV = dSSinhVien.tim(sinhVienCu);
-        if (viTriSV != nullptr)
-            *viTriSV = sinhVienMoi;
-        return true;
+        if (dSSinhVien.tim(sinhVienMoi) != KHONG_TIM_THAY)
+        {
+            cout << " sinh Vien Trung ma aaa;\n";
+            return false; // sinh Vien Trung ma;
+        }
+        if (sinhVienMoi.lMa() == "")
+        {
+            cout << " sinh vien khong hop le;\n";
+            return false; // sinh vien khong hop le
+        }
     }
-    return false;
+    Phong *phongsinhVienMoi = dSPhong.tim(Phong(sinhVienMoi.lMaPhong()));
+    if (sinhVienCu.lMaPhong() != sinhVienMoi.lMaPhong())
+    {
+        if (phongsinhVienMoi == KHONG_TIM_THAY)
+        {
+            cout << "Phong khong ton tai;\n";
+            return false; // phong khoong ton taij
+        }
+        if (phongsinhVienMoi->lSoNguoiHienTai() == phongsinhVienMoi->lSoNguoiToiDa())
+        {
+            cout << " phong day;\n";
+            return false; // phong da Day
+        }
+        else
+        {
+            Phong *phongSinhVienCu = dSPhong.tim(Phong(sinhVienCu.lMaPhong()));
+            phongSinhVienCu->cSoNguoiHienTai(phongSinhVienCu->lSoNguoiHienTai() - 1);
+            phongsinhVienMoi->cSoNguoiHienTai(phongsinhVienMoi->lSoNguoiHienTai() + 1);
+        }
+    }
+    SinhVien *viTriSV = dSSinhVien.tim(sinhVienCu);
+    if (viTriSV != nullptr)
+        *viTriSV = sinhVienMoi;
+    return true;
 }
 void QuanLyKTX::xoaSinhVienOPhong(const string &maPhong)
 {

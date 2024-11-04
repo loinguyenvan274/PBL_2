@@ -2,7 +2,7 @@
 #include "gui/quanLyGiaoDien.h"
 #include "app/QuanLyKTX.h"
 
-Font giaoDien::font28;
+Font giaoDien::font26;
 
 const char *dDFileFontChu = "assets/roboto.ttf";
 const char *dDFileSinhVien = "data/sinhVien.csv";
@@ -41,7 +41,7 @@ void khoiTaoCuaSo()
     const char *tieuDeChuongTrinh = "Quản Lý Sinh Viên Ký Túc Xá [ PBL2 Nguyễn Văn Lợi 102230026 - Nguyễn Thanh Hậu 102230013 ]";
     InitWindow(1480, 880, tieuDeChuongTrinh);
     SetWindowPosition(200, 200);
-    giaoDien::font28 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
+    giaoDien::font26 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
 }
 
 void runApp(QuanLyKTX &quanLyKTX)
@@ -66,7 +66,7 @@ int main()
     Vector<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
 
     QuanLyKTX quanLyKTX;
- for (int i = 0; i < phongKTX.lSoPhanTu(); i++)
+    for (int i = 0; i < phongKTX.lSoPhanTu(); i++)
     {
         // cout <<  << endl;
         quanLyKTX.themPhong(phongKTX[i]);
@@ -78,12 +78,11 @@ int main()
     }
     runApp(quanLyKTX);
 
-
     luuDuLieu(dDFileSinhVien, quanLyKTX.lDanhSachSinhVien());
 
     luuDuLieu(dDFilePhong, quanLyKTX.lDanhSachPhong());
 
-    UnloadFont(giaoDien::font28);
+    UnloadFont(giaoDien::font26);
     CloseWindow();
     return 0;
 }

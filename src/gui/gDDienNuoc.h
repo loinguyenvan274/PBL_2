@@ -43,7 +43,6 @@ private:
 
     void XuatFile();
     void ghiFileVaoDiaChi(const char *);
-
 public:
     gDDienNuoc(QuanLyKTX &, Vector<Vector<string>> &);
     void capNhatTT() override;

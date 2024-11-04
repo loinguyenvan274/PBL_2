@@ -14,7 +14,7 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
     heThong = docTep.docData();
 
     thanhChuyen = new Bang({10, 5}, 5, 1, {250, 36});
-    thanhChuyen->cKieuChu(giaoDien::font28, 26);
+    thanhChuyen->cKieuChu(giaoDien::font26, 26);
 
     oSinhVien.cDoBoVien(0.2);
     oPhong.cDoBoVien(0.2);

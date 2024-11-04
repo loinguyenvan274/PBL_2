@@ -4,15 +4,36 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
 {
     sohangBD = quanLyKTX.lDanhSachPhong().lSoPhanTu();
     // table
-    int soDongToiDa = 10000;
     flagTimKiem = false;
     chuoiTimSoSanh = "";
+    table = nullptr;
+
+    capNhatBang(quanLyKTX.lDanhSachPhong());
+    // hộp xóa
+    boxThem = hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
+    boxThem.cKieuChu(font26);
+    boxThem.cDoBoVien(0.3f);
+
+    boxXoa = hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
+    boxXoa.cKieuChu(font26);
+    boxXoa.cDoBoVien(0.3f);
+
+    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
+    boxTimKiem.cKieuChu(font26);
+    boxTimKiem.cDoBoVien(0.3f);
+
+    flagThongBaoKHL = false;
+}
+void giaoDienPhong::taoBang(const unsigned int &soDongToiDa)
+{
+    if (table != nullptr)
+        delete table;
 
     table = new Bang({10, 200}, 6, soDongToiDa + 1, {250, 42});
     table->cTieuDe(true);
     table->cFlagCuon(true);
     table->cGianHangCot(3, 0);
-    table->cKieuChu(font28, 26);
+    table->cKieuChu(font26, 26);
     table->cGioHanBD(table->lViTri().y, GetScreenHeight());
     table->cMauTheoHang(0, {46, 139, 87, 255});
     for (int i = 1; i < soDongToiDa; i++)
@@ -37,23 +58,18 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     {
         (*table)(i, 2).cChiNhapSo(true);
     }
-    capNhatBang(quanLyKTX.lDanhSachPhong());
-    // hộp xóa
-    boxThem = hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
-    boxThem.cKieuChu(font28);
-    boxThem.cDoBoVien(0.3f);
-
-    boxXoa = hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
-    boxXoa.cKieuChu(font28);
-    boxXoa.cDoBoVien(0.3f);
-
-    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
-    boxTimKiem.cKieuChu(font28);
-    boxTimKiem.cDoBoVien(0.3f);
 }
 void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
 {
     sohangBD = dSPhong.lSoPhanTu() + boxThem.laDuocChon();
+
+    static unsigned soDongBang = 0;
+    if (soDongBang < sohangBD + 1 || table == nullptr) // cong 1 la them cai tieu de;
+    {
+        soDongBang = (sohangBD + 1) * 2; // gấp đôi lê hễ thêm 1 đối tượng thôi mà phải tạo lại thì không tốt cho lắm
+        taoBang(soDongBang);
+    }
+    
     if (boxThem.laDuocChon())
         capNhatDong(1, Phong());
     for (int i = 1 + boxThem.laDuocChon(); i <= sohangBD; i++)
@@ -94,12 +110,16 @@ void giaoDienPhong::capNhatDanhSachPhong()
         if (phongCu.lMaPhong() == "")
         {
             if (!quanLyKTX.themPhong(phong))
-                cout << "sinh Vien khong hop le" << endl;
+            {
+                cout << "Phong khong hop le" << endl;
+                flagThongBaoKHL = true;
+            }
         }
         else if (!quanLyKTX.doiPhong(phongCu, phong))
         {
             cout << "sinh Vien khong hop le" << endl;
             capNhatDong(viTriCu.x, phongCu);
+            flagThongBaoKHL = true;
         }
         flagDoiPhong = false;
     }
@@ -172,6 +192,29 @@ void giaoDienPhong::bieuDien()
     boxTimKiem.bieuDien();
     boxThem.bieuDien();
     boxXoa.bieuDien();
+
+    static double thoiGianHenThongBao = 0;
+    if (flagThongBaoKHL)
+    {
+        cuaSoThongBaoKHL();
+        if (GetTime() - thoiGianHenThongBao > 5.0)
+        {
+            thoiGianHenThongBao = GetTime();
+        }
+    }
+    if (flagThongBaoKHL && (GetTime() - thoiGianHenThongBao > 4.0))
+        flagThongBaoKHL = false;
+}
+void giaoDienPhong::cuaSoThongBaoKHL()
+{
+    hop nenSauCuaSo(Rectangle{1031, 57, 439, 70}, RED);
+    hopChu chuThongBao(Rectangle{1036, 62, 429, 60}, "              Phòng không hợp lệ", WHITE);
+    chuThongBao.cKieuChu(font26);
+    nenSauCuaSo.cDoBoVien(0.3f);
+    chuThongBao.cDoBoVien(0.3f);
+
+    nenSauCuaSo.bieuDien();
+    chuThongBao.bieuDien();
 }
 
 giaoDienPhong::~giaoDienPhong()
