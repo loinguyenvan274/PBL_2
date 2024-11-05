@@ -28,12 +28,15 @@ public:
     bool doiSinhVien(const SinhVien &, const SinhVien &);
     bool doiPhong(const Phong &, const Phong &);
     const SinhVien &timSinhVien(const string &);
-    const Vector<SinhVien> timSinhVienGiong(const string &);
+    const Vector<SinhVien> timSinhVienGiong(const string &, bool (*soSanh)(const SinhVien &, const string &));
+    static bool soSanhMaSV(const SinhVien &, const string &);
+    static bool soSanhTenSV(const SinhVien &, const string &);
+    static bool soSanhMaPhongSV(const SinhVien &, const string &);
     const Vector<Phong> timPhongGiong(const string &);
     const Phong *timPhong(const string &) const;
     const Vector<Phong> &lDanhSachPhong();
     const Vector<SinhVien> &lDanhSachSinhVien();
-    const Vector<SinhVien> lSinhVien();
+
     void resetChiSoDienNuoc(ThietLapCSDN);
     ~QuanLyKTX();
 };

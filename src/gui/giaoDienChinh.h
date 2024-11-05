@@ -7,6 +7,9 @@
 class giaoDienChinh : public giaoDien
 {
 private:
+    hopChu tuyChonTimKiem;
+    unsigned int boDemMucChon; // cứ mỗi lần ấn vvaof tùy chọn tìm kiếm thì bộ đếm tăng lên 1 và ta chỉ cần % 3 là đuọc
+
     bool flagThongBaoKHL;
     void capNhatBang(const Vector<SinhVien> &);
     void capNhatDong(const int &, const SinhVien &);

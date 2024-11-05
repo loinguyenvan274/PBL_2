@@ -37,16 +37,19 @@ void QuanLyKTX::xoaPhong(const string &maPhong)
     dSPhong.xoa(dSPhong.tim(Phong(maPhong)));
     xoaSinhVienOPhong(maPhong);
 }
-const Vector<SinhVien> QuanLyKTX::timSinhVienGiong(const string &chuoiCon)
+const Vector<SinhVien> QuanLyKTX::timSinhVienGiong(const string &chuoiCon, bool (*soSanh)(const SinhVien &, const string &))
 {
     Vector<SinhVien> sinhvienDuocTim;
     for (int i = 0; i < dSSinhVien.lSoPhanTu(); i++)
     {
-        if (dSSinhVien[i].lHoVaTen().find(chuoiCon) != string::npos)
+        if (soSanh(dSSinhVien[i], chuoiCon))
             sinhvienDuocTim.them(dSSinhVien[i]);
     }
     return sinhvienDuocTim;
 }
+bool QuanLyKTX::soSanhMaSV(const SinhVien &sinhVien, const string &maSV) { return sinhVien.lMa().find(maSV) != string::npos; }
+bool QuanLyKTX::soSanhTenSV(const SinhVien &sinhVien, const string &tenSinhVien) { return sinhVien.lHoVaTen().find(tenSinhVien) != string::npos; }
+bool QuanLyKTX::soSanhMaPhongSV(const SinhVien &sinhVien, const string &phongSinhVien) { return sinhVien.lMaPhong().find(phongSinhVien) != string::npos; }
 const Vector<Phong> QuanLyKTX::timPhongGiong(const string &chuoiCon)
 {
     Vector<Phong> phongDuocTim;
@@ -60,10 +63,7 @@ const Vector<Phong> QuanLyKTX::timPhongGiong(const string &chuoiCon)
 
 bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVienMoi)
 {
-
-    sinhVienCu.bieuDien();
-    cout << "748797832483767436743684678\n";
-    sinhVienMoi.bieuDien();
+    // những cái return false này sau này có thê chỉnh sửa mới một thông báo khác chứ không phải tại sao gom lại các trường hợp cho khỏe
     if (!(sinhVienCu == sinhVienMoi))
     {
         if (dSSinhVien.tim(sinhVienMoi) != KHONG_TIM_THAY)

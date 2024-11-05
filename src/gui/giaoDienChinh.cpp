@@ -16,9 +16,15 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
     boxXoa = hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     boxXoa.cKieuChu(font26);
     boxXoa.cDoBoVien(0.3f);
-    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
+    boxTimKiem = hopChu({146, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
     boxTimKiem.cKieuChu(font26);
     boxTimKiem.cDoBoVien(0.3f);
+
+    tuyChonTimKiem = hopChu({10, 134, 130, 40}, " Tên", MAU_XANH, YELLOW, BLACK);
+    tuyChonTimKiem.cKieuChu(font26);
+    tuyChonTimKiem.cDoBoVien(0.3f);
+
+    boDemMucChon = 0; // khoi tao bang 0
 
     flagThongBaoKHL = false;
 }
@@ -145,6 +151,15 @@ void giaoDienChinh::capNhatTT()
     capNhatDanhSachSV(); // cap nhat qua sanh sach;
     boxThem.capNhatTT();
     boxXoa.capNhatTT();
+    tuyChonTimKiem.capNhatTT();
+    if (tuyChonTimKiem.laDuocChon())
+    {
+        boDemMucChon++;
+        tuyChonTimKiem.cTrangThaiChon(false);
+        const char *const noiDungOTuyChon[3] = {" Tên", " MSV", " Mã phòng"};
+        tuyChonTimKiem.cNoiDung(noiDungOTuyChon[boDemMucChon % 3]);
+    }
+
     boxTimKiem.capNhatTT();
 
     if (boxThem.laDuocChon())
@@ -171,8 +186,9 @@ void giaoDienChinh::capNhatTT()
     // tìm kiếm
     if (boxTimKiem.laDuocChon() && chuoiTimSoSanh != boxTimKiem.layChu())
     {
+        bool (*hamSoSanh[3])(const SinhVien &, const string &) = {QuanLyKTX::soSanhTenSV, QuanLyKTX::soSanhMaSV, QuanLyKTX::soSanhMaPhongSV};
         chuoiTimSoSanh = boxTimKiem.layChu();
-        capNhatBang(quanLyKTX.timSinhVienGiong(chuoiTimSoSanh));
+        capNhatBang(quanLyKTX.timSinhVienGiong(chuoiTimSoSanh, hamSoSanh[boDemMucChon % 3]));
     }
 }
 void giaoDienChinh::bieuDien()
@@ -180,6 +196,7 @@ void giaoDienChinh::bieuDien()
 
     table->bieuDien(0, 0, sohangBD, 7);
     boxTimKiem.bieuDien();
+    tuyChonTimKiem.bieuDien();
     boxThem.bieuDien();
     boxXoa.bieuDien();
 
