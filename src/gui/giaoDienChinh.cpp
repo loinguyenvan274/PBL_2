@@ -4,29 +4,36 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
 {
     sohangBD = soSinhVien;
     table = nullptr;
-    capNhatBang(quanLyKTX.lDanhSachSinhVien());
 
     flagTimKiem = false;
     chuoiTimSoSanh = "";
     // table ;
     // hộp xóa
-    boxThem = hopChu({1030, 134, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK);
+    boxThem = hopChu({1030, 144, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK);
     boxThem.cKieuChu(font26);
     boxThem.cDoBoVien(0.3f);
-    boxXoa = hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
+    boxXoa = hopChu({1260, 144, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
     boxXoa.cKieuChu(font26);
     boxXoa.cDoBoVien(0.3f);
-    boxTimKiem = hopChu({146, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
+
+    boxHTSoNguoiOBang = hopChu({10, 70, 540, 40}, "", WHITE, MAU_LA_CAY, BLACK);
+    boxHTSoNguoiOBang.cKieuChu(font26);
+    boxHTSoNguoiOBang.cDoBoVien(0.3f);
+    boxHTSoNguoiOBang.cTrangThaiChon(true);
+
+    boxTimKiem = hopChu({146, 144, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
     boxTimKiem.cKieuChu(font26);
     boxTimKiem.cDoBoVien(0.3f);
 
-    tuyChonTimKiem = hopChu({10, 134, 130, 40}, " Tên", MAU_XANH, YELLOW, BLACK);
+    tuyChonTimKiem = hopChu({10, 144, 130, 40}, " Tên", MAU_XANH, YELLOW, BLACK);
     tuyChonTimKiem.cKieuChu(font26);
     tuyChonTimKiem.cDoBoVien(0.3f);
 
     boDemMucChon = 0; // khoi tao bang 0
 
     flagThongBaoKHL = false;
+
+    capNhatBang(quanLyKTX.lDanhSachSinhVien());
 }
 void giaoDienChinh::taoBang(const unsigned int &soDongBieuDien)
 {
@@ -69,6 +76,7 @@ void giaoDienChinh::capNhatBang(const Vector<SinhVien> &danhSachSinhVien)
 {
     static unsigned soDongBang = 0;
     sohangBD = danhSachSinhVien.lSoPhanTu() + boxThem.laDuocChon();
+    boxHTSoNguoiOBang.cNoiDung("  Số sinh viên trên bảng: " + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachSinhVien().lSoPhanTu() + boxThem.laDuocChon()));
     if (soDongBang < sohangBD + 1 || table == nullptr) // cong 1 la them cai tieu de;
     {
         soDongBang = (sohangBD + 1) * 2; // gấp đôi lê hễ thêm 1 đối tượng thôi mà phải tạo lại thì không tốt cho lắm
@@ -102,22 +110,25 @@ void giaoDienChinh::capNhatDanhSachSV()
     static Vector2 viTriCu = {-2, -2}; // cho số âm , và tại sao không -1 -1 đi thì -1 -1 là giá trị ô không hoạt đông bên kia trả về
     if ((viTriCu.x != dCLay.x) && flagDoiSinhVien == true)
     {
-        cout << "here" << endl;
         if (sinhVienCu.lMa() == "")
         {
-            if (!quanLyKTX.themSinhVien(sinhVien))
+            trangThaiSV = quanLyKTX.themSinhVien(sinhVien);
+            if (trangThaiSV != HOP_LE)
             {
                 cout << "sinh Vien khong hop le" << endl; // "edit"
-                flagThongBaoKHL = true;
                 capNhatBang(quanLyKTX.lDanhSachSinhVien());
             }
         }
-        else if (!quanLyKTX.doiSinhVien(sinhVienCu, sinhVien))
+        else
         {
-            cout << "sinh Vien khong hop le" << endl;
-            flagThongBaoKHL = true;
-            capNhatDong(viTriCu.x, sinhVienCu);
+            trangThaiSV = quanLyKTX.doiSinhVien(sinhVienCu, sinhVien);
+            if (trangThaiSV != HOP_LE)
+            {
+                cout << "sinh Vien khong hop le" << endl;
+                capNhatDong(viTriCu.x, sinhVienCu);
+            }
         }
+        flagThongBaoKHL = true;
         flagDoiSinhVien = false;
     }
     if (hang != -1)
@@ -199,6 +210,7 @@ void giaoDienChinh::bieuDien()
     tuyChonTimKiem.bieuDien();
     boxThem.bieuDien();
     boxXoa.bieuDien();
+    boxHTSoNguoiOBang.bieuDien();
 
     static double thoiGianHenThongBao = 0;
     if (flagThongBaoKHL)
@@ -218,9 +230,13 @@ void giaoDienChinh::bieuDien()
 */
 void giaoDienChinh::cuaSoThongBaoKHL()
 {
-    hop nenSauCuaSo(Rectangle{1031, 57, 439, 70}, RED);
+    const string noiDungThongBao[5] = {"Hợp lệ", "Trùng mã", "Mã không hợp lệ", "Phòng Không tồn tại", "Phòng Đầy"};
+    Color mauVien = RED;
+    if (trangThaiSV == HOP_LE)
+        mauVien = GREEN;
+    hop nenSauCuaSo(Rectangle{1031, 57, 439, 70}, mauVien);
     nenSauCuaSo.cDoBoVien(0.3f);
-    hopChu chuThongBao(Rectangle{1036, 62, 429, 60}, "            Sinh viên không hợp lệ", WHITE);
+    hopChu chuThongBao(Rectangle{1036, 62, 429, 60}, "            " + noiDungThongBao[trangThaiSV], WHITE);
     chuThongBao.cKieuChu(font26);
     chuThongBao.cDoBoVien(0.3f);
 

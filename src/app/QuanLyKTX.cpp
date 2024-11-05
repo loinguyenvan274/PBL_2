@@ -4,14 +4,20 @@ QuanLyKTX::QuanLyKTX() {}
 
 QuanLyKTX::~QuanLyKTX() {}
 
-bool QuanLyKTX::themSinhVien(const SinhVien &sinhVien)
+TrangThaiSV QuanLyKTX::themSinhVien(const SinhVien &sinhVien)
 {
     Phong *phongChuaSinhVien = dSPhong.tim(Phong(sinhVien.lMaPhong()));
-    if ("" == sinhVien.lMa() || dSSinhVien.tim(sinhVien) != KHONG_TIM_THAY || dSPhong.tim(Phong(sinhVien.lMaPhong())) == KHONG_TIM_THAY || phongChuaSinhVien->lSoNguoiHienTai() == phongChuaSinhVien->lSoNguoiToiDa())
-        return false;
+    if ("" == sinhVien.lMa())
+        return MA_KHONG_HOP_LE;
+    if (dSSinhVien.tim(sinhVien) != KHONG_TIM_THAY)
+        return TRUNG_MA;
+    if (dSPhong.tim(Phong(sinhVien.lMaPhong())) == KHONG_TIM_THAY)
+        return PHONG_KHONG_TON_TAI;
+    if (phongChuaSinhVien->lSoNguoiHienTai() == phongChuaSinhVien->lSoNguoiToiDa())
+        return PHONG_DAY;
     dSSinhVien.chen(dSSinhVien.lDCDau(), sinhVien);
     phongChuaSinhVien->cSoNguoiHienTai(phongChuaSinhVien->lSoNguoiHienTai() + 1);
-    return true;
+    return HOP_LE;
 }
 bool QuanLyKTX::themPhong(const Phong &phong)
 {
@@ -61,7 +67,7 @@ const Vector<Phong> QuanLyKTX::timPhongGiong(const string &chuoiCon)
     return phongDuocTim;
 }
 
-bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVienMoi)
+TrangThaiSV QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVienMoi)
 {
     // những cái return false này sau này có thê chỉnh sửa mới một thông báo khác chứ không phải tại sao gom lại các trường hợp cho khỏe
     if (!(sinhVienCu == sinhVienMoi))
@@ -69,12 +75,12 @@ bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVien
         if (dSSinhVien.tim(sinhVienMoi) != KHONG_TIM_THAY)
         {
             cout << " sinh Vien Trung ma aaa;\n";
-            return false; // sinh Vien Trung ma;
+            return TRUNG_MA; // sinh Vien Trung ma;
         }
         if (sinhVienMoi.lMa() == "")
         {
             cout << " sinh vien khong hop le;\n";
-            return false; // sinh vien khong hop le
+            return MA_KHONG_HOP_LE; // sinh vien khong hop le
         }
     }
     Phong *phongsinhVienMoi = dSPhong.tim(Phong(sinhVienMoi.lMaPhong()));
@@ -83,12 +89,12 @@ bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVien
         if (phongsinhVienMoi == KHONG_TIM_THAY)
         {
             cout << "Phong khong ton tai;\n";
-            return false; // phong khoong ton taij
+            return PHONG_KHONG_TON_TAI; // phong khoong ton taij
         }
         if (phongsinhVienMoi->lSoNguoiHienTai() == phongsinhVienMoi->lSoNguoiToiDa())
         {
             cout << " phong day;\n";
-            return false; // phong da Day
+            return PHONG_DAY; // phong da Day
         }
         else
         {
@@ -100,7 +106,7 @@ bool QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVien
     SinhVien *viTriSV = dSSinhVien.tim(sinhVienCu);
     if (viTriSV != nullptr)
         *viTriSV = sinhVienMoi;
-    return true;
+    return HOP_LE;
 }
 void QuanLyKTX::xoaSinhVienOPhong(const string &maPhong)
 {

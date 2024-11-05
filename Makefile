@@ -7,10 +7,16 @@ path_include = ./include
 path_lib = ./lib
 lInclude = -lraylib -lwinmm -lgdi32 -lopengl32 -lole32 -lcomdlg32 
 path_build = ./build/index.exe
+paht_test = ./test/test.exe
 
 compile:
 	$(cc) $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
 	$(path_build)
+
+tt:
+	$(cc)  $(all_file_compile) -o $(paht_test) -L$(path_lib) -I$(path_include) $(lInclude)
+	$(paht_test)
+
 debug:
 	$(cc) -g  $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
 	gdb $(path_build)

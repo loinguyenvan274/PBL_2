@@ -1,6 +1,7 @@
 #include <iostream>
 #include "gui/quanLyGiaoDien.h"
 #include "app/QuanLyKTX.h"
+#include <random>
 
 Font giaoDien::font26;
 
@@ -68,14 +69,13 @@ int main()
     QuanLyKTX quanLyKTX;
     for (int i = 0; i < phongKTX.lSoPhanTu(); i++)
     {
-        // cout <<  << endl;
         quanLyKTX.themPhong(phongKTX[i]);
     }
     for (int i = 0; i < sinhVienKTX.lSoPhanTu(); i++)
     {
-        // cout <<  << endl;
         quanLyKTX.themSinhVien(sinhVienKTX[i]);
     }
+    
     runApp(quanLyKTX);
 
     luuDuLieu(dDFileSinhVien, quanLyKTX.lDanhSachSinhVien());
@@ -84,5 +84,43 @@ int main()
 
     UnloadFont(giaoDien::font26);
     CloseWindow();
+    /*---------------------------------tao case du lieu --------------------------------------*/
+    // long soDoiTuong = 1000;
+
+    // const char *dDfilePhongTest = "test/Phong.csv";
+
+    // std::random_device rd;                              
+    // std::mt19937 gen(rd());                             
+    // std::uniform_int_distribution<> dist(0, 32000 - 1);
+    // std::uniform_int_distribution<> randomSoNguoiTD(1, 8);
+    // std::uniform_int_distribution<> rdsd(100, 99999);
+    // std::uniform_int_distribution<> clcs(30, 150);
+
+    // Vector<Phong> phongTest(soDoiTuong);
+
+    // fstream docFile("test/ten.txt", ios::in | ios::app);
+    // Vector<string> ten(32000);
+    // string tamThoi;
+    // long i = 0;
+    // while (getline(docFile, tamThoi) && i < 32000)
+    // {
+    //     ten[i++] = tamThoi;
+    // }
+
+    // for (i = 0; i < soDoiTuong; i++)
+    // {
+    //     string b = to_string(i + 10000);
+    //     b = b.substr(1);
+    //     phongTest[i] = Phong("A" + b, randomSoNguoiTD(gen), ten[dist(gen)]);
+    //     float sss = rdsd(gen);
+    //     phongTest[i].cDienCSDT(sss);
+    //     phongTest[i].cDienCSCT(sss + clcs(gen));
+    //     sss = rdsd(gen);
+    //     phongTest[i].cNuocCSDT(sss);
+    //     phongTest[i].cNuocCSCT(sss + clcs(gen));
+    // }
+    // luuDuLieu(dDFilePhong, phongTest);
+
+    /*----------------------------------end---------------------------------------------------------*/
     return 0;
 }
