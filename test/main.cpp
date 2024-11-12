@@ -1,14 +1,13 @@
 #include <iostream>
-
-int a = 5;
+#include <vector>
 using namespace std;
-int &soNguyen()
-{
-    return a;
-}
 int main()
 {
-    soNguyen() = 6;
-    cout << a;
+    vector<int *> a(5);
+    int b = 10;
+    a[0] = &b;
+    b = 9;
+    cout << *a[0];
+
     return 0;
 }

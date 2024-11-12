@@ -66,20 +66,17 @@ int main()
     Vector<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
 
     QuanLyKTX quanLyKTX;
-    // quanLyKTX.dSSinhVien = sinhVienKTX;
-    // quanLyKTX.dSPhong = phongKTX;
-    // cout << "nah";
-    // int xxx;
-    // cin >> xxx;
+ 
     for (size_t i = 0; i < phongKTX.lSoPhanTu(); i++)
     {
         quanLyKTX.themPhong(phongKTX[i]);
     }
-    cout << "here";
     for (size_t i = 0; i < sinhVienKTX.lSoPhanTu(); i++)
     {
         quanLyKTX.themSinhVien(sinhVienKTX[i]);
     }
+   
+
     khoiTaoCuaSo();
 
     runApp(quanLyKTX);
@@ -92,7 +89,7 @@ int main()
     luuDuLieu(dDFilePhong, quanLyKTX.lDanhSachPhong());
 
     /*---------------------------------tao case du lieu --------------------------------------*/
-    // long soDoiTuong = 10000;
+    // long soDoiTuong = 1000000;
 
     // const char *dDfilePhongTest = "test/Phong.csv";
 
@@ -130,4 +127,5 @@ int main()
 
     /*----------------------------------end---------------------------------------------------------*/
     return 0;
+
 }

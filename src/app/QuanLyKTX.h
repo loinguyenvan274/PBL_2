@@ -4,6 +4,7 @@
 #include "Vector.h"
 #include "sinhVien.h"
 #include "Phong.h"
+#include "BangBam.h"
 enum ThietLapCSDN
 {
     THIET_LAP_TAT_CA,
@@ -20,9 +21,12 @@ enum TrangThaiSV
 class QuanLyKTX
 {
 private:
+    BangBam<SinhVien> dsSinhVien;
+    BangBam<Phong> dsPhong;
 
-    Vector<SinhVien> dSSinhVien;
-    Vector<Phong> dSPhong;
+    // Vector<SinhVien> dSSinhVien;
+    // Vector<Phong> dSPhong;
+
 public:
     QuanLyKTX();
     TrangThaiSV themSinhVien(const SinhVien &);
@@ -32,18 +36,17 @@ public:
     void xoaTatCaPhong();
     void xoaTatCaSinhVien();
     void xoaSinhVienOPhong(const string &);
-    void cThonTinSinhVien(const SinhVien &);
     TrangThaiSV doiSinhVien(const SinhVien &, const SinhVien &);
     bool doiPhong(const Phong &, const Phong &);
-    
+
     const Vector<SinhVien> timSinhVienGiong(const string &, bool (*soSanh)(const SinhVien &, const string &));
     static bool soSanhMaSV(const SinhVien &, const string &);
     static bool soSanhTenSV(const SinhVien &, const string &);
     static bool soSanhMaPhongSV(const SinhVien &, const string &);
     const Vector<Phong> timPhongGiong(const string &);
     const Phong *timPhong(const string &) const;
-    const Vector<Phong> &lDanhSachPhong();
-    const Vector<SinhVien> &lDanhSachSinhVien();
+    const Vector<Phong> lDanhSachPhong();
+    const Vector<SinhVien> lDanhSachSinhVien();
 
     void resetChiSoDienNuoc(ThietLapCSDN);
     ~QuanLyKTX();
