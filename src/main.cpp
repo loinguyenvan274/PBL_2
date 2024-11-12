@@ -61,36 +61,43 @@ void runApp(QuanLyKTX &quanLyKTX)
 
 int main()
 {
-    khoiTaoCuaSo();
 
     Vector<SinhVien> sinhVienKTX = layDuLieu<SinhVien>(dDFileSinhVien);
     Vector<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
 
     QuanLyKTX quanLyKTX;
-    for (int i = 0; i < phongKTX.lSoPhanTu(); i++)
+    // quanLyKTX.dSSinhVien = sinhVienKTX;
+    // quanLyKTX.dSPhong = phongKTX;
+    // cout << "nah";
+    // int xxx;
+    // cin >> xxx;
+    for (size_t i = 0; i < phongKTX.lSoPhanTu(); i++)
     {
         quanLyKTX.themPhong(phongKTX[i]);
     }
-    for (int i = 0; i < sinhVienKTX.lSoPhanTu(); i++)
+    cout << "here";
+    for (size_t i = 0; i < sinhVienKTX.lSoPhanTu(); i++)
     {
         quanLyKTX.themSinhVien(sinhVienKTX[i]);
     }
-    
+    khoiTaoCuaSo();
+
     runApp(quanLyKTX);
+
+    UnloadFont(giaoDien::font26);
+    CloseWindow();
 
     luuDuLieu(dDFileSinhVien, quanLyKTX.lDanhSachSinhVien());
 
     luuDuLieu(dDFilePhong, quanLyKTX.lDanhSachPhong());
 
-    UnloadFont(giaoDien::font26);
-    CloseWindow();
     /*---------------------------------tao case du lieu --------------------------------------*/
-    // long soDoiTuong = 1000;
+    // long soDoiTuong = 10000;
 
     // const char *dDfilePhongTest = "test/Phong.csv";
 
-    // std::random_device rd;                              
-    // std::mt19937 gen(rd());                             
+    // std::random_device rd;
+    // std::mt19937 gen(rd());
     // std::uniform_int_distribution<> dist(0, 32000 - 1);
     // std::uniform_int_distribution<> randomSoNguoiTD(1, 8);
     // std::uniform_int_distribution<> rdsd(100, 99999);
@@ -109,7 +116,7 @@ int main()
 
     // for (i = 0; i < soDoiTuong; i++)
     // {
-    //     string b = to_string(i + 10000);
+    //     string b = to_string(i + soDoiTuong);
     //     b = b.substr(1);
     //     phongTest[i] = Phong("A" + b, randomSoNguoiTD(gen), ten[dist(gen)]);
     //     float sss = rdsd(gen);

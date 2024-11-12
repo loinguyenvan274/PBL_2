@@ -1,8 +1,9 @@
 import random
 
+bodem = 0
 # Hàm sinh mã ngẫu nhiên từ A00000 đến A04999
 def generate_random_room_code():
-    random_num = random.randint(0, 4999)  # Sinh số ngẫu nhiên từ 0 đến 4999
+    random_num = random.randint(0, 9999)  # Sinh số ngẫu nhiên từ 0 đến 4999
     return f"A{random_num:04d}"  # Định dạng với 5 chữ số
 
 # Hàm sinh tên ngẫu nhiên
@@ -18,6 +19,7 @@ def generate_random_name():
 
 # Hàm tạo dữ liệu
 def generate_data(num_lines):
+    global bodem
     data = []
     student_ids = set()  # Tập hợp để theo dõi mã sinh viên đã tạo
 
@@ -26,11 +28,11 @@ def generate_data(num_lines):
         dob = "07/09/2005"  # Ngày sinh (có thể thay đổi nếu cần)
         
         # Tạo mã sinh viên duy nhất
-        while True:
-            student_id = f"1022{random.randint(0, 99999)}"  # Mã sinh viên
-            if student_id not in student_ids:  # Kiểm tra mã đã tồn tại chưa
-                student_ids.add(student_id)  # Thêm vào tập hợp
-                break
+        
+        student_id = f"102{bodem:06d}"  # Mã sinh viên
+        if student_id not in student_ids:  # Kiểm tra mã đã tồn tại chưa
+            student_ids.add(student_id)  # Thêm vào tập hợp
+                
         
         phone_number = f"03266190{random.randint(0, 9)}"  # Số điện thoại
         gender = random.choice(["Nam", "Nữ"])  # Giới tính ngẫu nhiên
@@ -38,7 +40,7 @@ def generate_data(num_lines):
 
         # Thêm dữ liệu vào danh sách
         data.append(f"{name}~{dob}~{student_id}~{phone_number}~{gender}~{room_code}~;")
-
+        bodem += 1
     return data
 
 # Ghi dữ liệu vào tệp
@@ -48,7 +50,7 @@ def write_data_to_file(filename, data):
             file.write(line + "\n")
 
 if __name__ == "__main__":
-    num_lines = 20000  # Số dòng dữ liệu cần tạo
+    num_lines = 100000  # Số dòng dữ liệu cần tạo
     data = generate_data(num_lines)
     write_data_to_file("data/sinhVien.csv", data)
     print("Tạo dữ liệu thành công vào tệp data.txt!")

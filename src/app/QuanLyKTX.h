@@ -20,9 +20,9 @@ enum TrangThaiSV
 class QuanLyKTX
 {
 private:
+
     Vector<SinhVien> dSSinhVien;
     Vector<Phong> dSPhong;
-
 public:
     QuanLyKTX();
     TrangThaiSV themSinhVien(const SinhVien &);
@@ -35,7 +35,7 @@ public:
     void cThonTinSinhVien(const SinhVien &);
     TrangThaiSV doiSinhVien(const SinhVien &, const SinhVien &);
     bool doiPhong(const Phong &, const Phong &);
-    const SinhVien &timSinhVien(const string &);
+    
     const Vector<SinhVien> timSinhVienGiong(const string &, bool (*soSanh)(const SinhVien &, const string &));
     static bool soSanhMaSV(const SinhVien &, const string &);
     static bool soSanhTenSV(const SinhVien &, const string &);

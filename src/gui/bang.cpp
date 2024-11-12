@@ -114,10 +114,7 @@ void Bang::cuon()
     gTCuon = double(long(gTCuon * 100000000.0) / 100000000.0); // làm tròn số tránh lỗi công 2 số thập phân
     if (gTCuon > 0 && hop[1][0].layViTri().y > chanTren + hop[0][0].layKichCo().y + cachHang)
         gTCuon = 0;
-    /* chỉnh vị trí khi cuộc nếu con trỏ nằm ở vị trí bản , có điều viết hơi ngu là tại sao ta
-    phải cập nhật cả đống đó ta chỉ cập nhật vị trí được xác định hiển thị lên thôi mà // nhưng mà nhát quá mà thấy
-    chương trình vẫn mược nên để đó khi n lag thì sữa :))
-    */
+ 
     if (GetMouseX() > chanTRai && GetMouseX() < chanPhai && GetMouseY() > chanTren && GetMouseY() < chanDuoi && gTCuon != 0)
     {
         for (int i = 0 + int(tieuDe); i < soHang; i++)
