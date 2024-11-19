@@ -3,6 +3,7 @@
 #include "hop.h"
 #include "raylib.h"
 #include <string>
+#include "../app/Vector.h"
 
 using namespace std;
 
@@ -18,7 +19,7 @@ class hopChu : public hop
 
 public:
     // (vị trí, chuôi , màu nên, màu viền, màu chữ )
-    hopChu(Rectangle = {0, 0, 0, 0}, const string = "", Color = WHITE, Color = RED, Color = BLACK);
+    hopChu(Rectangle = {0, 0, 0, 0}, const string = "", Color = WHITE, Color = RED, Color = BLACK, Font = GetFontDefault());
 
     void cNoiDung(const string chu);
     void cMauChu(const Color &);
@@ -27,6 +28,8 @@ public:
     void cKieuChu(const Font &);
     void bieuDien();
     void cChiNhapSo(const bool &);
+    NTN lNTN();
+
     string layChu();
 
     ~hopChu();

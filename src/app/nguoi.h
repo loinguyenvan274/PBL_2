@@ -17,6 +17,10 @@ public:
     void cHoVaTen(const string &);
     void cNgaySinh(const string &);
     void cMa(const string &);
+    void cSDT(const string &);
+    void cGioiTinh(const string &);
+    string lSDT() const;
+    string lGioiTinh() const;
     string lHoVaTen() const;
     string lMa() const;
     string lngaySinh() const;

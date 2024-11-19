@@ -6,8 +6,19 @@
 #include <string.h>
 #define KHONG_TIM_THAY nullptr
 
-// typedef unsigned long long size_t;
+typedef unsigned long long size_t;
 using namespace std;
+
+struct NTN
+{
+    int ngay;
+    int thang;
+    int nam;
+    string chuyenSangString() const
+    {
+        return to_string(ngay) + "/" + to_string(thang) + "/" + to_string(nam);
+    }
+};
 
 template <typename T>
 class Vector
@@ -47,4 +58,4 @@ public:
 };
 #include "Vector.cpp"
 #endif // _QUANLY
-// huynh nhu bao nhan\\
+       // huynh nhu bao nhan\\

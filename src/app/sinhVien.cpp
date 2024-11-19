@@ -1,34 +1,48 @@
 #include "SinhVien.h"
+#include <ctime>
 
-SinhVien::SinhVien(const string &hoVaTenDV, const string &maDV, const string &ngaySinhDV) : Nguoi(hoVaTenDV, maDV, ngaySinhDV)
+HopDongSinhVien::HopDongSinhVien()
 {
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    ngaySinhVienVao.nam = 1900 + ltm->tm_year;
+    ngaySinhVienVao.thang = 1 + ltm->tm_mon;
+    ngaySinhVienVao.ngay = ltm->tm_mday;
 
     maPhong = "";
+    // loaiPhong = "";
+    soThangO = 0;
+    // tienPhong = 0;
+    tienTheChap = 0;
 }
-void SinhVien::cNgayBatDauO(const string &thoiGianDV) { sDT = thoiGianDV; }
-void SinhVien::cMaPhong(const string &maPhongDV) { maPhong = maPhongDV; }
-void SinhVien::cThoiGianO(const string &thoiGianODV) { gioiTinh = thoiGianODV; }
-string SinhVien::lSDT() const { return sDT; }
-string SinhVien::lMaPhong() const { return maPhong; }
-string SinhVien::lGioiTinh() const { return gioiTinh; }
+
+SinhVien::SinhVien(const string &hoVaTenDV, const string &maDV, const string &ngaySinhDV) : Nguoi(hoVaTenDV, maDV, ngaySinhDV) {}
+string SinhVien::lMaPhong() const { return hopDong.maPhong; }
+void SinhVien::cMaPhong(const string &maPhongDV) { hopDong.maPhong = maPhongDV; }
 void SinhVien::bieuDien() const
 {
     cout << "Ten: " << hoVaTen << endl;
     cout << "Ma Sinh Vien: " << ma << endl;
-    cout << "ma Phong" << maPhong << endl;
+    cout << "ma Phong" << hopDong.maPhong << endl;
 }
 Vector<string> SinhVien::lThongTin() const
 {
     /*
     list theo theo thứ tự :họ và tên , ngày sinh, mã ,ngày bắt đầu ỏ,thời gian ở, mã phòng
     */
-    Vector<string> dSThuocTinh(6);
+    Vector<string> dSThuocTinh(11);
     dSThuocTinh[0] = hoVaTen;
     dSThuocTinh[1] = ngaySinh;
     dSThuocTinh[2] = ma;
     dSThuocTinh[3] = sDT;
     dSThuocTinh[4] = gioiTinh;
-    dSThuocTinh[5] = maPhong;
+    dSThuocTinh[5] = hopDong.maPhong;
+    dSThuocTinh[6] = to_string(hopDong.tienTheChap);
+    dSThuocTinh[7] = to_string(hopDong.soThangO);
+    dSThuocTinh[8] = to_string(hopDong.ngaySinhVienVao.ngay);
+    dSThuocTinh[9] = to_string(hopDong.ngaySinhVienVao.thang);
+    dSThuocTinh[10] = to_string(hopDong.ngaySinhVienVao.nam);
+
     return dSThuocTinh;
 }
 void SinhVien::cThongTin(const Vector<string> &dSThuocTinhDV)
@@ -38,7 +52,12 @@ void SinhVien::cThongTin(const Vector<string> &dSThuocTinhDV)
     ma = dSThuocTinhDV[2];
     sDT = dSThuocTinhDV[3];
     gioiTinh = dSThuocTinhDV[4];
-    maPhong = dSThuocTinhDV[5];
+    hopDong.maPhong = dSThuocTinhDV[5];
+    hopDong.tienTheChap = stoul(dSThuocTinhDV[6]);
+    hopDong.soThangO = stoi(dSThuocTinhDV[7]);
+    hopDong.ngaySinhVienVao.ngay = stoi(dSThuocTinhDV[8]);
+    hopDong.ngaySinhVienVao.thang = stoi(dSThuocTinhDV[9]);
+    hopDong.ngaySinhVienVao.nam = stoi(dSThuocTinhDV[10]);
 }
 SinhVien &SinhVien::operator=(const SinhVien &sinhvien)
 {
@@ -47,8 +66,9 @@ SinhVien &SinhVien::operator=(const SinhVien &sinhvien)
     sDT = sinhvien.lSDT();
     gioiTinh = sinhvien.lGioiTinh();
     ma = sinhvien.lMa();
-    maPhong = sinhvien.lMaPhong();
+    hopDong.maPhong = sinhvien.lMaPhong();
     return *this;
 }
-
+const HopDongSinhVien &SinhVien::lHopDong() const { return hopDong; }
+void SinhVien::cHopDong(const HopDongSinhVien &hopDong) { this->hopDong = hopDong; }
 SinhVien::~SinhVien() {}

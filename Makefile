@@ -22,10 +22,11 @@ debug:
 	gdb $(path_build)
 run:
 	$(path_build)
+	
 git_push:
 	git add .
 	git commit -m "m"
 	git push
 t:
-	g++ ./test/main.cpp -o ./test/main -L$(path_lib)  -I$(path_include) $(lInclude)
+	g++ ./test/main.cpp -o ./test/main 
 	./test/main

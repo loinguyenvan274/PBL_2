@@ -1,1 +1,4 @@
-có sử dụng cấu trúc dữ liệu
+
+tiền phòng, loại phòng bỏ đi vì nó được tính bằng cách lấy bên phòng 
+
+trong giao diẹn phòng tôi da -> loại Phong , thêm cột mưcs gia tiên 

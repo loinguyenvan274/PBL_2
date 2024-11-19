@@ -14,7 +14,6 @@ const Vector<Type> layDuLieu(const char *duongDan)
 {
     docGhiFile docGhi(duongDan);
     Vector<Vector<std::string>> dSDoc = docGhi.docData();
-
     Vector<Type> qL(dSDoc.lSoPhanTu());
     for (int i = 0; i < dSDoc.lSoPhanTu(); i++)
     {
@@ -33,7 +32,6 @@ void luuDuLieu(const char *duongDan, const Vector<Type> &danhSach)
     {
         dSGhi[i] = danhSach[i].lThongTin();
     }
-
     docGhi.ghiData(dSGhi);
 }
 
@@ -41,7 +39,7 @@ void khoiTaoCuaSo()
 {
     const char *tieuDeChuongTrinh = "Quản Lý Sinh Viên Ký Túc Xá [ PBL2 Nguyễn Văn Lợi 102230026 - Nguyễn Thanh Hậu 102230013 ]";
     InitWindow(1480, 880, tieuDeChuongTrinh);
-    SetWindowPosition(200, 200);
+    SetWindowPosition(50, 50);
     giaoDien::font26 = LoadFontEx(dDFileFontChu, 26, const_cast<int *>(vietnameseCodepoints), sizeof(vietnameseCodepoints) / sizeof(int));
 }
 
@@ -66,7 +64,7 @@ int main()
     Vector<Phong> phongKTX = layDuLieu<Phong>(dDFilePhong);
 
     QuanLyKTX quanLyKTX;
- 
+
     for (size_t i = 0; i < phongKTX.lSoPhanTu(); i++)
     {
         quanLyKTX.themPhong(phongKTX[i]);
@@ -75,7 +73,6 @@ int main()
     {
         quanLyKTX.themSinhVien(sinhVienKTX[i]);
     }
-   
 
     khoiTaoCuaSo();
 
@@ -89,7 +86,7 @@ int main()
     luuDuLieu(dDFilePhong, quanLyKTX.lDanhSachPhong());
 
     /*---------------------------------tao case du lieu --------------------------------------*/
-    // long soDoiTuong = 1000000;
+    // unsigned long long soDoiTuong = 1000000;
 
     // const char *dDfilePhongTest = "test/Phong.csv";
 
@@ -105,7 +102,7 @@ int main()
     // fstream docFile("test/ten.txt", ios::in | ios::app);
     // Vector<string> ten(32000);
     // string tamThoi;
-    // long i = 0;
+    // unsigned long long i = 0;
     // while (getline(docFile, tamThoi) && i < 32000)
     // {
     //     ten[i++] = tamThoi;
@@ -127,5 +124,4 @@ int main()
 
     /*----------------------------------end---------------------------------------------------------*/
     return 0;
-
 }

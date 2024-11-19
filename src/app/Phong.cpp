@@ -1,6 +1,6 @@
 #include "Phong.h"
 
-Phong::Phong(string maPhong, int soNguoiToiDa, string moTa) : maPhong(maPhong), soNguoiToiDa(soNguoiToiDa), moTa(moTa), soNguoiHienTai(0), dienCSCT(0.0f), dienCSDT(0.0f), nuocCSDT(0.0f), nuocCSCT(0.0f), nopTienDN(false) {}
+Phong::Phong(string maPhong, int soNguoiToiDa, string moTa) : maPhong(maPhong), soNguoiToiDa(soNguoiToiDa), moTa(moTa), soNguoiHienTai(0), dienCSCT(0.0f), dienCSDT(0.0f), nuocCSDT(0.0f), nuocCSCT(0.0f), nopTienDN(false), giaPhong(0) {}
 
 const string &Phong::lMaPhong() const { return maPhong; }
 const string &Phong::lMoTa() const { return moTa; }
@@ -13,6 +13,7 @@ const float &Phong::lDienCSCT() const { return dienCSCT; }
 const float &Phong::lNuocCSDT() const { return nuocCSDT; }
 const float &Phong::lNuocCSCT() const { return nuocCSCT; }
 const bool &Phong::daNopTienDN() const { return nopTienDN; }
+const unsigned long &Phong::lGiaPhong() const { return giaPhong; }
 
 void Phong::cMaPhong(const string &maPhong) { this->maPhong = maPhong; }
 void Phong::cMoTa(const string &moTa) { this->moTa = moTa; }
@@ -24,6 +25,7 @@ void Phong::cDienCSDT(const float &dienCSDT) { this->dienCSDT = dienCSDT; }
 void Phong::cDienCSCT(const float &dienCSCT) { this->dienCSCT = dienCSCT; }
 void Phong::cNuocCSDT(const float &nuocCSDT) { this->nuocCSDT = nuocCSDT; }
 void Phong::cNuocCSCT(const float &nuocCSCT) { this->nuocCSCT = nuocCSCT; }
+void Phong::cGiaPhong(const unsigned long &giaPhong) { this->giaPhong = giaPhong; }
 void Phong::cNopTienDN(const bool &boolean) { this->nopTienDN = boolean; }
 
 Vector<string> Phong::lThongTin()
@@ -31,7 +33,7 @@ Vector<string> Phong::lThongTin()
     /*
     list theo theo thứ tự :họ và tên , ngày sinh, mã ,ngày bắt đầu ỏ,thời gian ở, mã phòng
     */
-    Vector<string> thuocTinh(9);
+    Vector<string> thuocTinh(10);
     thuocTinh[0] = maPhong;
     thuocTinh[1] = to_string(soNguoiToiDa);
     thuocTinh[2] = "0";
@@ -44,6 +46,7 @@ Vector<string> Phong::lThongTin()
         thuocTinh[8] = "1";
     else
         thuocTinh[8] = "0";
+    thuocTinh[9] = to_string(giaPhong);
     return thuocTinh;
 }
 void Phong::cThongTin(const Vector<string> &thuocTinhDV)
@@ -60,6 +63,7 @@ void Phong::cThongTin(const Vector<string> &thuocTinhDV)
         nopTienDN = true;
     else
         nopTienDN = false;
+    giaPhong = stoul(thuocTinhDV[9]);
 }
 
 void Phong::hienThiThongTin() const
@@ -81,6 +85,7 @@ Phong &Phong::operator=(const Phong &phong1)
     moTa = phong1.moTa;
     soNguoiHienTai = phong1.soNguoiHienTai;
     soNguoiToiDa = phong1.soNguoiToiDa;
+    giaPhong = phong1.giaPhong;
     dienCSCT = phong1.dienCSCT;
     dienCSDT = phong1.dienCSDT;
     nuocCSCT = phong1.nuocCSCT;

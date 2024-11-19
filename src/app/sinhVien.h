@@ -3,19 +3,30 @@
 #include <string>
 #include "Nguoi.h"
 #include "Vector.h"
+
+struct HopDongSinhVien
+{
+    NTN ngaySinhVienVao;
+    string maPhong;
+    // string loaiPhong;
+    int soThangO;
+    // unsigned long tienPhong;
+    unsigned long tienTheChap;
+    HopDongSinhVien();
+};
 class SinhVien : public Nguoi
 {
 private:
-    string maPhong;
+    HopDongSinhVien hopDong;
+
 public:
     SinhVien(const string & = "", const string & = "", const string & = "");
-    void cNgayBatDauO(const string &);
-    void cMaPhong(const string &);
-    void cThoiGianO(const string &);
 
-    string lSDT() const;
+    void cMaPhong(const string &);
+    const HopDongSinhVien &lHopDong() const;
+    void cHopDong(const HopDongSinhVien &);
+
     string lMaPhong() const;
-    string lGioiTinh() const;
     void bieuDien() const;
     void cThongTin(const Vector<string> &);
     SinhVien &operator=(const SinhVien &);

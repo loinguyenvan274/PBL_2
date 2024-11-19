@@ -23,6 +23,7 @@ Bang::Bang(const Vector2 &viTriDV, const int &soCot, const int &soHang, const Ve
         }
     }
 }
+
 void Bang::cKieuChu(const Font &fontDV, const int &coChu)
 {
     for (int i = 0; i < soHang; i++)
@@ -114,7 +115,7 @@ void Bang::cuon()
     gTCuon = double(long(gTCuon * 100000000.0) / 100000000.0); // làm tròn số tránh lỗi công 2 số thập phân
     if (gTCuon > 0 && hop[1][0].layViTri().y > chanTren + hop[0][0].layKichCo().y + cachHang)
         gTCuon = 0;
- 
+
     if (GetMouseX() > chanTRai && GetMouseX() < chanPhai && GetMouseY() > chanTren && GetMouseY() < chanDuoi && gTCuon != 0)
     {
         for (int i = 0 + int(tieuDe); i < soHang; i++)

@@ -1,5 +1,15 @@
 #include "giaoDienPhong.h"
 
+enum thuTuCot
+{
+    STT,
+    MA_PHONG,
+    LOAI_PHONG,
+    HIEN_TAI,
+    GIA_PHONG,
+    MO_TA,
+    XOA
+};
 giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
 {
     sohangBD = quanLyKTX.lDanhSachPhong().lSoPhanTu();
@@ -29,7 +39,7 @@ void giaoDienPhong::taoBang(const unsigned int &soDongToiDa)
     if (table != nullptr)
         delete table;
 
-    table = new Bang({10, 200}, 6, soDongToiDa + 1, {250, 42});
+    table = new Bang({10, 200}, 7, soDongToiDa + 1, {250, 42});
     table->cTieuDe(true);
     table->cFlagCuon(true);
     table->cGianHangCot(3, 0);
@@ -41,22 +51,25 @@ void giaoDienPhong::taoBang(const unsigned int &soDongToiDa)
         table->cMauTheoHang(i, {32, 178, 170, 255});
     }
 
-    (*table)(0, 0).cNoiDung("STT");
-    (*table)(0, 1).cNoiDung("Phòng");
-    (*table)(0, 2).cNoiDung("Tối đa");
-    (*table)(0, 3).cNoiDung("Hiện tại");
-    (*table)(0, 4).cNoiDung("Mô tả");
-    (*table)(0, 5).cNoiDung("Xóa");
+    (*table)(0, STT).cNoiDung("STT");
+    (*table)(0, MA_PHONG).cNoiDung("Phòng");
+    (*table)(0, LOAI_PHONG).cNoiDung("Loại phòng");
+    (*table)(0, HIEN_TAI).cNoiDung("Hiện tại");
+    (*table)(0, GIA_PHONG).cNoiDung("Giá Phòng/Tháng");
+    (*table)(0, MO_TA).cNoiDung("Mô tả");
+    (*table)(0, XOA).cNoiDung("Xóa");
 
-    table->cCot(0, 60);
-    table->cCot(1, 240);
-    table->cCot(2, 200);
-    table->cCot(3, 200);
-    table->cCot(4, 700);
-    table->cCot(5, 60);
+    table->cCot(STT, 60);
+    table->cCot(MA_PHONG, 220);
+    table->cCot(LOAI_PHONG, 170);
+    table->cCot(HIEN_TAI, 170);
+    table->cCot(GIA_PHONG, 230);
+    table->cCot(MO_TA, 550);
+    table->cCot(XOA, 60);
     for (int i = 0; i < soDongToiDa; i++)
     {
-        (*table)(i, 2).cChiNhapSo(true);
+        (*table)(i, LOAI_PHONG).cChiNhapSo(true);
+        (*table)(i, GIA_PHONG).cChiNhapSo(true);
     }
 }
 void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
@@ -69,7 +82,7 @@ void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
         soDongBang = (sohangBD + 1) * 2; // gấp đôi lê hễ thêm 1 đối tượng thôi mà phải tạo lại thì không tốt cho lắm
         taoBang(soDongBang);
     }
-    
+
     if (boxThem.laDuocChon())
         capNhatDong(1, Phong());
     for (int i = 1 + boxThem.laDuocChon(); i <= sohangBD; i++)
@@ -79,19 +92,30 @@ void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
 }
 void giaoDienPhong::capNhatDong(const int &viTri, const Phong &phong)
 {
-    (*table)(viTri, 0).cNoiDung(to_string(viTri));
-    (*table)(viTri, 1).cNoiDung(phong.lMaPhong());
-    (*table)(viTri, 2).cNoiDung(to_string(phong.lSoNguoiToiDa()));
-    (*table)(viTri, 3).cNoiDung(to_string(phong.lSoNguoiHienTai()));
-    (*table)(viTri, 4).cNoiDung(phong.lMoTa());
-    (*table)(viTri, 5).cNoiDung("Xóa");
+    (*table)(viTri, STT).cNoiDung(to_string(viTri));
+    (*table)(viTri, MA_PHONG).cNoiDung(phong.lMaPhong());
+    (*table)(viTri, LOAI_PHONG).cNoiDung(to_string(phong.lSoNguoiToiDa()));
+    (*table)(viTri, HIEN_TAI).cNoiDung(to_string(phong.lSoNguoiHienTai()));
+    (*table)(viTri, GIA_PHONG).cNoiDung(to_string(phong.lGiaPhong()));
+    (*table)(viTri, MO_TA).cNoiDung(phong.lMoTa());
+    (*table)(viTri, XOA).cNoiDung("Xóa");
 }
 Phong giaoDienPhong::lPhongTuBang(const int &viTri) const
 {
     string oSo = (*table)(viTri, 2).layChu();
     if (oSo == "")
         oSo += '0';
-    Phong phong((*table)(viTri, 1).layChu(), stoi(oSo), (*table)(viTri, 4).layChu());
+    Phong phong((*table)(viTri, 1).layChu(), stoi(oSo), (*table)(viTri, 5).layChu());
+    phong.cSoNguoiHienTai(stoi((*table)(viTri, 3).layChu()));
+    try
+    {
+        phong.cGiaPhong(stoul((*table)(viTri, GIA_PHONG).layChu()));
+    }
+    catch (const std::invalid_argument &e)
+    {
+        phong.cGiaPhong(0);
+    }
+
     return phong;
 }
 void giaoDienPhong::capNhatDanhSachPhong()
@@ -126,16 +150,14 @@ void giaoDienPhong::capNhatDanhSachPhong()
     if (hang != -1)
     {
         phong = lPhongTuBang(hang);
-        if (1 <= cot && cot <= 4 && flagDoiPhong == false)
+        if (MA_PHONG <= cot && cot <= GIA_PHONG && flagDoiPhong == false)
         {
             phongCu = lPhongTuBang(hang);
             flagDoiPhong = true;
             viTriCu = dCLay;
         }
-        else if (cot == 5)
+        else if (cot == XOA)
         {
-            cout << phong.lMaPhong() << endl;
-
             quanLyKTX.xoaPhong(phong.lMaPhong());
             capNhatBang(quanLyKTX.lDanhSachPhong());
             (*table)(hang, cot).cTrangThaiChon(false);
@@ -151,7 +173,7 @@ void giaoDienPhong::capNhatTT()
 
     table->capNhatTT();
     table->vungHoatDong(1, 1, sohangBD, 2);
-    table->vungHoatDong(1, 4, sohangBD, 5);
+    table->vungHoatDong(1, 4, sohangBD, 6);
     capNhatDanhSachPhong();
 
     boxThem.capNhatTT();
@@ -188,7 +210,7 @@ void giaoDienPhong::capNhatTT()
 }
 void giaoDienPhong::bieuDien()
 {
-    table->bieuDien(0, 0, sohangBD, 5);
+    table->bieuDien(STT, 0, sohangBD, XOA);
     boxTimKiem.bieuDien();
     boxThem.bieuDien();
     boxXoa.bieuDien();

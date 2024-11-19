@@ -4,10 +4,9 @@
 double hopChu::tGTamThoi = 0;
 double hopChu::tGBatDauNhan = 0;
 
-hopChu::hopChu(Rectangle hinhThaiDV, const string chuDV, Color mauNenDV, Color mauVienDV, Color mauChuDV) : hop(hinhThaiDV, mauNenDV, mauVienDV), chu(chuDV), mauChu(mauChuDV)
+hopChu::hopChu(Rectangle hinhThaiDV, const string chuDV, Color mauNenDV, Color mauVienDV, Color mauChuDV, Font kieuChu) : hop(hinhThaiDV, mauNenDV, mauVienDV), chu(chuDV), mauChu(mauChuDV), kieuChu(kieuChu)
 {
-    coChu = 26;                 // cở chử mặt định 26
-    kieuChu = GetFontDefault(); // lấy kiểu chữ mặt định của thư viện raylib
+    coChu = 26; // cở chử mặt định 26
     chiNhapSo = false;
 }
 hopChu ::~hopChu() {}
@@ -57,6 +56,27 @@ void hopChu::capNhatTT()
             chu += kyTuVuaNhan;
         }
     }
+}
+
+NTN hopChu::lNTN()
+{
+    NTN ntn;
+
+    size_t pos1 = chu.find('/');
+    size_t pos2 = chu.rfind('/');
+
+    if (pos1 != string::npos && pos2 != string::npos && pos1 != pos2)
+    {
+        ntn.ngay = stoi(chu.substr(0, pos1));
+        ntn.thang = stoi(chu.substr(pos1 + 1, pos2 - pos1 - 1));
+        ntn.nam = stoi(chu.substr(pos2 + 1));
+    }
+    else
+    {
+        ntn.ngay = ntn.thang = ntn.nam = 0;
+    }
+
+    return ntn;
 }
 
 string hopChu::layChu() { return chu; }

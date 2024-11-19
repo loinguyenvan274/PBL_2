@@ -41,7 +41,7 @@ void quanLyGiaoDien::bieuDien()
     DrawTextureEx(logoBachKhoa, Vector2{1350, 3}, 0.0f, 0.18f, WHITE);
     DrawTextureEx(logoKhoaCntt, Vector2{1400, 3}, 0.0f, 0.18f, WHITE);
 
-    gDHienThi->bieuDien(); // Truy cập con trỏ
+    gDHienThi->bieuDien();
 }
 void quanLyGiaoDien::capNhatTT()
 {
@@ -80,7 +80,7 @@ void quanLyGiaoDien::capNhatTT()
         flagGD = flagGDMoi;
     }
     thanhChuyen->vungHoatDong(0, 0, 0, 2);
-    gDHienThi->capNhatTT(); // Truy cập con trỏ
+    gDHienThi->capNhatTT();
 }
 void quanLyGiaoDien::xoa()
 {
@@ -90,7 +90,7 @@ void quanLyGiaoDien::xoa()
         gDHienThi = nullptr;
     }
 }
-void quanLyGiaoDien::doi(giaoDien *gDHienThi) // Nhận con trỏ
+void quanLyGiaoDien::doi(giaoDien *gDHienThi)
 {
     xoa();
     this->gDHienThi = gDHienThi;

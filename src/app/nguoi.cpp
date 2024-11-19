@@ -15,6 +15,10 @@ void Nguoi::cDanhTinh(const string &hoVaTenDV, const string &maDV, const string 
 void Nguoi::cHoVaTen(const string &hoVaTenDV) { hoVaTen = hoVaTenDV; }
 void Nguoi::cMa(const string &maDV) { ma = maDV; }
 void Nguoi::cNgaySinh(const string &ngaySinhDV) { ngaySinh = ngaySinhDV; }
+void Nguoi::cSDT(const string &sDT) { this->sDT = sDT; }
+void Nguoi::cGioiTinh(const string &gioiTinh) { this->gioiTinh = gioiTinh; }
+string Nguoi::lSDT() const { return sDT; }
+string Nguoi::lGioiTinh() const { return gioiTinh; }
 string Nguoi::lHoVaTen() const { return hoVaTen; }
 string Nguoi::lMa() const { return ma; }
 string Nguoi::lngaySinh() const { return ngaySinh; }

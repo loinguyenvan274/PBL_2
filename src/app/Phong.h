@@ -11,6 +11,7 @@ private:
     unsigned int soNguoiToiDa;
     unsigned int soNguoiHienTai;
     float dienCSDT, dienCSCT, nuocCSDT, nuocCSCT;
+    unsigned long giaPhong;
     bool nopTienDN;
 
 public:
@@ -24,6 +25,7 @@ public:
     const float &lNuocCSDT() const;
     const float &lNuocCSCT() const;
     const bool &daNopTienDN() const;
+    const unsigned long &lGiaPhong() const;
     bool operator==(const Phong &) const;
     Phong &operator=(const Phong &);
 
@@ -34,6 +36,7 @@ public:
     void cDienCSDT(const float &);
     void cDienCSCT(const float &);
     void cNuocCSDT(const float &);
+    void cGiaPhong(const unsigned long &);
     void cNuocCSCT(const float &);
     void cNopTienDN(const bool &);
 

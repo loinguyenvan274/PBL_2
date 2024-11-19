@@ -22,7 +22,7 @@ void hop::cKichCo(const float &with, const float &height)
 }
 void hop::cMauNen(const Color &mauNenDV) { mauNen = mauNenDV; }
 void hop::cMauVien(const Color &mauVienDV) { mauNen = mauVienDV; }
-Vector2 hop::layViTri() { return Vector2{hinhThai.x, hinhThai.y}; }
+Vector2 hop::layViTri() const { return Vector2{hinhThai.x, hinhThai.y}; }
 Vector2 hop::layKichCo() { return Vector2{hinhThai.width, hinhThai.height}; }
 void hop::cDoDayVien(float doDayDV) { doDayVien = doDayDV; }
 void hop::cDoBoVien(const float &doBoVienDV) { doBoVien = doBoVienDV; };

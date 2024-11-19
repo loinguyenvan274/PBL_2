@@ -14,12 +14,12 @@ enum flagGiaoDien
 class quanLyGiaoDien
 {
 private:
-    enum flagGiaoDien flagGD;
-    enum flagGiaoDien flagGDMoi;
+    flagGiaoDien flagGD;
+    flagGiaoDien flagGDMoi;
 
     Texture2D logoBachKhoa;
     Texture2D logoKhoaCntt;
-    
+
     QuanLyKTX &quanLyKTX;
 
     giaoDien *gDHienThi;

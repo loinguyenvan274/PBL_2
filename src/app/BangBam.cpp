@@ -42,6 +42,7 @@ void BangBam<T>::xoaTatCa()
 			delete tamThoi;
 		}
 	}
+	soPhanTu = 0;
 }
 template <typename T>
 BangBam<T>::~BangBam()
@@ -151,6 +152,13 @@ bool BangBam<T>::xoaPhanTu(const std::string &maBam)
 	}
 
 	return false;
+}
+template <typename T>
+
+void BangBam<T>::thayThe(const T &phanTu, const std::string &maMoi, const std::string &maCu)
+{
+	xoaPhanTu(maCu);
+	themPhanTu(phanTu, maMoi);
 }
 
 #endif

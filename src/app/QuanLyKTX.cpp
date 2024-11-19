@@ -35,6 +35,10 @@ void QuanLyKTX::xoaSinhVien(const string &maSinhVien)
         phongChuaSinhVien->cSoNguoiHienTai(phongChuaSinhVien->lSoNguoiHienTai() - 1);
 }
 
+const SinhVien *QuanLyKTX::timSinhVien(const string &ma) const
+{
+    return dsSinhVien.timPhanTu(ma);
+}
 void QuanLyKTX::xoaPhong(const string &maPhong)
 {
     dsPhong.xoaPhanTu(maPhong);
@@ -70,6 +74,10 @@ const Vector<Phong> QuanLyKTX::timPhongGiong(const string &chuoiCon)
 TrangThaiSV QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &sinhVienMoi)
 {
     // những cái return false này sau này có thê chỉnh sửa mới một thông báo khác chứ không phải tại sao gom lại các trường hợp cho khỏe
+    if (sinhVienCu.lMa() == "")
+    {
+        return themSinhVien(sinhVienMoi);
+    }
     if (!(sinhVienCu == sinhVienMoi))
     {
         if (dsSinhVien.timPhanTu(sinhVienMoi.lMa()) != KHONG_TIM_THAY)
@@ -103,9 +111,7 @@ TrangThaiSV QuanLyKTX::doiSinhVien(const SinhVien &sinhVienCu, const SinhVien &s
             phongsinhVienMoi->cSoNguoiHienTai(phongsinhVienMoi->lSoNguoiHienTai() + 1);
         }
     }
-    SinhVien *viTriSV = dsSinhVien.timPhanTu(sinhVienCu.lMa());
-    if (viTriSV != nullptr)
-        *viTriSV = sinhVienMoi;
+    dsSinhVien.thayThe(sinhVienMoi, sinhVienMoi.lMa(), sinhVienCu.lMa());
     return HOP_LE;
 }
 void QuanLyKTX::xoaSinhVienOPhong(const string &maPhong)
@@ -122,15 +128,9 @@ void QuanLyKTX::xoaSinhVienOPhong(const string &maPhong)
 bool QuanLyKTX::doiPhong(const Phong &phongCu, const Phong &phongMoi)
 {
 
-    if (((phongCu == phongMoi) || (dsPhong.timPhanTu(phongMoi.lMaPhong()) == KHONG_TIM_THAY) && phongMoi.lMaPhong() != ""))
+    if ((phongCu == phongMoi && phongMoi.lSoNguoiToiDa() >= phongCu.lSoNguoiHienTai()) || (dsPhong.timPhanTu(phongMoi.lMaPhong()) == KHONG_TIM_THAY && phongMoi.lMaPhong() != "" && phongCu.lSoNguoiHienTai() == 0))
     {
-        Phong *viTriPhong = dsPhong.timPhanTu(phongCu.lMaPhong());
-        if (viTriPhong != nullptr)
-            *viTriPhong = phongMoi;
-        if (!(phongCu == phongMoi))
-        {
-            xoaSinhVienOPhong(phongCu.lMaPhong());
-        }
+        dsPhong.thayThe(phongMoi, phongMoi.lMaPhong(), phongCu.lMaPhong());
         return true;
     }
     return false;

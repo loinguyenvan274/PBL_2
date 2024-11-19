@@ -6,9 +6,7 @@ class hop
 {
 protected:
     Rectangle hinhThai; // vị trí ô, chiều dài, chiều rộng
-
     float doDayVien;
-
     Color mauNen;  // màu trong ô
     Color mauVien; // màu đường viền
 
@@ -27,7 +25,7 @@ public:
     void cDoBoVien(const float &);
     void cRangBuoc(const bool &);
 
-    Vector2 layViTri();
+    Vector2 layViTri() const;
     Vector2 layKichCo();
     const bool &laDuocChon();
     const bool &laRangBuoc();

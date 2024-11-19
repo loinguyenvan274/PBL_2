@@ -33,6 +33,7 @@ public:
     const Vector<T *> layCacPhanTu();
     Diem<T> *timDiem(const std::string &) const;
     T *timPhanTu(const std::string &) const;
+    void thayThe(const T &,const std::string &, const std::string &);
     bool xoaPhanTu(const std::string &);
     void xoaTatCa();
     ~BangBam();

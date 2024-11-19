@@ -45,6 +45,7 @@ public:
     static bool soSanhMaPhongSV(const SinhVien &, const string &);
     const Vector<Phong> timPhongGiong(const string &);
     const Phong *timPhong(const string &) const;
+    const SinhVien *timSinhVien(const string &) const;
     const Vector<Phong> lDanhSachPhong();
     const Vector<SinhVien> lDanhSachSinhVien();
 

@@ -11,6 +11,7 @@ private:
     int soHang, soCot;
     int cachHang, cachCot;                      // khoảng các giữa các ô trong cột
     int chanTren, chanDuoi, chanTRai, chanPhai; // dùng để xác định giới hạn vẽ
+
     bool tieuDe;
     Vector2 viTri;     // ví trí của bảng
     hopChu **hop;      // này là  cấp pháp ra nhiều hộp
