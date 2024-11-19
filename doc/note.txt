@@ -1,4 +1,5 @@
+hiển thị số phòng trên bản 
+tìm kiếm phòng, phòng đầy, phòng trống , tất cả,
 
-tiền phòng, loại phòng bỏ đi vì nó được tính bằng cách lấy bên phòng 
+chinh phan dao dien cua so con, 
 
-trong giao diẹn phòng tôi da -> loại Phong , thêm cột mưcs gia tiên 

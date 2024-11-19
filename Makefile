@@ -10,7 +10,7 @@ path_build = ./build/index.exe
 paht_test = ./test/test.exe
 
 compile:
-	$(cc) $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
+	$(cc) -g $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
 	$(path_build)
 
 tt:
@@ -18,7 +18,7 @@ tt:
 	$(paht_test)
 
 debug:
-	$(cc) -g  $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
+#$(cc) -g  $(all_file_compile) -o $(path_build) -L$(path_lib) -I$(path_include) $(lInclude)
 	gdb $(path_build)
 run:
 	$(path_build)

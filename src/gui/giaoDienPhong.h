@@ -14,7 +14,10 @@ private:
     Phong lPhongTuBang(const int &) const;
     void capNhatDanhSachPhong();
     void cuaSoThongBaoKHL();
-    void taoBang(const unsigned int& );
+    void taoBang(const unsigned int &);
+    NutTuyChon cacNutChon;
+    hopChu boxHTSoPhongOBang;
+    void taoNutTuyChon();
 
 public:
     giaoDienPhong(QuanLyKTX &quanLyKTX);

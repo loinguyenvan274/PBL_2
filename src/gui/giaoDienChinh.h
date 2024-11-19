@@ -4,12 +4,14 @@
 #include "raylib.h"
 #include "giaoDien.h"
 #include "cuaSoCon.h"
+
 class giaoDienChinh : public giaoDien
 {
 private:
     cuaSoCon cuaSoChinhSua;
     hopChu tuyChonTimKiem;
     hopChu boxHTSoNguoiOBang;
+    NutTuyChon cacNutChon;
     unsigned int boDemMucChon; // cứ mỗi lần ấn vvaof tùy chọn tìm kiếm thì bộ đếm tăng lên 1 và ta chỉ cần % 3 là đuọc
     TrangThaiSV trangThaiSV;
     SinhVien sinhVienCu;
@@ -25,6 +27,8 @@ private:
     bool flagChinhSinhVien;
     void capNhatTTChinh();
     void cNLoaiPhongVaGiaPhong();
+    void taoNutTuyChon();
+    Vector<SinhVien> dsSinhVienTimKiem();
 
 public:
     giaoDienChinh(QuanLyKTX &);

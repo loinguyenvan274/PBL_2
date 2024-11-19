@@ -36,7 +36,7 @@ void hop::cTrangThaiChon(const bool &TTChon) { tTchon = TTChon; }
 void hop::bieuDien()
 {
     float doDayVien;
-    if (tTchon || coChuotChi)
+    if (tTchon || coChuotChi || rangBuoc)
         doDayVien = this->doDayVien;
     else
         doDayVien = 0;

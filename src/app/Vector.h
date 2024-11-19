@@ -9,17 +9,74 @@
 typedef unsigned long long size_t;
 using namespace std;
 
+#include <iostream>
+#include <string>
+using namespace std;
+
 struct NTN
 {
     int ngay;
     int thang;
     int nam;
+    NTN()
+    {
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+        this->nam = 1900 + ltm->tm_year;
+        this->thang = 1 + ltm->tm_mon;
+        this->ngay = ltm->tm_mday;
+    }
+    int laySoNgayTrongThang(int thang, int nam) const
+    {
+        if (thang == 4 || thang == 6 || thang == 9 || thang == 11)
+            return 30;
+        if (thang == 2)
+        {
+            if ((nam % 4 == 0 && nam % 100 != 0) || (nam % 400 == 0))
+                return 29;
+            else
+                return 28;
+        }
+        return 31;
+    }
+
     string chuyenSangString() const
     {
         return to_string(ngay) + "/" + to_string(thang) + "/" + to_string(nam);
     }
-};
+    NTN &operator+=(int soThang)
+    {
+        thang += soThang;
+        while (thang > 12)
+        {
+            thang -= 12;
+            nam++;
+        }
+        while (thang < 1)
+        {
+            thang += 12;
+            nam--;
+        }
 
+        int soNgayTrongThang = laySoNgayTrongThang(thang, nam);
+        if (ngay > soNgayTrongThang)
+            ngay = soNgayTrongThang;
+
+        return *this;
+    }
+    bool operator<(const NTN &khac) const
+    {
+        if (nam != khac.nam)
+            return nam < khac.nam;
+        if (thang != khac.thang)
+            return thang < khac.thang;
+        return ngay < khac.ngay;
+    }
+    bool operator>(const NTN &khac) const
+    {
+        return khac < *this;
+    }
+};
 template <typename T>
 class Vector
 {

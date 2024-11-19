@@ -128,9 +128,19 @@ void QuanLyKTX::xoaSinhVienOPhong(const string &maPhong)
 bool QuanLyKTX::doiPhong(const Phong &phongCu, const Phong &phongMoi)
 {
 
+    Phong phongMoiDayDu = phongMoi;
     if ((phongCu == phongMoi && phongMoi.lSoNguoiToiDa() >= phongCu.lSoNguoiHienTai()) || (dsPhong.timPhanTu(phongMoi.lMaPhong()) == KHONG_TIM_THAY && phongMoi.lMaPhong() != "" && phongCu.lSoNguoiHienTai() == 0))
     {
-        dsPhong.thayThe(phongMoi, phongMoi.lMaPhong(), phongCu.lMaPhong());
+        const Phong *phongCuChinhThuc = dsPhong.timPhanTu(phongCu.lMaPhong());
+        if (phongCuChinhThuc != nullptr && !(phongCu == phongMoi))
+        {
+            phongMoiDayDu.cDienCSDT(phongCuChinhThuc->lDienCSDT());
+            phongMoiDayDu.cDienCSCT(phongCuChinhThuc->lDienCSCT());
+            phongMoiDayDu.cNuocCSDT(phongCuChinhThuc->lNuocCSDT());
+            phongMoiDayDu.cNuocCSCT(phongCuChinhThuc->lNuocCSCT());
+            phongMoiDayDu.cNopTienDN(phongCuChinhThuc->daNopTienDN());
+        }
+        dsPhong.thayThe(phongMoiDayDu, phongMoiDayDu.lMaPhong(), phongCu.lMaPhong());
         return true;
     }
     return false;
@@ -142,10 +152,7 @@ void QuanLyKTX::xoaTatCaPhong()
     dsPhong.xoaTatCa();
     xoaTatCaSinhVien();
 }
-const Phong *QuanLyKTX::timPhong(const string &maPhong) const
-{
-    return dsPhong.timPhanTu(maPhong);
-}
+const Phong *QuanLyKTX::timPhong(const string &maPhong) const { return dsPhong.timPhanTu(maPhong); }
 
 const Vector<SinhVien> QuanLyKTX::lDanhSachSinhVien() { return dsSinhVien.layCacGiaTri(); };
 

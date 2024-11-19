@@ -3,12 +3,6 @@
 
 HopDongSinhVien::HopDongSinhVien()
 {
-    time_t now = time(0);
-    tm *ltm = localtime(&now);
-    ngaySinhVienVao.nam = 1900 + ltm->tm_year;
-    ngaySinhVienVao.thang = 1 + ltm->tm_mon;
-    ngaySinhVienVao.ngay = ltm->tm_mday;
-
     maPhong = "";
     // loaiPhong = "";
     soThangO = 0;
@@ -66,7 +60,7 @@ SinhVien &SinhVien::operator=(const SinhVien &sinhvien)
     sDT = sinhvien.lSDT();
     gioiTinh = sinhvien.lGioiTinh();
     ma = sinhvien.lMa();
-    hopDong.maPhong = sinhvien.lMaPhong();
+    hopDong = sinhvien.lHopDong();
     return *this;
 }
 const HopDongSinhVien &SinhVien::lHopDong() const { return hopDong; }

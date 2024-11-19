@@ -10,13 +10,23 @@ enum thuTuCot
     MO_TA,
     XOA
 };
+enum cacNutTuyChon
+{
+    N_TAT_CA,
+    N_PHONG_TRONG,
+    N_DAY_PHONG
+};
 giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
 {
+    taoNutTuyChon();
     sohangBD = quanLyKTX.lDanhSachPhong().lSoPhanTu();
     // table
     flagTimKiem = false;
     chuoiTimSoSanh = "";
     table = nullptr;
+    boxHTSoPhongOBang = hopChu({10, 70, 540, 40}, "", WHITE, MAU_LA_CAY, BLACK, font26);
+    boxHTSoPhongOBang.cDoBoVien(0.3f);
+    boxHTSoPhongOBang.cRangBuoc(true);
 
     capNhatBang(quanLyKTX.lDanhSachPhong());
     // hộp xóa
@@ -74,6 +84,7 @@ void giaoDienPhong::taoBang(const unsigned int &soDongToiDa)
 }
 void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
 {
+
     sohangBD = dSPhong.lSoPhanTu() + boxThem.laDuocChon();
 
     static unsigned soDongBang = 0;
@@ -85,9 +96,49 @@ void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
 
     if (boxThem.laDuocChon())
         capNhatDong(1, Phong());
+    unsigned demHangThoaMang = 0;
+    int viTRiPhong;
     for (int i = 1 + boxThem.laDuocChon(); i <= sohangBD; i++)
     {
-        capNhatDong(i, dSPhong[i - 1 - boxThem.laDuocChon()]);
+        viTRiPhong = i - 1 - boxThem.laDuocChon();
+
+        if (cacNutChon.dSNut[N_DAY_PHONG].laRangBuoc())
+        {
+            if (!(dSPhong[viTRiPhong].lSoNguoiToiDa() == dSPhong[viTRiPhong].lSoNguoiHienTai()))
+            {
+                cout << dSPhong[viTRiPhong].lSoNguoiToiDa() << "  " << dSPhong[viTRiPhong].lSoNguoiHienTai() << endl
+                     << endl
+                     << endl;
+                continue;
+            }
+        }
+        else if (cacNutChon.dSNut[N_PHONG_TRONG].laRangBuoc())
+        {
+            if (!(dSPhong[viTRiPhong].lSoNguoiToiDa() > dSPhong[viTRiPhong].lSoNguoiHienTai()))
+            {
+                cout << dSPhong[viTRiPhong].lSoNguoiToiDa() << "  " << dSPhong[viTRiPhong].lSoNguoiHienTai() << endl
+                     << endl
+                     << endl;
+                continue;
+            }
+        }
+        capNhatDong(demHangThoaMang++ + 1 + boxThem.laDuocChon(), dSPhong[viTRiPhong]);
+    }
+
+    sohangBD = demHangThoaMang + boxThem.laDuocChon();
+    boxHTSoPhongOBang.cNoiDung("  Số danh sách trên bảng: " + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachPhong().lSoPhanTu() + boxThem.laDuocChon()));
+}
+void giaoDienPhong::taoNutTuyChon()
+{
+    const int soNut = 3;
+    cacNutChon.dSNut = Vector<hopChu>(soNut);
+    float chieuDaiO = 150;
+    float khoangCachO = 20;
+    const char *noiDungNut[soNut] = {"Tất cả", "Phòng trống", "Phòng đầy"};
+    for (int i = 0; i < cacNutChon.dSNut.lSoPhanTu(); i++)
+    {
+        cacNutChon.dSNut[i] = hopChu({500 + (chieuDaiO + khoangCachO) * i, 140, chieuDaiO, 40}, noiDungNut[i], BLUE, YELLOW, BLACK, font26);
+        cacNutChon.dSNut[i].cDoBoVien(0.3f);
     }
 }
 void giaoDienPhong::capNhatDong(const int &viTri, const Phong &phong)
@@ -159,7 +210,7 @@ void giaoDienPhong::capNhatDanhSachPhong()
         else if (cot == XOA)
         {
             quanLyKTX.xoaPhong(phong.lMaPhong());
-            capNhatBang(quanLyKTX.lDanhSachPhong());
+            capNhatBang(quanLyKTX.timPhongGiong(chuoiTimSoSanh));
             (*table)(hang, cot).cTrangThaiChon(false);
         }
     }
@@ -179,16 +230,24 @@ void giaoDienPhong::capNhatTT()
     boxThem.capNhatTT();
     boxXoa.capNhatTT();
     boxTimKiem.capNhatTT();
+    cacNutChon.capNhatTT();
+    static int nutChonHienTai;
+
+    if (nutChonHienTai != cacNutChon.nutBiRangBuot)
+    {
+        nutChonHienTai = cacNutChon.nutBiRangBuot;
+        capNhatBang(quanLyKTX.timPhongGiong(chuoiTimSoSanh));
+    }
 
     if (boxThem.laDuocChon())
     {
-        capNhatBang(quanLyKTX.lDanhSachPhong());
+        capNhatBang(quanLyKTX.timPhongGiong(chuoiTimSoSanh));
         boxThem.cTrangThaiChon(false);
     }
     if (boxXoa.laDuocChon())
     {
         quanLyKTX.xoaTatCaPhong();
-        capNhatBang(quanLyKTX.lDanhSachPhong());
+        capNhatBang(quanLyKTX.timPhongGiong(chuoiTimSoSanh));
         boxXoa.cTrangThaiChon(false);
     }
     if (boxTimKiem.laDuocChon() && !flagTimKiem)
@@ -205,7 +264,7 @@ void giaoDienPhong::capNhatTT()
     if (boxTimKiem.laDuocChon() && chuoiTimSoSanh != boxTimKiem.layChu())
     {
         chuoiTimSoSanh = boxTimKiem.layChu();
-        capNhatBang(quanLyKTX.timPhongGiong(boxTimKiem.layChu()));
+        capNhatBang(quanLyKTX.timPhongGiong(chuoiTimSoSanh));
     }
 }
 void giaoDienPhong::bieuDien()
@@ -214,6 +273,8 @@ void giaoDienPhong::bieuDien()
     boxTimKiem.bieuDien();
     boxThem.bieuDien();
     boxXoa.bieuDien();
+    cacNutChon.bieuDien();
+    boxHTSoPhongOBang.bieuDien();
 
     static double thoiGianHenThongBao = 0;
     if (flagThongBaoKHL)
