@@ -6,7 +6,7 @@ all_file_compile = ./src/main.cpp $(all_cpp_app) ./src/gui/*.cpp ./src/gui/*.c
 path_include = ./include
 path_lib = ./lib
 lInclude = -lraylib -lwinmm -lgdi32 -lopengl32 -lole32 -lcomdlg32 
-path_build = ./build/index.exe
+path_build = ./index.exe
 paht_test = ./test/test.exe
 
 compile:
@@ -28,5 +28,5 @@ git_push:
 	git commit -m "m"
 	git push
 t:
-	g++ ./test/main.cpp -o ./test/main 
+	g++ ./test/main.cpp -o ./test/main  -L$(path_lib) -I$(path_include) $(lInclude)
 	./test/main

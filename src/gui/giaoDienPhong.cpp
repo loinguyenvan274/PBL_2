@@ -250,10 +250,6 @@ void giaoDienPhong::capNhatDanhSachPhong()
 void giaoDienPhong::capNhatTT()
 {
 
-    // // check
-    // if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-    //     cout << GetMouseY() << "  ---  " << GetMouseX() << endl;
-
     table->capNhatTT();
     table->vungHoatDong(1, 1, sohangBD, 2);
     table->vungHoatDong(1, 4, sohangBD, 6);
