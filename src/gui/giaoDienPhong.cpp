@@ -16,8 +16,42 @@ enum cacNutTuyChon
     N_PHONG_TRONG,
     N_DAY_PHONG
 };
-giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
+struct ngonNguHienThiGDP
 {
+    const char **roiRac;
+    const char **noiDungNut;
+};
+
+namespace GDP
+{
+    const char *roiRacViet[30] = {"Thêm phòng", "Xóa tất cả", "Tìm kiếm", "STT", "Phòng", "Loại phòng", "Hiện tại", "Giá Phòng/Tháng", "Mô tả", "Xóa", "  Số danh sách trên bảng: ", "Xóa", "Tìm kiếm", "              Phòng không hợp lệ"};
+    const char *noiDungNutViet[10] = {"Tất cả", "Phòng trống", "Phòng đầy"};
+
+    const char *roiRacAnh[30] = {"Add room", "Delete all", "Search", "No.", "Room", "Room type", "Current", "Price per month", "Description", "Delete", "Number of items on the table:", "Delete", "Search", "Invalid room"};
+    const char *noiDungNutAnh[10] = {"All", "Empty rooms", "Full rooms"};
+
+    const char *roiRacNhat[30] = {"部屋を追加", "すべて削除", "検索", "番号", "部屋", "部屋タイプ", "現在", "月額料金", "説明", "削除", "表のリスト数:", "削除", "検索", "無効な部屋"};
+    const char *noiDungNutNhat[10] = {"すべて", "空室", "満室"};
+    const ngonNguHienThiGDP tiengViet{roiRacViet, noiDungNutViet};
+    const ngonNguHienThiGDP tiengAnh{roiRacAnh, roiRacAnh};
+    const ngonNguHienThiGDP tiengNhat{roiRacNhat, roiRacNhat};
+}
+const ngonNguHienThiGDP *chuGDP;
+
+giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien(quanLyKTX, heThong)
+{
+    switch (this->heThong->ngonNgu)
+    {
+    case 0:
+        chuGDP = &GDP::tiengViet;
+        break;
+    case 1:
+        chuGDP = &GDP::tiengAnh;
+        break;
+    case 2:
+        chuGDP = &GDP::tiengNhat;
+        break;
+    }
     taoNutTuyChon();
     sohangBD = quanLyKTX.lDanhSachPhong().lSoPhanTu();
     // table
@@ -30,15 +64,15 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX)
 
     capNhatBang(quanLyKTX.lDanhSachPhong());
     // hộp xóa
-    boxThem = hopChu({1030, 134, 210, 40}, "      Thêm phòng", BLUE, YELLOW, BLACK);
+    boxThem = hopChu({1030, 134, 210, 40}, chuGDP->roiRac[0], BLUE, YELLOW, BLACK);
     boxThem.cKieuChu(font26);
     boxThem.cDoBoVien(0.3f);
 
-    boxXoa = hopChu({1260, 134, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK);
+    boxXoa = hopChu({1260, 134, 210, 40}, chuGDP->roiRac[1], RED, YELLOW, BLACK);
     boxXoa.cKieuChu(font26);
     boxXoa.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
+    boxTimKiem = hopChu({70, 134, 400, 40}, chuGDP->roiRac[2], BLUE, YELLOW, BLACK);
     boxTimKiem.cKieuChu(font26);
     boxTimKiem.cDoBoVien(0.3f);
 
@@ -61,21 +95,21 @@ void giaoDienPhong::taoBang(const unsigned int &soDongToiDa)
         table->cMauTheoHang(i, {32, 178, 170, 255});
     }
 
-    (*table)(0, STT).cNoiDung("STT");
-    (*table)(0, MA_PHONG).cNoiDung("Phòng");
-    (*table)(0, LOAI_PHONG).cNoiDung("Loại phòng");
-    (*table)(0, HIEN_TAI).cNoiDung("Hiện tại");
-    (*table)(0, GIA_PHONG).cNoiDung("Giá Phòng/Tháng");
-    (*table)(0, MO_TA).cNoiDung("Mô tả");
-    (*table)(0, XOA).cNoiDung("Xóa");
+    (*table)(0, STT).cNoiDung(chuGDP->roiRac[3]);
+    (*table)(0, MA_PHONG).cNoiDung(chuGDP->roiRac[4]);
+    (*table)(0, LOAI_PHONG).cNoiDung(chuGDP->roiRac[5]);
+    (*table)(0, HIEN_TAI).cNoiDung(chuGDP->roiRac[6]);
+    (*table)(0, GIA_PHONG).cNoiDung(chuGDP->roiRac[7]);
+    (*table)(0, MO_TA).cNoiDung(chuGDP->roiRac[8]);
+    (*table)(0, XOA).cNoiDung(chuGDP->roiRac[9]);
 
     table->cCot(STT, 60);
     table->cCot(MA_PHONG, 220);
     table->cCot(LOAI_PHONG, 170);
     table->cCot(HIEN_TAI, 170);
     table->cCot(GIA_PHONG, 230);
-    table->cCot(MO_TA, 550);
-    table->cCot(XOA, 60);
+    table->cCot(MO_TA, 530);
+    table->cCot(XOA, 80);
     for (int i = 0; i < soDongToiDa; i++)
     {
         (*table)(i, LOAI_PHONG).cChiNhapSo(true);
@@ -106,9 +140,6 @@ void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
         {
             if (!(dSPhong[viTRiPhong].lSoNguoiToiDa() == dSPhong[viTRiPhong].lSoNguoiHienTai()))
             {
-                cout << dSPhong[viTRiPhong].lSoNguoiToiDa() << "  " << dSPhong[viTRiPhong].lSoNguoiHienTai() << endl
-                     << endl
-                     << endl;
                 continue;
             }
         }
@@ -116,9 +147,6 @@ void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
         {
             if (!(dSPhong[viTRiPhong].lSoNguoiToiDa() > dSPhong[viTRiPhong].lSoNguoiHienTai()))
             {
-                cout << dSPhong[viTRiPhong].lSoNguoiToiDa() << "  " << dSPhong[viTRiPhong].lSoNguoiHienTai() << endl
-                     << endl
-                     << endl;
                 continue;
             }
         }
@@ -126,7 +154,7 @@ void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
     }
 
     sohangBD = demHangThoaMang + boxThem.laDuocChon();
-    boxHTSoPhongOBang.cNoiDung("  Số danh sách trên bảng: " + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachPhong().lSoPhanTu() + boxThem.laDuocChon()));
+    boxHTSoPhongOBang.cNoiDung(chuGDP->roiRac[10] + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachPhong().lSoPhanTu()));
 }
 void giaoDienPhong::taoNutTuyChon()
 {
@@ -134,10 +162,10 @@ void giaoDienPhong::taoNutTuyChon()
     cacNutChon.dSNut = Vector<hopChu>(soNut);
     float chieuDaiO = 150;
     float khoangCachO = 20;
-    const char *noiDungNut[soNut] = {"Tất cả", "Phòng trống", "Phòng đầy"};
+
     for (int i = 0; i < cacNutChon.dSNut.lSoPhanTu(); i++)
     {
-        cacNutChon.dSNut[i] = hopChu({500 + (chieuDaiO + khoangCachO) * i, 140, chieuDaiO, 40}, noiDungNut[i], BLUE, YELLOW, BLACK, font26);
+        cacNutChon.dSNut[i] = hopChu({515 + (chieuDaiO + khoangCachO) * i, 134, chieuDaiO, 40}, chuGDP->noiDungNut[i], BLUE, YELLOW, BLACK, font26);
         cacNutChon.dSNut[i].cDoBoVien(0.3f);
     }
 }
@@ -149,7 +177,7 @@ void giaoDienPhong::capNhatDong(const int &viTri, const Phong &phong)
     (*table)(viTri, HIEN_TAI).cNoiDung(to_string(phong.lSoNguoiHienTai()));
     (*table)(viTri, GIA_PHONG).cNoiDung(to_string(phong.lGiaPhong()));
     (*table)(viTri, MO_TA).cNoiDung(phong.lMoTa());
-    (*table)(viTri, XOA).cNoiDung("Xóa");
+    (*table)(viTri, XOA).cNoiDung(chuGDP->roiRac[11]);
 }
 Phong giaoDienPhong::lPhongTuBang(const int &viTri) const
 {
@@ -257,7 +285,7 @@ void giaoDienPhong::capNhatTT()
     }
     if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
     {
-        boxTimKiem.cNoiDung("          Tìm kiếm");
+        boxTimKiem.cNoiDung(chuGDP->roiRac[12]);
         flagTimKiem = false;
     }
 
@@ -291,7 +319,7 @@ void giaoDienPhong::bieuDien()
 void giaoDienPhong::cuaSoThongBaoKHL()
 {
     hop nenSauCuaSo(Rectangle{1031, 57, 439, 70}, RED);
-    hopChu chuThongBao(Rectangle{1036, 62, 429, 60}, "              Phòng không hợp lệ", WHITE);
+    hopChu chuThongBao(Rectangle{1036, 62, 429, 60}, chuGDP->roiRac[13], WHITE);
     chuThongBao.cKieuChu(font26);
     nenSauCuaSo.cDoBoVien(0.3f);
     chuThongBao.cDoBoVien(0.3f);

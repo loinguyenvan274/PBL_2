@@ -5,7 +5,7 @@
 
 Font giaoDien::font26;
 
-const char *dDFileFontChu = "assets/roboto.ttf";
+const char *dDFileFontChu = "assets/japanese.ttf";
 const char *dDFileSinhVien = "data/sinhVien.csv";
 const char *dDFilePhong = "data/Phong.csv";
 

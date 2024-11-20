@@ -1,6 +1,6 @@
 #include "giaoDien.h"
 #include <cmath>
-giaoDien::giaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX), chuoiTimSoSanh(""){}
+giaoDien::giaoDien(QuanLyKTX &quanLyKTX, HeThong &heThong) : quanLyKTX(quanLyKTX), heThong(&heThong), chuoiTimSoSanh("") {}
 const string giaoDien::floatSangString(const float &soThuc, const int &soSoLamTron)
 {
     float sThuc = double(long((soThuc * pow(10.0, soSoLamTron) / pow(10.0, soSoLamTron))));

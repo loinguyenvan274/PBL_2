@@ -16,12 +16,58 @@ enum cotBang
     C_DA_NOP
 
 };
-
+enum nutTTNopTien
+{
+    TAT_CA,
+    DA_NOP,
+    CHUA_NOP,
+};
 #define SO_COT_BANG 12
 
-gDDienNuoc ::gDDienNuoc(QuanLyKTX &quanLyKTX, Vector<Vector<string>> &heThong) : giaoDien(quanLyKTX)
+struct hienThiChuGDDN
 {
-    this->heThong = &heThong;
+    const char **roiRac;
+    const char **tieuDe;
+    const char **noiDungNut;
+};
+
+namespace GDDN
+{
+
+    const char *roiRacViet[30] = {"Tìm kiếm", "Rồi", "Chưa", "Chưa", "Rồi", "  Số danh sách trên bảng: ", "Thiết lập lại", "Thiết lập giá điện nước", "Bậc ", "Mức bật điện", "Giá điện", "Giá nước", "Thiết lập lại", "Giá điện nước", "Tìm kiếm", "         Thiết lập lại tất cả", "Giữ cột CSCT và chuyển sang CSDT", " Xuất file"};
+    const char *tieuDeViet[20] = {"STT", "Phòng", "Điện", "Nước", "Tổng nộp", "Đã nộp", "", "", "CSDT", "CSCT", "Lượng.TT", "T.Tiền", "CSDT", "CSCT", "Lượng.TT", "T.Tiền", "", "", ""};
+    const char *noiDungNutViet[10] = {"Tất cả", "ĐÃ nộp", "Chưa nộp"};
+
+    const char *roiRacAnh[30] = {"Search", "Done", "Not yet", "Not yet", "Done", "Number of items on the table:", "Reset", "Set electricity and water rates", "Tier", "Electricity tier", "Electricity price", "Water price", "Reset", "Elec & water prices", "Search", "Reset all", "Keep CSCT column and switch to CSDT", "Export file"};
+    const char *tieuDeAnh[20] = {"No.", "Room", "Electricity", "Water", "Total payment", "Paid", "", "", "CSDT", "CSCT", "Usage", "Amount", "CSDT", "CSCT", "Usage", "Amount", "", "", ""};
+    const char *noiDungNutAnh[10] = {"All", "Paid", "Unpaid"};
+
+    const char *roiRacNhat[30] = {"検索", "済み", "まだ", "まだ", "済み", "表のリスト数:", "リセット", "電気と水道料金の設定", "レベル", "電気レベル", "電気料金", "水道料金", "リセット", "電気と水道料金", "検索", "すべてリセット", "CSCT列を保持してCSDTに切り替える", "ファイルを出力"};
+    const char *tieuDeNhat[20] = {"番号", "部屋", "電気", "水道", "総支払", "支払済み", "", "", "CSDT", "CSCT", "使用量(電気)", "金額(電気)", "CSDT", "CSCT", "使用量(水道)", "金額(水道)", "", "", ""};
+    const char *noiDungNutNhat[10] = {"すべて", "支払済み", "未払い"};
+
+    hienThiChuGDDN tiengViet{roiRacViet, tieuDeViet, noiDungNutViet};
+    hienThiChuGDDN tiengAnh{roiRacAnh, tieuDeAnh, noiDungNutAnh};
+    hienThiChuGDDN tiengNhat{roiRacNhat, tieuDeNhat, noiDungNutNhat};
+
+}
+hienThiChuGDDN *chuGDDN;
+
+gDDienNuoc ::gDDienNuoc(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien(quanLyKTX, heThong)
+{
+
+    switch (this->heThong->ngonNgu)
+    {
+    case 0:
+        chuGDDN = &GDDN::tiengViet;
+        break;
+    case 1:
+        chuGDDN = &GDDN::tiengAnh;
+        break;
+    case 2:
+        chuGDDN = &GDDN::tiengNhat;
+        break;
+    }
 
     initDienNuoc(); // khởi tạo điện nước
 
@@ -32,10 +78,10 @@ void gDDienNuoc::initDienNuoc()
     const int soMucDien = 6, hMucBacDien = 0, hGiaDien = 1, hGiaNuoc = 2;
     for (int i = 0; i < soMucDien; i++)
     {
-        mucBacDien[i] = stoi((*heThong)[hMucBacDien][i]);
-        giaTienDien[i] = stod((*heThong)[hGiaDien][i]);
+        mucBacDien[i] = heThong->bacGiaDien[i];
+        giaTienDien[i] = heThong->giaDien[i];
     }
-    giaTienNuoc = stod((*heThong)[hGiaNuoc][0]);
+    giaTienNuoc = heThong->giaNuoc;
 }
 void gDDienNuoc::XuatFile()
 {
@@ -67,48 +113,38 @@ void gDDienNuoc::ghiFileVaoDiaChi(const char *duongDan)
     ghiFile.close();
 }
 
-void gDDienNuoc::capNhatTT()
+void gDDienNuoc::capNhatTTChinh()
 {
-
-    // if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-    //     cout << GetMouseY() << " ----- " << GetMouseX() << endl;
     table->capNhatTT();
     table->vungHoatDong(1, C_CS_DIEN_DT, sohangBD, C_CS_DIEN_CT);
     table->vungHoatDong(1, C_CS_NUOC_DT, sohangBD, C_CS_NUOC_CT);
     table->vungHoatDong(1, C_DA_NOP, sohangBD, C_DA_NOP);
     capNhatDanhSach(); // cap lai nhung gi nguoi dung nhap vao vao danh sach
-
-    boxReset.capNhatTT();
-    if (boxReset.laDuocChon())
-        boxReset.cRangBuoc(true);
-    if (boxReset.laRangBuoc())
-        cSResetCapNhatTT();
-
-    boxSetGiaTien.capNhatTT();
-    if (boxSetGiaTien.laDuocChon())
-    {
-        kTBangNhapGia();
-        boxSetGiaTien.cRangBuoc(true);
-    }
-    if (boxSetGiaTien.laRangBuoc())
-        cSTLGiaTienCapNhatTT();
+    cacNutChon.capNhatTT();
+    static int nutChonHienTai;
 
     boxXuatFile.capNhatTT();
+    boxTimKiem.capNhatTT();
+    if (nutChonHienTai != cacNutChon.nutBiRangBuot)
+    {
+        nutChonHienTai = cacNutChon.nutBiRangBuot;
+        capNhatBang(quanLyKTX.timPhongGiong(chuoiTimSoSanh));
+    }
+
     if (boxXuatFile.laDuocChon())
     {
         XuatFile();
         boxXuatFile.cTrangThaiChon(false);
     }
-
-    boxTimKiem.capNhatTT();
-    if (boxTimKiem.laDuocChon() && !flagTimKiem)
+    else if (boxTimKiem.laDuocChon() && !flagTimKiem)
     {
         boxTimKiem.cNoiDung("");
         flagTimKiem = true;
     }
+
     if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
     {
-        boxTimKiem.cNoiDung("          Tìm kiếm");
+        boxTimKiem.cNoiDung(chuGDDN->roiRac[0]);
         flagTimKiem = false;
     }
     // tìm kiếm
@@ -117,6 +153,40 @@ void gDDienNuoc::capNhatTT()
 
         chuoiTimSoSanh = boxTimKiem.layChu();
         capNhatBang(quanLyKTX.timPhongGiong(boxTimKiem.layChu()));
+    }
+}
+void gDDienNuoc::capNhatTT()
+{
+
+    // if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    //     cout << GetMouseY() << " ----- " << GetMouseX() << endl;
+
+    boxReset.capNhatTT();
+    boxSetGiaTien.capNhatTT();
+
+    if (boxReset.laDuocChon())
+    {
+        boxReset.cRangBuoc(true);
+        boxReset.cTrangThaiChon(false);
+    }
+    else if (boxSetGiaTien.laDuocChon())
+    {
+        kTBangNhapGia();
+        boxSetGiaTien.cRangBuoc(true);
+        boxSetGiaTien.cTrangThaiChon(false);
+    }
+
+    if (boxReset.laRangBuoc())
+    {
+        cSResetCapNhatTT();
+    }
+    else if (boxSetGiaTien.laRangBuoc())
+    {
+        cSTLGiaTienCapNhatTT();
+    }
+    else
+    {
+        capNhatTTChinh();
     }
 }
 void gDDienNuoc::capNhatDanhSach()
@@ -132,23 +202,25 @@ void gDDienNuoc::capNhatDanhSach()
         phongChinhSua.cNuocCSCT(stringSangFloat((*table)(hang, C_CS_NUOC_CT).layChu()));
         if (cot == C_DA_NOP)
         {
-            string daNopTien = "Rồi";
+            string daNopTien = chuGDDN->roiRac[1];
             bool boolDaNopTien = true;
             if (phongChinhSua.daNopTienDN())
             {
-                daNopTien = "Chưa";
+                daNopTien = chuGDDN->roiRac[2];
                 boolDaNopTien = false;
             }
             phongChinhSua.cNopTienDN(boolDaNopTien);
             (*table)(hang, C_DA_NOP).cNoiDung(daNopTien);
             (*table)(hang, C_DA_NOP).cTrangThaiChon(false);
         }
-        phongChinhSua.hienThiThongTin();
         quanLyKTX.doiPhong(phongChinhSua, phongChinhSua); // tham số dầu chỉ cần lấy mã phòng từ đó ma phòng truy ra phòng và được gán lại  bởi tham số thứ hai
+        capNhatTinhToan(hang, *quanLyKTX.timPhong((*table)(hang, 1).layChu()));
     }
 }
 void gDDienNuoc::bieuDien()
 {
+    cacNutChon.bieuDien();
+    boxHTSoPhongOBang.bieuDien();
     table->bieuDien(0, 0, sohangBD, 11);
     thanhDienNuoc->bieuDien(0, 0, 0, 5);
     boxTimKiem.bieuDien();
@@ -196,9 +268,9 @@ void gDDienNuoc::capNhatTinhToan(const int &vTriBang, const Phong &phong)
 }
 void gDDienNuoc::capNhatDong(const int &viTri, const Phong &phong)
 {
-    string nopTien = "Chưa";
+    string nopTien = chuGDDN->roiRac[3];
     if (phong.daNopTienDN())
-        nopTien = "Rồi";
+        nopTien = chuGDDN->roiRac[4];
     (*table)(viTri, C_STT).cNoiDung(to_string(viTri));
     (*table)(viTri, C_M_PHONG).cNoiDung(phong.lMaPhong());
     (*table)(viTri, C_CS_DIEN_DT).cNoiDung(floatSangString(phong.lDienCSDT()));
@@ -211,12 +283,44 @@ void gDDienNuoc::capNhatDong(const int &viTri, const Phong &phong)
 void gDDienNuoc::capNhatBang(const Vector<Phong> &dSPhong)
 {
     sohangBD = dSPhong.lSoPhanTu();
+    unsigned demHangThoaMang = 0;
+    int viTRiPhong;
     for (int i = 1; i <= sohangBD; i++)
     {
-        capNhatDong(i, dSPhong[i - 1]);
+        viTRiPhong = i - 1;
+        if (cacNutChon.dSNut[DA_NOP].laRangBuoc())
+        {
+            if (!(dSPhong[viTRiPhong].daNopTienDN()))
+            {
+                continue;
+            }
+        }
+        else if (cacNutChon.dSNut[CHUA_NOP].laRangBuoc())
+        {
+            if (dSPhong[viTRiPhong].daNopTienDN())
+            {
+                continue;
+            }
+        }
+        capNhatDong(demHangThoaMang++ + 1, dSPhong[viTRiPhong]);
     }
+    sohangBD = demHangThoaMang;
+    boxHTSoPhongOBang.cNoiDung(chuGDDN->roiRac[5] + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachPhong().lSoPhanTu()));
 }
 
+void gDDienNuoc::taoNutTuyChon()
+{
+    const int soNut = 3;
+    cacNutChon.dSNut = Vector<hopChu>(soNut);
+    float chieuDaiO = 110;
+    float khoangCachO = 20;
+
+    for (int i = 0; i < cacNutChon.dSNut.lSoPhanTu(); i++)
+    {
+        cacNutChon.dSNut[i] = hopChu({450 + (chieuDaiO + khoangCachO) * i, 134, chieuDaiO, 40}, chuGDDN->noiDungNut[i], BLUE, YELLOW, BLACK, font26);
+        cacNutChon.dSNut[i].cDoBoVien(0.3f);
+    }
+}
 void gDDienNuoc::resetCapNhatTT()
 {
 
@@ -250,7 +354,7 @@ void gDDienNuoc::cuaSoCon(const float &chieuDai, const float &chieuRong, const s
 
 void gDDienNuoc::cSResetBieuDien()
 {
-    cuaSoCon(900, 350, "                       Thiết lập lại"); // dùng để vẽ ra của sổ phía sau
+    cuaSoCon(900, 350, chuGDDN->roiRac[6]); // dùng để vẽ ra của sổ phía sau
     boxResetHet.bieuDien();
     boxResetCoLay.bieuDien();
 }
@@ -265,7 +369,7 @@ void gDDienNuoc::cSResetCapNhatTT()
 }
 void gDDienNuoc::cSTLGiaTienBieuDien()
 {
-    cuaSoCon(1000, 600, "      Thiết lập giá điện nước");
+    cuaSoCon(1200, 600, chuGDDN->roiRac[7]);
     BangSetGiaTienDien->bieuDien(0, 0, BangSetGiaTienDien->lSoHang() - 1, BangSetGiaTienDien->lSoCot() - 1);
 }
 void gDDienNuoc::cSTLGiaTienCapNhatTT()
@@ -286,24 +390,24 @@ void gDDienNuoc::cSTLGiaTienCapNhatTT()
         {
         case 1:
             mucBacDien[hang - 1] = soVuaNhap;
-            (*heThong)[hMucBacDien][hang - 1] = chuoiVuaNhap;
+            heThong->bacGiaDien[hang - 1] = stoi(chuoiVuaNhap);
             break;
         case 2:
             giaTienDien[hang - 1] = soVuaNhap;
-            (*heThong)[hGiaDien][hang - 1] = chuoiVuaNhap;
+            heThong->giaDien[hang - 1] = stoul(chuoiVuaNhap);
             break;
         case 4:
             giaTienNuoc = soVuaNhap;
-            (*heThong)[hGiaNuoc][0] = chuoiVuaNhap;
+            heThong->giaNuoc = stoul(chuoiVuaNhap);
             break;
         }
-        capNhatBang(quanLyKTX.lDanhSachPhong());
     }
 
     nutTat.capNhatTT();
     if (nutTat.laDuocChon())
     {
         delete BangSetGiaTienDien;
+        capNhatBang(quanLyKTX.lDanhSachPhong());
         BangSetGiaTienDien = nullptr;
         boxSetGiaTien.cRangBuoc(false);
     }
@@ -321,7 +425,7 @@ void gDDienNuoc::kTBangNhapGia()
         BangSetGiaTienDien->cMauTheoCot(4, MAU_LA_CAY);
 
         BangSetGiaTienDien->cMauTheoHang(0, MAU_LA_CAY);
-        string vietVaoO = "Bậc ";
+        string vietVaoO = chuGDDN->roiRac[8];
         for (int i = 1; i <= 6; i++)
         {
             (*BangSetGiaTienDien)(i, 0).cNoiDung(vietVaoO + to_string(i));
@@ -330,9 +434,9 @@ void gDDienNuoc::kTBangNhapGia()
             (*BangSetGiaTienDien)(i, 1).cChiNhapSo(true);
             (*BangSetGiaTienDien)(i, 2).cChiNhapSo(true);
         }
-        (*BangSetGiaTienDien)(0, 1).cNoiDung("Mức bật điện");
-        (*BangSetGiaTienDien)(0, 2).cNoiDung("  Giá điện");
-        (*BangSetGiaTienDien)(0, 4).cNoiDung("  Giá nước");
+        (*BangSetGiaTienDien)(0, 1).cNoiDung(chuGDDN->roiRac[9]);
+        (*BangSetGiaTienDien)(0, 2).cNoiDung(chuGDDN->roiRac[10]);
+        (*BangSetGiaTienDien)(0, 4).cNoiDung(chuGDDN->roiRac[11]);
         (*BangSetGiaTienDien)(1, 4).cNoiDung(floatSangString(giaTienNuoc));
         (*BangSetGiaTienDien)(1, 4).cMauNen(WHITE);
         (*BangSetGiaTienDien)(1, 4).cChiNhapSo(true);
@@ -340,6 +444,10 @@ void gDDienNuoc::kTBangNhapGia()
 }
 void gDDienNuoc::veKhoiTao()
 {
+    taoNutTuyChon();
+    boxHTSoPhongOBang = hopChu({10, 70, 540, 40}, "", WHITE, MAU_LA_CAY, BLACK, font26);
+    boxHTSoPhongOBang.cDoBoVien(0.3f);
+    boxHTSoPhongOBang.cRangBuoc(true);
     // tạo thanh điện nước
     thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 42});
     thanhDienNuoc->cKieuChu(font26, 26);
@@ -358,17 +466,16 @@ void gDDienNuoc::veKhoiTao()
     table->cGioHanBD(table->lViTri().y, GetScreenHeight()); // đặt giới hạn vì không thể vẽ hết tất các các ô, nếu vẽ hêt tức những ô ra ngoài vùng cửa sổ vũng vẽ => dư thừa và hiệu suất kém
 
     // Thiết lập tiêu đề cho bảng và thanh tiêu đề  cột
-    const string tieuDe[18] = {"STT", "Phòng", "Điện", "Nước", "Tổng nộp", "Đã nộp", "", "", "CSDT", "CSCT", "Lượng.TT", "T.Tiền", "CSDT", "CSCT", "Lượng.TT", "T.Tiền"};
     const int chieuDaiO[18] = {60, 120, 490, 490, 200, 100, 60, 120, 110, 110, 120, 150, 110, 110, 120, 150, 200, 100};
     for (int i = 0; i < 6; i++)
     {
         thanhDienNuoc->cCot(i, chieuDaiO[i]);
-        (*thanhDienNuoc)(0, i).cNoiDung(tieuDe[i]);
+        (*thanhDienNuoc)(0, i).cNoiDung(chuGDDN->tieuDe[i]);
     }
     for (int i = 6; i < 18; i++)
     {
         table->cCot(i - 6, chieuDaiO[i]);
-        (*table)(0, i - 6).cNoiDung(tieuDe[i]);
+        (*table)(0, i - 6).cNoiDung(chuGDDN->tieuDe[i]);
     }
     // thiết lập ô chỉ nhập số
     for (int i = 0; i < soDongToiDa; i++)
@@ -389,23 +496,23 @@ void gDDienNuoc::veKhoiTao()
     table->cMauTheoHang(0, MAU_LA_CAY);
     capNhatBang(quanLyKTX.lDanhSachPhong());
 
-    boxReset = hopChu({1260, 134, 210, 40}, "         Thiết lập lại", RED, YELLOW);
+    boxReset = hopChu({1260, 134, 170, 40}, chuGDDN->roiRac[12], RED, YELLOW);
     boxReset.cKieuChu(font26);
     boxReset.cDoBoVien(0.3f);
 
-    boxSetGiaTien = hopChu({1030, 134, 210, 40}, "Giá điện nước", BLUE, YELLOW);
+    boxSetGiaTien = hopChu({1070, 134, 170, 40}, chuGDDN->roiRac[13], BLUE, YELLOW);
     boxSetGiaTien.cKieuChu(font26);
     boxSetGiaTien.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({70, 134, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK);
+    boxTimKiem = hopChu({30, 134, 370, 40}, chuGDDN->roiRac[14], BLUE, YELLOW, BLACK);
     boxTimKiem.cKieuChu(font26);
     boxTimKiem.cDoBoVien(0.3f);
 
-    boxResetHet = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f - 40, 560, 60}, "         Thiết lập lại tất cả");
+    boxResetHet = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f - 40, 560, 60}, chuGDDN->roiRac[15]);
     boxResetHet.cKieuChu(font26);
     boxResetHet.cDoBoVien(0.3f);
 
-    boxResetCoLay = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f + 70, 560, 60}, "        Giữ cột CSCT và chuyển sang CSDT");
+    boxResetCoLay = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f + 70, 560, 60}, chuGDDN->roiRac[16]);
     boxResetCoLay.cKieuChu(font26);
     boxResetCoLay.cDoBoVien(0.3f);
 
@@ -413,7 +520,7 @@ void gDDienNuoc::veKhoiTao()
 
     BangSetGiaTienDien = nullptr;
 
-    boxXuatFile = hopChu({800, 134, 210, 40}, " Xuất file", BLUE, YELLOW);
+    boxXuatFile = hopChu({880, 134, 170, 40}, chuGDDN->roiRac[17], BLUE, YELLOW);
     boxXuatFile.cKieuChu(font26);
     boxXuatFile.cDoBoVien(0.3f);
 }

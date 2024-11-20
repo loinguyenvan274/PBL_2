@@ -18,6 +18,7 @@ enum TrangThaiSV
     PHONG_KHONG_TON_TAI,
     PHONG_DAY,
 };
+
 class QuanLyKTX
 {
 private:

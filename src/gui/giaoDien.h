@@ -22,6 +22,31 @@ struct NutTuyChon
     void capNhatTT();
     NutTuyChon();
 };
+enum NgonNgu
+{
+    TIENG_VIET,
+    TIENG_ANH,
+    TIENG_NHAT
+
+};
+enum ChuDeGiaoDien
+{
+    GD_SANG,
+    GD_TOI
+};
+struct HeThong
+{
+    unsigned int bacGiaDien[6];
+    unsigned long giaDien[6];
+    unsigned long giaNuoc;
+    string tenDonVi;
+    string diaChi;
+    unsigned long giaPhongMatDinh;
+    unsigned long giaCocMatDinh;
+    NgonNgu ngonNgu;
+    ChuDeGiaoDien chuDeGD;
+};
+
 class giaoDien
 {
 protected:
@@ -35,13 +60,14 @@ protected:
     hopChu boxThem, boxXoa, boxTimKiem;
     int sohangBD;
     bool flagTimKiem;                                             // dùng để tìm kiếm
-    string chuoiTimSoSanh;                                        // dung để kiểm tra cập nhật tìm kiếm nếu chuổi vừa mới nhật khác chuổi vừa nảy thì sẽ tìm kiếm lại
+    string chuoiTimSoSanh;
+    HeThong *heThong;                                             // dung để kiểm tra cập nhật tìm kiếm nếu chuổi vừa mới nhật khác chuổi vừa nảy thì sẽ tìm kiếm lại
     const string floatSangString(const float &, const int & = 4); // loai bỏ số 000 dư thừa phía sau;
     const float stringSangFloat(const string &);
 
 public:
     static Font font26;
-    giaoDien(QuanLyKTX &);
+    giaoDien(QuanLyKTX &, HeThong&);
     virtual void capNhatTT() = 0;
     virtual void bieuDien() = 0;
     virtual ~giaoDien() = default;

@@ -8,8 +8,17 @@ enum flagGiaoDien
 {
     FGD_SINH_VIEN,
     FGD_PHONG,
-    FGD_DIEN_NUOC
+    FGD_DIEN_NUOC,
+    FGD_THIET_LAP
 };
+/*
+tên đơn vị,
+địa chỉ,
+giá Phòng mặt định
+giá tiền thế chấp mặt định
+ngôn ngữ,
+giao diện (sang,tối)
+*/
 
 class quanLyGiaoDien
 {
@@ -23,8 +32,11 @@ private:
     QuanLyKTX &quanLyKTX;
 
     giaoDien *gDHienThi;
-    Vector<Vector<string>> heThong; // lưu giá tiền điện / tiền nước / bật tiền điện tiền, biến hệ thông...
+    HeThong heThong;
     Bang *thanhChuyen;
+    void initHeThong();
+    void luuHeThong();
+    void capNhatGDVoiHeThong();
 
 public:
     quanLyGiaoDien(QuanLyKTX &);

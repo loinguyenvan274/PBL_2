@@ -1,5 +1,1 @@
-hiển thị số phòng trên bản 
-tìm kiếm phòng, phòng đầy, phòng trống , tất cả,
-
-chinh phan dao dien cua so con, 
-
+ユニット名住所部屋の料金(デフォルト)保証金 (デフォルト)言語インターフェースライトダーク日本語

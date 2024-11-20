@@ -25,9 +25,64 @@ enum cacNutTuyChon
     N_HET_HAN,
     N_CON_HAN
 };
-const char *chuCacOCuaSoCon[20] = {"Họ và tên:", "CCCD:", "SĐT:", "Giới tính:", "Ngày sinh:", "Ngày vào ở:", "Mã Phòng:", "Loại phòng:", "Số tháng ở:", "Tiền phòng:", "Tiền cọc:", "Xóa", "Thoát", "Lưu", "Xuất hợp đồng", "Thêm hình ảnh"};
-giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX), flagChinhSinhVien(false)
+
+struct hienThiChuGDC
 {
+    const char **chuCacOCuaSoCon;
+    const char **cacNutCongCu;
+    const char **noiDungNut;
+    const char **tieuDe;
+    const char **noiDungRoiRac;
+    const char **noiDungOTuyChon;
+    const string *noiDungThongBao;
+};
+namespace GDC
+{
+    const char *chuCacOCuaSoConNhat[20] = {"氏名:", "CCCD:", "電話番号:", "性別:", "生年月日:", "入居日:", "部屋番号:", "部屋タイプ:", "入居月数:", "家賃:", "保証金:", "削除", "退出", "保存", "契約書の出力", "画像を追加"};
+    const char *cacNutCongCuNhat[20] = {"学生を追加", "すべて削除", "検索", "名前"};
+    const char *noiDungNutNhat[20] = {"すべて", "期限切れ", "有効"};
+    const char *tieuDeNhat[] = {"番号", "氏名", "生年月日", "CCCD", "電話番号", "性別", "部屋番号", "編集"};
+    const char *noiDungRoiRacNhat[20] = {"部屋", "人", "編集", "表の行数:", "検索"};
+    const char *noiDungOTuyChonNhat[3] = {"名前", "CCCD", "部屋番号"};
+    const string noiDungThongBaoNhat[5] = {"有効", "重複コード", "無効なコード", "存在しない部屋", "部屋が満員"};
+
+    const char *chuCacOCuaSoConAnh[20] = {"Full name:", "ID number:", "Phone number:", "Gender:", "Date of birth:", "Move-in date:", "Room number:", "Room type:", "Months of stay:", "Room fee:", "Deposit:", "Delete", "Exit", "Save", "Export contract", "Add image"};
+    const char *cacNutCongCuAnh[20] = {"Add student", "Delete all", "Search", "Name"};
+    const char *noiDungNutAnh[20] = {"All", "Expired", "Valid"};
+    const char *tieuDeAnh[] = {"No.", "Full name", "Date of birth", "ID number", "Phone number", "Gender", "Room number", "Edit"};
+    const char *noiDungRoiRacAnh[20] = {"Room", "People", "Edit", "Number of rows on the table:", "Search"};
+    const char *noiDungOTuyChonAnh[3] = {"Name", "ID number", "Room number"};
+    const string noiDungThongBaoAnh[5] = {"Valid", "Duplicate code", "Invalid code", "Room does not exist", "Room is full"};
+
+    const char *chuCacOCuaSoConViet[20] = {"Họ và tên:", "CCCD:", "SĐT:", "Giới tính:", "Ngày sinh:", "Ngày vào ở:", "Mã Phòng:", "Loại phòng:", "Số tháng ở:", "Tiền phòng:", "Tiền cọc:", "Xóa", "Thoát", "Lưu", "Xuất hợp đồng", "Thêm hình ảnh"};
+    const char *cacNutCongCuViet[20] = {"Thêm sinh viên", "Xóa tất cả", "Tìm kiếm", " Tên"};
+    const char *noiDungNutViet[20] = {"Tất cả", "Hết hạn", "Còn hạn"};
+    const char *tieuDeViet[] = {"STT", "Họ và tên", "Ngày sinh", "CCCD", "Số điện thoại", "Giới tính", "Mã phòng", "Chỉnh Sửa"};
+    const char *noiDungRoiRacViet[20] = {"phòng ", "nguời", "  Chỉnh", " Số dòng trên bản: ", "          Tìm kiếm"};
+    const char *noiDungOTuyChonViet[3] = {" Tên", " CCCD", " Mã phòng"};
+    const string noiDungThongBaoViet[5] = {"Hợp lệ", "Trùng mã", "Mã không hợp lệ", "Phòng Không tồn tại", "Phòng Đầy"};
+
+    const hienThiChuGDC tiengViet{chuCacOCuaSoConViet, cacNutCongCuViet, noiDungNutViet, tieuDeViet, noiDungRoiRacViet, noiDungOTuyChonViet, noiDungThongBaoViet};
+    const hienThiChuGDC tiengAnh{chuCacOCuaSoConAnh, cacNutCongCuAnh, noiDungNutAnh, tieuDeAnh, noiDungRoiRacAnh, noiDungOTuyChonAnh, noiDungThongBaoAnh};
+    const hienThiChuGDC tiengNhat{chuCacOCuaSoConNhat, cacNutCongCuNhat, noiDungNutNhat, tieuDeNhat, noiDungRoiRacNhat, noiDungOTuyChonNhat, noiDungThongBaoNhat};
+}
+
+const hienThiChuGDC *chuGDC;
+giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien(quanLyKTX, heThong), flagChinhSinhVien(false)
+{
+    switch (this->heThong->ngonNgu)
+    {
+    case 0:
+        chuGDC = &GDC::tiengViet;
+        break;
+    case 1:
+        chuGDC = &GDC::tiengAnh;
+        break;
+    case 2:
+        chuGDC = &GDC::tiengNhat;
+        break;
+    }
+
     taoNutTuyChon();
     sohangBD = soSinhVien;
     table = nullptr;
@@ -35,20 +90,20 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX) : giaoDien(quanLyKTX), flagC
     flagTimKiem = false;
     chuoiTimSoSanh = "";
 
-    boxThem = hopChu({1030, 144, 210, 40}, "   Thêm sinh viên", BLUE, YELLOW, BLACK, font26);
+    boxThem = hopChu({1030, 144, 210, 40}, chuGDC->cacNutCongCu[0], BLUE, YELLOW, BLACK, font26);
     boxThem.cDoBoVien(0.3f);
 
-    boxXoa = hopChu({1260, 144, 210, 40}, "         Xóa tất cả", RED, YELLOW, BLACK, font26);
+    boxXoa = hopChu({1260, 144, 210, 40}, chuGDC->cacNutCongCu[1], RED, YELLOW, BLACK, font26);
     boxXoa.cDoBoVien(0.3f);
 
     boxHTSoNguoiOBang = hopChu({10, 70, 540, 40}, "", WHITE, MAU_LA_CAY, BLACK, font26);
     boxHTSoNguoiOBang.cDoBoVien(0.3f);
     boxHTSoNguoiOBang.cRangBuoc(true);
 
-    boxTimKiem = hopChu({146, 144, 400, 40}, "          Tìm kiếm", BLUE, YELLOW, BLACK, font26);
+    boxTimKiem = hopChu({146, 144, 400, 40}, chuGDC->cacNutCongCu[2], BLUE, YELLOW, BLACK, font26);
     boxTimKiem.cDoBoVien(0.3f);
 
-    tuyChonTimKiem = hopChu({10, 144, 130, 40}, " Tên", MAU_XANH, YELLOW, BLACK, font26);
+    tuyChonTimKiem = hopChu({10, 144, 130, 40}, chuGDC->cacNutCongCu[3], MAU_XANH, YELLOW, BLACK, font26);
     tuyChonTimKiem.cDoBoVien(0.3f);
 
     boDemMucChon = 0; // khoi tao bang 0
@@ -65,10 +120,9 @@ void giaoDienChinh::taoNutTuyChon()
     cacNutChon.dSNut = Vector<hopChu>(soNut);
     float chieuDaiO = 130;
     float khoangCachO = 20;
-    const char *noiDungNut[soNut] = {"Tất cả", "Hết hạn", "Còn hạn"};
     for (int i = 0; i < cacNutChon.dSNut.lSoPhanTu(); i++)
     {
-        cacNutChon.dSNut[i] = hopChu({570 + (chieuDaiO + khoangCachO) * i, 144, chieuDaiO, 40}, noiDungNut[i], BLUE, YELLOW, BLACK, font26);
+        cacNutChon.dSNut[i] = hopChu({570 + (chieuDaiO + khoangCachO) * i, 144, chieuDaiO, 40}, chuGDC->noiDungNut[i], BLUE, YELLOW, BLACK, font26);
         cacNutChon.dSNut[i].cDoBoVien(0.3f);
     }
 }
@@ -95,35 +149,35 @@ void giaoDienChinh::taoCuaSoCon()
     const float khoangCachO = 40;
     Color mauNenChuHienThi = Color{224, 255, 255, 255};
     const int doRongOHIenThi = 150;
-    cuaSoChinhSua.dSHopHienThi[HO_VA_TEN] = hopChu({400, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuCacOCuaSoCon[HO_VA_TEN], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[HO_VA_TEN] = hopChu({400, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[HO_VA_TEN], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[HO_VA_TEN] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[CCCD] = hopChu({400, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuCacOCuaSoCon[CCCD], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[CCCD] = hopChu({400, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[CCCD], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[CCCD] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 3, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[SDT] = hopChu({400, viTriYCuaSo + khoangCachO * 5, doRongOHIenThi, 40}, chuCacOCuaSoCon[SDT], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[SDT] = hopChu({400, viTriYCuaSo + khoangCachO * 5, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[SDT], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[SDT] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 5, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[GIOI_TINH] = hopChu({900, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuCacOCuaSoCon[GIOI_TINH], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[GIOI_TINH] = hopChu({900, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[GIOI_TINH], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[GIOI_TINH] = hopChu({900 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 3, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[NGAY_SINH] = hopChu({900, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuCacOCuaSoCon[NGAY_SINH], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[NGAY_SINH] = hopChu({900, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[NGAY_SINH], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[NGAY_SINH] = hopChu({900 + doRongOHIenThi, viTriYCuaSo + khoangCachO, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[MA_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuCacOCuaSoCon[MA_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[MA_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[MA_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[MA_PHONG] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 10, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[LOAI_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuCacOCuaSoCon[LOAI_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[LOAI_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[LOAI_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[LOAI_PHONG] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 8, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[SO_THANG_O] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuCacOCuaSoCon[SO_THANG_O], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[SO_THANG_O] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[SO_THANG_O], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[SO_THANG_O] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 12, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[TIEN_PHONG] = hopChu({800, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuCacOCuaSoCon[TIEN_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[TIEN_PHONG] = hopChu({800, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[TIEN_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[TIEN_PHONG] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 8, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[NGAY_VAO_O] = hopChu({800, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuCacOCuaSoCon[NGAY_VAO_O], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[NGAY_VAO_O] = hopChu({800, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[NGAY_VAO_O], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[NGAY_VAO_O] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 10, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[TIEN_THE_CHAP] = hopChu({800, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuCacOCuaSoCon[TIEN_THE_CHAP], mauNenChuHienThi, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[TIEN_THE_CHAP] = hopChu({800, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[TIEN_THE_CHAP], mauNenChuHienThi, YELLOW, BLACK, font26);
     cuaSoChinhSua.dShopChu[TIEN_THE_CHAP] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 12, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
     // Các nút chức năng đặt ở cuối
-    cuaSoChinhSua.dShopChu[XOA] = hopChu({900, 700, 130, 40}, chuCacOCuaSoCon[XOA], MAU_XANH, BLACK, BLACK, font26);
-    cuaSoChinhSua.dShopChu[LUU] = hopChu({1050, 700, 130, 40}, chuCacOCuaSoCon[LUU], MAU_XANH, BLACK, BLACK, font26);
-    cuaSoChinhSua.dShopChu[THOAT] = hopChu({1200, 700, 130, 40}, chuCacOCuaSoCon[THOAT], MAU_XANH, BLACK, BLACK, font26);
-    cuaSoChinhSua.dShopChu[XUAT_HOP_DONG] = hopChu({viTriXCuaSo + 70, 700, 190, 40}, chuCacOCuaSoCon[XUAT_HOP_DONG], MAU_XANH, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dShopChu[XOA] = hopChu({900, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[XOA], MAU_XANH, BLACK, BLACK, font26);
+    cuaSoChinhSua.dShopChu[LUU] = hopChu({1050, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[LUU], MAU_XANH, BLACK, BLACK, font26);
+    cuaSoChinhSua.dShopChu[THOAT] = hopChu({1200, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[THOAT], MAU_XANH, BLACK, BLACK, font26);
+    cuaSoChinhSua.dShopChu[XUAT_HOP_DONG] = hopChu({viTriXCuaSo + 70, 700, 190, 40}, chuGDC->chuCacOCuaSoCon[XUAT_HOP_DONG], MAU_XANH, YELLOW, BLACK, font26);
 
-    cuaSoChinhSua.dShopChu[THEM_HINH_ANH] = hopChu(Rectangle{viTriXCuaSo + 70, viTriYCuaSo + 40, 142, 182}, chuCacOCuaSoCon[THEM_HINH_ANH], MAU_XANH, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dShopChu[THEM_HINH_ANH] = hopChu(Rectangle{viTriXCuaSo + 70, viTriYCuaSo + 40, 142, 182}, chuGDC->chuCacOCuaSoCon[THEM_HINH_ANH], MAU_XANH, YELLOW, BLACK, font26);
     for (int i = 0; i < cuaSoChinhSua.dShopChu.lSoPhanTu(); i++)
     {
         cuaSoChinhSua.dShopChu[i].cDoBoVien(0.2f);
@@ -152,7 +206,7 @@ void giaoDienChinh::cNLoaiPhongVaGiaPhong()
     const Phong *phongTim = quanLyKTX.timPhong(cuaSoChinhSua.dShopChu[MA_PHONG].layChu());
     if (phongTim != nullptr)
     {
-        loaiPhong = "phòng " + to_string(phongTim->lSoNguoiToiDa()) + " người";
+        loaiPhong = chuGDC->noiDungRoiRac[0] + to_string(phongTim->lSoNguoiToiDa()) + " " + chuGDC->noiDungRoiRac[1];
         if (phongTim->lSoNguoiToiDa() != 0)
             giaPhong = to_string(phongTim->lGiaPhong() * soThang / phongTim->lSoNguoiToiDa());
         else
@@ -193,12 +247,11 @@ void giaoDienChinh::taoBang(const unsigned int &soDongBieuDien)
         table->cMauTheoHang(i, {32, 178, 170, 255});
     }
     table->cMauTheoHang(0, {46, 139, 87, 255});
-    const string tieuDe[] = {"STT", "Họ và tên", "Ngày sinh", "CCCD", "Số điện thoại", "Giới tính", "Mã phòng", "Chỉnh Sửa"};
     const int doDai[] = {60, 280, 250, 200, 210, 160, 180, 120};
     // Đặt nội dung  và chiều dài cho các cột
     for (int i = 0; i < 8; ++i)
     {
-        (*table)(0, i).cNoiDung(tieuDe[i]);
+        (*table)(0, i).cNoiDung(chuGDC->tieuDe[i]);
         table->cCot(i, doDai[i]);
     }
 }
@@ -211,7 +264,7 @@ void giaoDienChinh::capNhatDong(const int &viTri, const SinhVien &sinhVien)
     (*table)(viTri, 4).cNoiDung(sinhVien.lSDT());
     (*table)(viTri, 5).cNoiDung(sinhVien.lGioiTinh());
     (*table)(viTri, 6).cNoiDung(sinhVien.lMaPhong());
-    (*table)(viTri, 7).cNoiDung("  Chỉnh");
+    (*table)(viTri, 7).cNoiDung(chuGDC->noiDungRoiRac[2]);
 }
 void giaoDienChinh::capNhatBang(const Vector<SinhVien> &danhSachSinhVien)
 {
@@ -251,7 +304,7 @@ void giaoDienChinh::capNhatBang(const Vector<SinhVien> &danhSachSinhVien)
         capNhatDong(demHangThoaMang++ + 1 + boxThem.laDuocChon(), danhSachSinhVien[viTriDanhSach]);
     }
     sohangBD = demHangThoaMang;
-    boxHTSoNguoiOBang.cNoiDung("  Số danh sách trên bảng: " + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachSinhVien().lSoPhanTu() + boxThem.laDuocChon()));
+    boxHTSoNguoiOBang.cNoiDung(chuGDC->noiDungRoiRac[3] + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachSinhVien().lSoPhanTu()));
 }
 SinhVien giaoDienChinh::LaySinhVienOBang() const
 {
@@ -339,8 +392,7 @@ void giaoDienChinh::capNhatTTChinh()
     {
         boDemMucChon++;
         tuyChonTimKiem.cTrangThaiChon(false);
-        const char *const noiDungOTuyChon[3] = {" Tên", " CCCD", " Mã phòng"};
-        tuyChonTimKiem.cNoiDung(noiDungOTuyChon[boDemMucChon % 3]);
+        tuyChonTimKiem.cNoiDung(chuGDC->noiDungOTuyChon[boDemMucChon % 3]);
     }
 
     boxTimKiem.capNhatTT();
@@ -368,7 +420,7 @@ void giaoDienChinh::capNhatTTChinh()
     }
     if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
     {
-        boxTimKiem.cNoiDung("          Tìm kiếm");
+        boxTimKiem.cNoiDung(chuGDC->noiDungRoiRac[4]);
         flagTimKiem = false;
     }
     // tìm kiếm
@@ -451,13 +503,12 @@ void giaoDienChinh::bieuDien()
 }
 void giaoDienChinh::cuaSoThongBaoKHL()
 {
-    const string noiDungThongBao[5] = {"Hợp lệ", "Trùng mã", "Mã không hợp lệ", "Phòng Không tồn tại", "Phòng Đầy"};
     Color mauVien = RED;
     if (trangThaiSV == HOP_LE)
         mauVien = GREEN;
     hop nenSauCuaSo(Rectangle{1031, 57, 439, 70}, mauVien);
     nenSauCuaSo.cDoBoVien(0.3f);
-    hopChu chuThongBao(Rectangle{1036, 62, 429, 60}, "            " + noiDungThongBao[trangThaiSV], WHITE);
+    hopChu chuThongBao(Rectangle{1036, 62, 429, 60}, "            " + chuGDC->noiDungThongBao[trangThaiSV], WHITE);
     chuThongBao.cKieuChu(font26);
     chuThongBao.cDoBoVien(0.3f);
 

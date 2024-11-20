@@ -21,6 +21,9 @@ private:
     hop nutTat; // tắt ô cửa sổ con
     Bang *BangSetGiaTienDien;
     hopChu boxXuatFile;
+    hopChu boxHTSoPhongOBang;
+    NutTuyChon cacNutChon;
+    void taoNutTuyChon();
 
     int mucBacDien[6];
     double giaTienDien[6]; // theo các tính tiền điện của bậc điện (tiền điện được tính theo 6 bật)
@@ -31,7 +34,7 @@ private:
     void veKhoiTao();
     void initDienNuoc();
     void resetCapNhatTT();
-    Vector<Vector<string>> *heThong;
+   
     void cuaSoCon(const float &, const float &, const string &);
 
     void cSResetBieuDien();
@@ -40,11 +43,13 @@ private:
     void cSTLGiaTienCapNhatTT();
 
     void kTBangNhapGia();
+    void capNhatTTChinh();
 
     void XuatFile();
     void ghiFileVaoDiaChi(const char *);
+
 public:
-    gDDienNuoc(QuanLyKTX &, Vector<Vector<string>> &);
+    gDDienNuoc(QuanLyKTX &, HeThong &);
     void capNhatTT() override;
     void bieuDien() override;
     ~gDDienNuoc();

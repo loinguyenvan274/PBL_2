@@ -129,6 +129,8 @@ bool BangBam<T>::xoaPhanTu(const std::string &maBam)
 	Size_t chiSo = hamBam(maBam);
 
 	Diem<T> *truyTheo = mang[chiSo];
+	if (truyTheo == nullptr)
+		return false;
 	Diem<T> *diemGiu;
 	if (mang[chiSo] != nullptr && mang[chiSo]->maBam == maBam)
 	{

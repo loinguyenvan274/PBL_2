@@ -31,7 +31,7 @@ private:
     Vector<SinhVien> dsSinhVienTimKiem();
 
 public:
-    giaoDienChinh(QuanLyKTX &);
+    giaoDienChinh(QuanLyKTX &,HeThong&);
     void capNhatTT() override;
     void bieuDien() override;
     ~giaoDienChinh();

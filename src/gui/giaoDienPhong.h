@@ -15,12 +15,12 @@ private:
     void capNhatDanhSachPhong();
     void cuaSoThongBaoKHL();
     void taoBang(const unsigned int &);
-    NutTuyChon cacNutChon;
     hopChu boxHTSoPhongOBang;
+    NutTuyChon cacNutChon;
     void taoNutTuyChon();
 
 public:
-    giaoDienPhong(QuanLyKTX &quanLyKTX);
+    giaoDienPhong(QuanLyKTX &quanLyKTX, HeThong &HeThong);
     void capNhatTT() override;
     void bieuDien() override;
     ~giaoDienPhong();
