@@ -38,29 +38,29 @@ struct hienThiChuGDC
 };
 namespace GDC
 {
-    const char *chuCacOCuaSoConNhat[20] = {"氏名:", "CCCD:", "電話番号:", "性別:", "生年月日:", "入居日:", "部屋番号:", "部屋タイプ:", "入居月数:", "家賃:", "保証金:", "削除", "退出", "保存", "契約書の出力", "画像を追加"};
-    const char *cacNutCongCuNhat[20] = {"学生を追加", "すべて削除", "検索", "名前"};
-    const char *noiDungNutNhat[20] = {"すべて", "期限切れ", "有効"};
-    const char *tieuDeNhat[] = {"番号", "氏名", "生年月日", "CCCD", "電話番号", "性別", "部屋番号", "編集"};
-    const char *noiDungRoiRacNhat[20] = {"部屋", "人", "編集", "表の行数:", "検索"};
-    const char *noiDungOTuyChonNhat[3] = {"名前", "CCCD", "部屋番号"};
-    const string noiDungThongBaoNhat[5] = {"有効", "重複コード", "無効なコード", "存在しない部屋", "部屋が満員"};
+    const char *chuCacOCuaSoConNhat[] = {"名前:", "身分証番号:", "電話番号:", "性別:", "生年月日:", "入居日:", "部屋番号:", "部屋タイプ:", "入居月数:", "家賃:", "保証金:", "削除", "退出", "保存", "契約書の出力", "画像を追加"};
+    const char *cacNutCongCuNhat[] = {"学生を追加", "すべて削除", "検索", "名前"};
+    const char *noiDungNutNhat[] = {"すべて", "期限切れ", "有効"};
+    const char *tieuDeNhat[] = {"番号", "名前", "生年月日", "身分証番号", "電話番号", "性別", "部屋番号", "編集"};
+    const char *noiDungRoiRacNhat[] = {"部屋", "人", "編集", "表の行数:", "検索"};
+    const char *noiDungOTuyChonNhat[] = {"名前", "身分証番号", "部屋番号"};
+    const string noiDungThongBaoNhat[] = {"有効", "重複コード", "無効なコード", "存在しない部屋", "部屋が満員"};
 
-    const char *chuCacOCuaSoConAnh[20] = {"Full name:", "ID number:", "Phone number:", "Gender:", "Date of birth:", "Move-in date:", "Room number:", "Room type:", "Months of stay:", "Room fee:", "Deposit:", "Delete", "Exit", "Save", "Export contract", "Add image"};
-    const char *cacNutCongCuAnh[20] = {"Add student", "Delete all", "Search", "Name"};
-    const char *noiDungNutAnh[20] = {"All", "Expired", "Valid"};
+    const char *chuCacOCuaSoConAnh[] = {"Full name:", "ID number:", "Phone number:", "Gender:", "Date of birth:", "Move-in date:", "Room number:", "Room type:", "Months of stay:", "Room fee:", "Deposit:", "Delete", "Exit", "Save", "Export contract", "Add image"};
+    const char *cacNutCongCuAnh[] = {"Add student", "Delete all", "Search", "Name"};
+    const char *noiDungNutAnh[] = {"All", "Expired", "Valid"};
     const char *tieuDeAnh[] = {"No.", "Full name", "Date of birth", "ID number", "Phone number", "Gender", "Room number", "Edit"};
-    const char *noiDungRoiRacAnh[20] = {"Room", "People", "Edit", "Number of rows on the table:", "Search"};
-    const char *noiDungOTuyChonAnh[3] = {"Name", "ID number", "Room number"};
-    const string noiDungThongBaoAnh[5] = {"Valid", "Duplicate code", "Invalid code", "Room does not exist", "Room is full"};
+    const char *noiDungRoiRacAnh[] = {"Room", "People", "Edit", "Number of rows on the table:", "Search"};
+    const char *noiDungOTuyChonAnh[] = {"Name", "ID number", "Room number"};
+    const string noiDungThongBaoAnh[] = {"Valid", "Duplicate code", "Invalid code", "Room does not exist", "Room is full"};
 
-    const char *chuCacOCuaSoConViet[20] = {"Họ và tên:", "CCCD:", "SĐT:", "Giới tính:", "Ngày sinh:", "Ngày vào ở:", "Mã Phòng:", "Loại phòng:", "Số tháng ở:", "Tiền phòng:", "Tiền cọc:", "Xóa", "Thoát", "Lưu", "Xuất hợp đồng", "Thêm hình ảnh"};
-    const char *cacNutCongCuViet[20] = {"Thêm sinh viên", "Xóa tất cả", "Tìm kiếm", " Tên"};
-    const char *noiDungNutViet[20] = {"Tất cả", "Hết hạn", "Còn hạn"};
+    const char *chuCacOCuaSoConViet[] = {"Họ và tên:", "CCCD:", "SĐT:", "Giới tính:", "Ngày sinh:", "Ngày vào ở:", "Mã Phòng:", "Loại phòng:", "Số tháng ở:", "Tiền phòng:", "Tiền cọc:", "Xóa", "Thoát", "Lưu", "Xuất hợp đồng", "Thêm hình ảnh"};
+    const char *cacNutCongCuViet[] = {"Thêm sinh viên", "Xóa tất cả", "Tìm kiếm", " Tên"};
+    const char *noiDungNutViet[] = {"Tất cả", "Hết hạn", "Còn hạn"};
     const char *tieuDeViet[] = {"STT", "Họ và tên", "Ngày sinh", "CCCD", "Số điện thoại", "Giới tính", "Mã phòng", "Chỉnh Sửa"};
-    const char *noiDungRoiRacViet[20] = {"phòng ", "nguời", "  Chỉnh", " Số dòng trên bản: ", "          Tìm kiếm"};
-    const char *noiDungOTuyChonViet[3] = {" Tên", " CCCD", " Mã phòng"};
-    const string noiDungThongBaoViet[5] = {"Hợp lệ", "Trùng mã", "Mã không hợp lệ", "Phòng Không tồn tại", "Phòng Đầy"};
+    const char *noiDungRoiRacViet[] = {"phòng ", "nguời", "  Chỉnh", " Số dòng trên bản: ", "          Tìm kiếm"};
+    const char *noiDungOTuyChonViet[] = {" Tên", " CCCD", " Mã phòng"};
+    const string noiDungThongBaoViet[] = {"Hợp lệ", "Trùng mã", "Mã không hợp lệ", "Phòng Không tồn tại", "Phòng Đầy"};
 
     const hienThiChuGDC tiengViet{chuCacOCuaSoConViet, cacNutCongCuViet, noiDungNutViet, tieuDeViet, noiDungRoiRacViet, noiDungOTuyChonViet, noiDungThongBaoViet};
     const hienThiChuGDC tiengAnh{chuCacOCuaSoConAnh, cacNutCongCuAnh, noiDungNutAnh, tieuDeAnh, noiDungRoiRacAnh, noiDungOTuyChonAnh, noiDungThongBaoAnh};
@@ -399,7 +399,11 @@ void giaoDienChinh::capNhatTTChinh()
 
     if (boxThem.laDuocChon())
     {
+        HopDongSinhVien hopDongMatDinh;
+        hopDongMatDinh.tienTheChap = heThong->giaCocMatDinh;
         sinhVienCu = SinhVien();
+        
+        sinhVienCu.cHopDong(hopDongMatDinh);
         capNhatCuaSoCon(sinhVienCu);
         flagChinhSinhVien = true;
         boxThem.cTrangThaiChon(false);

@@ -33,8 +33,8 @@ namespace GDP
     const char *roiRacNhat[30] = {"部屋を追加", "すべて削除", "検索", "番号", "部屋", "部屋タイプ", "現在", "月額料金", "説明", "削除", "表のリスト数:", "削除", "検索", "無効な部屋"};
     const char *noiDungNutNhat[10] = {"すべて", "空室", "満室"};
     const ngonNguHienThiGDP tiengViet{roiRacViet, noiDungNutViet};
-    const ngonNguHienThiGDP tiengAnh{roiRacAnh, roiRacAnh};
-    const ngonNguHienThiGDP tiengNhat{roiRacNhat, roiRacNhat};
+    const ngonNguHienThiGDP tiengAnh{roiRacAnh, noiDungNutAnh};
+    const ngonNguHienThiGDP tiengNhat{roiRacNhat, noiDungNutNhat};
 }
 const ngonNguHienThiGDP *chuGDP;
 
@@ -129,7 +129,11 @@ void giaoDienPhong::capNhatBang(const Vector<Phong> &dSPhong)
     }
 
     if (boxThem.laDuocChon())
-        capNhatDong(1, Phong());
+    {
+        Phong phongMatDinh;
+        phongMatDinh.cGiaPhong(heThong->giaPhongMatDinh);
+        capNhatDong(1, phongMatDinh);
+    }
     unsigned demHangThoaMang = 0;
     int viTRiPhong;
     for (int i = 1 + boxThem.laDuocChon(); i <= sohangBD; i++)
@@ -229,7 +233,7 @@ void giaoDienPhong::capNhatDanhSachPhong()
     if (hang != -1)
     {
         phong = lPhongTuBang(hang);
-        if (MA_PHONG <= cot && cot <= GIA_PHONG && flagDoiPhong == false)
+        if (MA_PHONG <= cot && cot <= MO_TA && flagDoiPhong == false)
         {
             phongCu = lPhongTuBang(hang);
             flagDoiPhong = true;

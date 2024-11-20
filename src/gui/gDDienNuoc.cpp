@@ -36,7 +36,7 @@ namespace GDDN
 
     const char *roiRacViet[30] = {"Tìm kiếm", "Rồi", "Chưa", "Chưa", "Rồi", "  Số danh sách trên bảng: ", "Thiết lập lại", "Thiết lập giá điện nước", "Bậc ", "Mức bật điện", "Giá điện", "Giá nước", "Thiết lập lại", "Giá điện nước", "Tìm kiếm", "         Thiết lập lại tất cả", "Giữ cột CSCT và chuyển sang CSDT", " Xuất file"};
     const char *tieuDeViet[20] = {"STT", "Phòng", "Điện", "Nước", "Tổng nộp", "Đã nộp", "", "", "CSDT", "CSCT", "Lượng.TT", "T.Tiền", "CSDT", "CSCT", "Lượng.TT", "T.Tiền", "", "", ""};
-    const char *noiDungNutViet[10] = {"Tất cả", "ĐÃ nộp", "Chưa nộp"};
+    const char *noiDungNutViet[10] = {"Tất cả", "Đã nộp", "Chưa nộp"};
 
     const char *roiRacAnh[30] = {"Search", "Done", "Not yet", "Not yet", "Done", "Number of items on the table:", "Reset", "Set electricity and water rates", "Tier", "Electricity tier", "Electricity price", "Water price", "Reset", "Elec & water prices", "Search", "Reset all", "Keep CSCT column and switch to CSDT", "Export file"};
     const char *tieuDeAnh[20] = {"No.", "Room", "Electricity", "Water", "Total payment", "Paid", "", "", "CSDT", "CSCT", "Usage", "Amount", "CSDT", "CSCT", "Usage", "Amount", "", "", ""};
