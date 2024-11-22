@@ -37,6 +37,7 @@ namespace GDP
     const ngonNguHienThiGDP tiengNhat{roiRacNhat, noiDungNutNhat};
 }
 const ngonNguHienThiGDP *chuGDP;
+extern const Color *Mau;
 
 giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien(quanLyKTX, heThong)
 {
@@ -58,21 +59,20 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien
     flagTimKiem = false;
     chuoiTimSoSanh = "";
     table = nullptr;
-    boxHTSoPhongOBang = hopChu({10, 70, 540, 40}, "", WHITE, MAU_LA_CAY, BLACK, font26);
+    boxHTSoPhongOBang = hopChu({10, 70, 460, 40}, "", Mau[0], MAU_LA_CAY, Mau[2], font26);
     boxHTSoPhongOBang.cDoBoVien(0.3f);
-    boxHTSoPhongOBang.cRangBuoc(true);
 
     capNhatBang(quanLyKTX.lDanhSachPhong());
     // hộp xóa
-    boxThem = hopChu({1030, 134, 210, 40}, chuGDP->roiRac[0], BLUE, YELLOW, BLACK);
+    boxThem = hopChu({1030, 134, 210, 40}, chuGDP->roiRac[0], Mau[0], YELLOW, Mau[2]);
     boxThem.cKieuChu(font26);
     boxThem.cDoBoVien(0.3f);
 
-    boxXoa = hopChu({1260, 134, 210, 40}, chuGDP->roiRac[1], RED, YELLOW, BLACK);
+    boxXoa = hopChu({1260, 134, 210, 40}, chuGDP->roiRac[1], RED, YELLOW, Mau[2]);
     boxXoa.cKieuChu(font26);
     boxXoa.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({70, 134, 400, 40}, chuGDP->roiRac[2], BLUE, YELLOW, BLACK);
+    boxTimKiem = hopChu({70, 134, 400, 40}, chuGDP->roiRac[2], Mau[0], YELLOW, Mau[8]);
     boxTimKiem.cKieuChu(font26);
     boxTimKiem.cDoBoVien(0.3f);
 
@@ -169,7 +169,7 @@ void giaoDienPhong::taoNutTuyChon()
 
     for (int i = 0; i < cacNutChon.dSNut.lSoPhanTu(); i++)
     {
-        cacNutChon.dSNut[i] = hopChu({515 + (chieuDaiO + khoangCachO) * i, 134, chieuDaiO, 40}, chuGDP->noiDungNut[i], BLUE, YELLOW, BLACK, font26);
+        cacNutChon.dSNut[i] = hopChu({515 + (chieuDaiO + khoangCachO) * i, 134, chieuDaiO, 40}, chuGDP->noiDungNut[i], Mau[0], YELLOW, Mau[2], font26);
         cacNutChon.dSNut[i].cDoBoVien(0.3f);
     }
 }

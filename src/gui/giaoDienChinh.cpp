@@ -65,7 +65,10 @@ namespace GDC
     const hienThiChuGDC tiengViet{chuCacOCuaSoConViet, cacNutCongCuViet, noiDungNutViet, tieuDeViet, noiDungRoiRacViet, noiDungOTuyChonViet, noiDungThongBaoViet};
     const hienThiChuGDC tiengAnh{chuCacOCuaSoConAnh, cacNutCongCuAnh, noiDungNutAnh, tieuDeAnh, noiDungRoiRacAnh, noiDungOTuyChonAnh, noiDungThongBaoAnh};
     const hienThiChuGDC tiengNhat{chuCacOCuaSoConNhat, cacNutCongCuNhat, noiDungNutNhat, tieuDeNhat, noiDungRoiRacNhat, noiDungOTuyChonNhat, noiDungThongBaoNhat};
+
 }
+// Color chuDeSang[20] = {Mau[0], Mau[1], BLACK};
+extern const Color *Mau;
 
 const hienThiChuGDC *chuGDC;
 giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien(quanLyKTX, heThong), flagChinhSinhVien(false)
@@ -90,20 +93,19 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien
     flagTimKiem = false;
     chuoiTimSoSanh = "";
 
-    boxThem = hopChu({1030, 144, 210, 40}, chuGDC->cacNutCongCu[0], BLUE, YELLOW, BLACK, font26);
+    boxThem = hopChu({1030, 144, 210, 40}, chuGDC->cacNutCongCu[0], Mau[0], Mau[1], Mau[2], font26);
     boxThem.cDoBoVien(0.3f);
 
-    boxXoa = hopChu({1260, 144, 210, 40}, chuGDC->cacNutCongCu[1], RED, YELLOW, BLACK, font26);
+    boxXoa = hopChu({1260, 144, 210, 40}, chuGDC->cacNutCongCu[1], Mau[3], Mau[1], Mau[2], font26);
     boxXoa.cDoBoVien(0.3f);
 
-    boxHTSoNguoiOBang = hopChu({10, 70, 540, 40}, "", WHITE, MAU_LA_CAY, BLACK, font26);
+    boxHTSoNguoiOBang = hopChu({10, 70, 540, 40}, "", Mau[0], Mau[8], Mau[2], font26);
     boxHTSoNguoiOBang.cDoBoVien(0.3f);
-    boxHTSoNguoiOBang.cRangBuoc(true);
 
-    boxTimKiem = hopChu({146, 144, 400, 40}, chuGDC->cacNutCongCu[2], BLUE, YELLOW, BLACK, font26);
+    boxTimKiem = hopChu({146, 144, 400, 40}, chuGDC->cacNutCongCu[2], Mau[0], Mau[1], Mau[8], font26);
     boxTimKiem.cDoBoVien(0.3f);
 
-    tuyChonTimKiem = hopChu({10, 144, 130, 40}, chuGDC->cacNutCongCu[3], MAU_XANH, YELLOW, BLACK, font26);
+    tuyChonTimKiem = hopChu({10, 144, 130, 40}, chuGDC->cacNutCongCu[3], Mau[0], Mau[1], Mau[8], font26);
     tuyChonTimKiem.cDoBoVien(0.3f);
 
     boDemMucChon = 0; // khoi tao bang 0
@@ -122,7 +124,7 @@ void giaoDienChinh::taoNutTuyChon()
     float khoangCachO = 20;
     for (int i = 0; i < cacNutChon.dSNut.lSoPhanTu(); i++)
     {
-        cacNutChon.dSNut[i] = hopChu({570 + (chieuDaiO + khoangCachO) * i, 144, chieuDaiO, 40}, chuGDC->noiDungNut[i], BLUE, YELLOW, BLACK, font26);
+        cacNutChon.dSNut[i] = hopChu({570 + (chieuDaiO + khoangCachO) * i, 144, chieuDaiO, 40}, chuGDC->noiDungNut[i], Mau[0], Mau[1], Mau[2], font26);
         cacNutChon.dSNut[i].cDoBoVien(0.3f);
     }
 }
@@ -134,58 +136,59 @@ void giaoDienChinh::taoCuaSoCon()
                              kichCoCuaSoCon);
     cuaSoChinhSua.khungCuaSo.cDoBoVien(0.1f);
     cuaSoChinhSua.khungCuaSo.cDoDayVien(3);
-    cuaSoChinhSua.khungCuaSo.cMauNen(Color{224, 255, 255, 255});
-    cuaSoChinhSua.khungCuaSo.cTrangThaiChon(true);
+    cuaSoChinhSua.khungCuaSo.cMauNen(Mau[6]);
+    cuaSoChinhSua.khungCuaSo.cRangBuoc(true);
     cuaSoChinhSua.dSHopHienThi = Vector<hopChu>(13);
     cuaSoChinhSua.dShopChu = Vector<hopChu>(17);
     for (int i = 0; i < cuaSoChinhSua.dShopChu.lSoPhanTu(); i++)
     {
         cuaSoChinhSua.dShopChu[i].cDoBoVien(0.3f);
-        cuaSoChinhSua.dShopChu[i].cMauNen(MAU_LA_CAY);
+        cuaSoChinhSua.dShopChu[i].cMauNen(Mau[4]);
     }
 
     const float viTriXCuaSo = cuaSoChinhSua.viTri.x;
     const float viTriYCuaSo = cuaSoChinhSua.viTri.y;
     const float khoangCachO = 40;
-    Color mauNenChuHienThi = Color{224, 255, 255, 255};
+    Color mauNenChuHienThi = Mau[6];
     const int doRongOHIenThi = 150;
-    cuaSoChinhSua.dSHopHienThi[HO_VA_TEN] = hopChu({400, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[HO_VA_TEN], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[HO_VA_TEN] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[CCCD] = hopChu({400, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[CCCD], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[CCCD] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 3, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[SDT] = hopChu({400, viTriYCuaSo + khoangCachO * 5, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[SDT], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[SDT] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 5, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[GIOI_TINH] = hopChu({900, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[GIOI_TINH], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[GIOI_TINH] = hopChu({900 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 3, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[NGAY_SINH] = hopChu({900, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[NGAY_SINH], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[NGAY_SINH] = hopChu({900 + doRongOHIenThi, viTriYCuaSo + khoangCachO, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[MA_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[MA_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[MA_PHONG] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 10, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[LOAI_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[LOAI_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[LOAI_PHONG] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 8, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[SO_THANG_O] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[SO_THANG_O], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[SO_THANG_O] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 12, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[TIEN_PHONG] = hopChu({800, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[TIEN_PHONG], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[TIEN_PHONG] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 8, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[NGAY_VAO_O] = hopChu({800, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[NGAY_VAO_O], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[NGAY_VAO_O] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 10, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dSHopHienThi[TIEN_THE_CHAP] = hopChu({800, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[TIEN_THE_CHAP], mauNenChuHienThi, YELLOW, BLACK, font26);
-    cuaSoChinhSua.dShopChu[TIEN_THE_CHAP] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 12, 300, 40}, "", MAU_XANH, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dSHopHienThi[HO_VA_TEN] = hopChu({400, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[HO_VA_TEN], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[HO_VA_TEN] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[CCCD] = hopChu({400, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[CCCD], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[CCCD] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 3, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[SDT] = hopChu({400, viTriYCuaSo + khoangCachO * 5, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[SDT], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[SDT] = hopChu({400 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 5, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[GIOI_TINH] = hopChu({900, viTriYCuaSo + khoangCachO * 3, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[GIOI_TINH], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[GIOI_TINH] = hopChu({900 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 3, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[NGAY_SINH] = hopChu({900, viTriYCuaSo + khoangCachO, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[NGAY_SINH], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[NGAY_SINH] = hopChu({900 + doRongOHIenThi, viTriYCuaSo + khoangCachO, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[MA_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[MA_PHONG], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[MA_PHONG] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 10, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[LOAI_PHONG] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[LOAI_PHONG], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[LOAI_PHONG] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 8, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[SO_THANG_O] = hopChu({viTriXCuaSo + 100, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[SO_THANG_O], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[SO_THANG_O] = hopChu({viTriXCuaSo + 100 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 12, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[TIEN_PHONG] = hopChu({800, viTriYCuaSo + khoangCachO * 8, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[TIEN_PHONG], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[TIEN_PHONG] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 8, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[NGAY_VAO_O] = hopChu({800, viTriYCuaSo + khoangCachO * 10, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[NGAY_VAO_O], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[NGAY_VAO_O] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 10, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dSHopHienThi[TIEN_THE_CHAP] = hopChu({800, viTriYCuaSo + khoangCachO * 12, doRongOHIenThi, 40}, chuGDC->chuCacOCuaSoCon[TIEN_THE_CHAP], mauNenChuHienThi, Mau[1], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[TIEN_THE_CHAP] = hopChu({800 + doRongOHIenThi, viTriYCuaSo + khoangCachO * 12, 300, 40}, "", Mau[0], Mau[1], Mau[2], font26);
     // Các nút chức năng đặt ở cuối
-    cuaSoChinhSua.dShopChu[XOA] = hopChu({900, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[XOA], MAU_XANH, BLACK, BLACK, font26);
-    cuaSoChinhSua.dShopChu[LUU] = hopChu({1050, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[LUU], MAU_XANH, BLACK, BLACK, font26);
-    cuaSoChinhSua.dShopChu[THOAT] = hopChu({1200, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[THOAT], MAU_XANH, BLACK, BLACK, font26);
-    cuaSoChinhSua.dShopChu[XUAT_HOP_DONG] = hopChu({viTriXCuaSo + 70, 700, 190, 40}, chuGDC->chuCacOCuaSoCon[XUAT_HOP_DONG], MAU_XANH, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dShopChu[XOA] = hopChu({900, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[XOA], Mau[0], Mau[2], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[LUU] = hopChu({1050, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[LUU], Mau[0], Mau[2], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[THOAT] = hopChu({1200, 700, 130, 40}, chuGDC->chuCacOCuaSoCon[THOAT], Mau[0], Mau[2], Mau[2], font26);
+    cuaSoChinhSua.dShopChu[XUAT_HOP_DONG] = hopChu({viTriXCuaSo + 70, 700, 190, 40}, chuGDC->chuCacOCuaSoCon[XUAT_HOP_DONG], Mau[0], Mau[1], Mau[8], font26);
 
-    cuaSoChinhSua.dShopChu[THEM_HINH_ANH] = hopChu(Rectangle{viTriXCuaSo + 70, viTriYCuaSo + 40, 142, 182}, chuGDC->chuCacOCuaSoCon[THEM_HINH_ANH], MAU_XANH, YELLOW, BLACK, font26);
+    cuaSoChinhSua.dShopChu[THEM_HINH_ANH] = hopChu(Rectangle{viTriXCuaSo + 70, viTriYCuaSo + 40, 142, 182}, chuGDC->chuCacOCuaSoCon[THEM_HINH_ANH], Mau[0], Mau[1], Mau[2], font26);
     for (int i = 0; i < cuaSoChinhSua.dShopChu.lSoPhanTu(); i++)
     {
         cuaSoChinhSua.dShopChu[i].cDoBoVien(0.2f);
-        cuaSoChinhSua.dShopChu[i].cMauNen(MAU_LA_CAY);
+        cuaSoChinhSua.dShopChu[i].cMauNen(Mau[0]);
     }
-    cuaSoChinhSua.dShopChu[XOA].cMauNen(RED);
-    cuaSoChinhSua.dShopChu[LUU].cMauNen(BLUE);
-    cuaSoChinhSua.dShopChu[THOAT].cMauNen(YELLOW);
+
+    cuaSoChinhSua.dShopChu[XOA].cMauNen(Mau[3]);
+    cuaSoChinhSua.dShopChu[LUU].cMauNen(Mau[10]);
+    cuaSoChinhSua.dShopChu[THOAT].cMauNen(Mau[1]);
 }
 void giaoDienChinh::cNLoaiPhongVaGiaPhong()
 {
@@ -245,6 +248,7 @@ void giaoDienChinh::taoBang(const unsigned int &soDongBieuDien)
     for (int i = 1; i < soDongBieuDien; i++)
     {
         table->cMauTheoHang(i, {32, 178, 170, 255});
+        (*table)(i, 7).cMauChu(Mau[9]);
     }
     table->cMauTheoHang(0, {46, 139, 87, 255});
     const int doDai[] = {60, 280, 250, 200, 210, 160, 180, 120};
@@ -402,7 +406,7 @@ void giaoDienChinh::capNhatTTChinh()
         HopDongSinhVien hopDongMatDinh;
         hopDongMatDinh.tienTheChap = heThong->giaCocMatDinh;
         sinhVienCu = SinhVien();
-        
+
         sinhVienCu.cHopDong(hopDongMatDinh);
         capNhatCuaSoCon(sinhVienCu);
         flagChinhSinhVien = true;
@@ -507,7 +511,7 @@ void giaoDienChinh::bieuDien()
 }
 void giaoDienChinh::cuaSoThongBaoKHL()
 {
-    Color mauVien = RED;
+    Color mauVien = Mau[3];
     if (trangThaiSV == HOP_LE)
         mauVien = GREEN;
     hop nenSauCuaSo(Rectangle{1031, 57, 439, 70}, mauVien);

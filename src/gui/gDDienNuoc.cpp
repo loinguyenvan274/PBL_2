@@ -38,7 +38,7 @@ namespace GDDN
     const char *tieuDeViet[20] = {"STT", "Phòng", "Điện", "Nước", "Tổng nộp", "Đã nộp", "", "", "CSDT", "CSCT", "Lượng.TT", "T.Tiền", "CSDT", "CSCT", "Lượng.TT", "T.Tiền", "", "", ""};
     const char *noiDungNutViet[10] = {"Tất cả", "Đã nộp", "Chưa nộp"};
 
-    const char *roiRacAnh[30] = {"Search", "Done", "Not yet", "Not yet", "Done", "Number of items on the table:", "Reset", "Set electricity and water rates", "Tier", "Electricity tier", "Electricity price", "Water price", "Reset", "Elec & water prices", "Search", "Reset all", "Keep CSCT column and switch to CSDT", "Export file"};
+    const char *roiRacAnh[30] = {"Search", "Done", "Not yet", "Not yet", "Done", "Number of items on the table:", "Reset", "Set electricity and water rates", "Tier", "Electricity tier", "Electricity price", "Water price", "Reset", "prices", "Search", "Reset all", "Keep CSCT column and switch to CSDT", "Export file"};
     const char *tieuDeAnh[20] = {"No.", "Room", "Electricity", "Water", "Total payment", "Paid", "", "", "CSDT", "CSCT", "Usage", "Amount", "CSDT", "CSCT", "Usage", "Amount", "", "", ""};
     const char *noiDungNutAnh[10] = {"All", "Paid", "Unpaid"};
 
@@ -52,6 +52,7 @@ namespace GDDN
 
 }
 hienThiChuGDDN *chuGDDN;
+extern const Color *Mau;
 
 gDDienNuoc ::gDDienNuoc(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien(quanLyKTX, heThong)
 {
@@ -99,7 +100,7 @@ void gDDienNuoc::ghiFileVaoDiaChi(const char *duongDan)
     ofstream ghiFile(duongDan, ios::out);
 
     cout << duongDan;
-    ghiFile << "\t\t\tBan Kí túc xá xin Thông báo Tiền điện nước\n\n";
+    ghiFile << "\t\t\tBan Kí túc xá " + heThong->tenDonVi + " xin Thông báo Tiền điện nước\n\n";
 
     for (int i = 0; i <= sohangBD; i++)
     {
@@ -317,7 +318,7 @@ void gDDienNuoc::taoNutTuyChon()
 
     for (int i = 0; i < cacNutChon.dSNut.lSoPhanTu(); i++)
     {
-        cacNutChon.dSNut[i] = hopChu({450 + (chieuDaiO + khoangCachO) * i, 134, chieuDaiO, 40}, chuGDDN->noiDungNut[i], BLUE, YELLOW, BLACK, font26);
+        cacNutChon.dSNut[i] = hopChu({450 + (chieuDaiO + khoangCachO) * i, 134, chieuDaiO, 40}, chuGDDN->noiDungNut[i], Mau[0], YELLOW, Mau[3], font26);
         cacNutChon.dSNut[i].cDoBoVien(0.3f);
     }
 }
@@ -445,9 +446,8 @@ void gDDienNuoc::kTBangNhapGia()
 void gDDienNuoc::veKhoiTao()
 {
     taoNutTuyChon();
-    boxHTSoPhongOBang = hopChu({10, 70, 540, 40}, "", WHITE, MAU_LA_CAY, BLACK, font26);
+    boxHTSoPhongOBang = hopChu({10, 70, 391, 40}, "", Mau[0], MAU_LA_CAY, Mau[2], font26);
     boxHTSoPhongOBang.cDoBoVien(0.3f);
-    boxHTSoPhongOBang.cRangBuoc(true);
     // tạo thanh điện nước
     thanhDienNuoc = new Bang({10, 200}, 6, 1, {250, 42});
     thanhDienNuoc->cKieuChu(font26, 26);
@@ -496,15 +496,15 @@ void gDDienNuoc::veKhoiTao()
     table->cMauTheoHang(0, MAU_LA_CAY);
     capNhatBang(quanLyKTX.lDanhSachPhong());
 
-    boxReset = hopChu({1260, 134, 170, 40}, chuGDDN->roiRac[12], RED, YELLOW);
+    boxReset = hopChu({1260, 134, 170, 40}, chuGDDN->roiRac[12], Mau[0], YELLOW, Mau[2]);
     boxReset.cKieuChu(font26);
     boxReset.cDoBoVien(0.3f);
 
-    boxSetGiaTien = hopChu({1070, 134, 170, 40}, chuGDDN->roiRac[13], BLUE, YELLOW);
+    boxSetGiaTien = hopChu({1070, 134, 170, 40}, chuGDDN->roiRac[13], Mau[0], YELLOW, Mau[2]);
     boxSetGiaTien.cKieuChu(font26);
     boxSetGiaTien.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({30, 134, 370, 40}, chuGDDN->roiRac[14], BLUE, YELLOW, BLACK);
+    boxTimKiem = hopChu({30, 134, 370, 40}, chuGDDN->roiRac[14], Mau[0], YELLOW, Mau[8]);
     boxTimKiem.cKieuChu(font26);
     boxTimKiem.cDoBoVien(0.3f);
 
@@ -520,7 +520,6 @@ void gDDienNuoc::veKhoiTao()
 
     BangSetGiaTienDien = nullptr;
 
-    boxXuatFile = hopChu({880, 134, 170, 40}, chuGDDN->roiRac[17], BLUE, YELLOW);
-    boxXuatFile.cKieuChu(font26);
+    boxXuatFile = hopChu({880, 134, 170, 40}, chuGDDN->roiRac[17], Mau[0], YELLOW, Mau[2], font26);
     boxXuatFile.cDoBoVien(0.3f);
 }

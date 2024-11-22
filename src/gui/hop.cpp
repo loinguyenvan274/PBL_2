@@ -36,7 +36,7 @@ void hop::cTrangThaiChon(const bool &TTChon) { tTchon = TTChon; }
 void hop::bieuDien()
 {
     float doDayVien;
-    if (tTchon || coChuotChi || rangBuoc)
+    if (rangBuoc)
         doDayVien = this->doDayVien;
     else
         doDayVien = 0;
@@ -46,6 +46,10 @@ void hop::bieuDien()
     DrawRectangleRounded((Rectangle){hinhThai.x, hinhThai.y, hinhThai.width, hinhThai.height}, doBoVien, phanDoan, mauVien);
     // Vẽ hình chữ nhật bên trong với độ bo và trừ đi độ dày viền
     DrawRectangleRounded((Rectangle){hinhThai.x + doDayVien, hinhThai.y + doDayVien, hinhThai.width - doDayVien * 2, hinhThai.height - doDayVien * 2}, doBoVien, phanDoan, mauNen);
+    if (coChuotChi || tTchon)
+    {
+        DrawRectangleRounded((Rectangle){hinhThai.x + doDayVien, hinhThai.y + doDayVien, hinhThai.width - doDayVien * 2, hinhThai.height - doDayVien * 2}, doBoVien, phanDoan, Color{34, 139, 34, 120});
+    }
 }
 void hop::capNhatTT()
 {

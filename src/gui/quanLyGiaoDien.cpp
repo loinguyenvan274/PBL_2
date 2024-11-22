@@ -9,6 +9,13 @@
 #define oDienNuoc (*thanhChuyen)(0, 2)
 #define oThietLap (*thanhChuyen)(0, 3)
 
+#define MAU_XANH_CAY_NHE \
+    Color { 224, 255, 255, 255 }
+#define MAU_TRANG_NHE {44, 44, 44, 255}
+#define MAU_XAM_NHE {31, 31, 31, 255}
+#define MAU_XAM {25, 25, 25, 255}
+#define MAU_XANH_0_128 {0, 128, 128, 255}
+
 const char *dDHeThong = "data/heThong.csv";
 const char *dDFileAnhBachKhoa = "assets/bach_khoa.png";
 const char *dDFileAnhKhoaCNTT = "assets/khoa_cntt.png";
@@ -20,12 +27,16 @@ namespace QLGD
     const char *tiengAnh[5] = {"Student", "Room", "Electricity & Water", "Settings", ""};
     const char **ngonNguHienTai;
 }
+// 7
+Color *Mau;
+Color MauSang[] = {BLUE, YELLOW, BLACK, RED, MAU_LA_CAY, MAU_XANH, MAU_XANH_CAY_NHE, MAU_XANH_0_128, BLACK, RED, BLUE};
+Color MauToi[] = {MAU_TRANG_NHE, ORANGE, WHITE, MAROON, DARKGREEN, DARKPURPLE, MAU_XAM, MAU_XAM_NHE, BLUE, RED, BLUE};
 
 const int SO_HANG_HE_THONG = 9, H_SO_COT_MUC_DIEN = 6, H_MUC_BAC_DIEN = 0, H_GIA_DIEN = 1, H_GIA_NUOC = 2, H_TEN_DON_VI = 3, H_DIA_CHI = 4, H_GIA_PHONG_MD = 5, H_GIA_COC_MD = 6, H_NGON_NGU = 7, H_CHU_DE = 8;
 
 quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
 {
-
+    Mau = MauSang;
     QLGD::ngonNguHienTai = QLGD::tiengAnh;
     thanhChuyen = new Bang({10, 5}, 5, 1, {250, 36});
     thanhChuyen->cKieuChu(giaoDien::font26, 26);
@@ -35,7 +46,7 @@ quanLyGiaoDien::quanLyGiaoDien(QuanLyKTX &quanLyKTX) : quanLyKTX(quanLyKTX)
         (*thanhChuyen)(0, i).cDoBoVien(0.25f);
     }
 
-    thanhChuyen->cMauTheoHang(0, BLUE);
+    thanhChuyen->cMauTheoHang(0, Mau[0]);
     thanhChuyen->cGianHangCot(0, 10);
     //
     logoBachKhoa = LoadTexture(dDFileAnhBachKhoa);
@@ -83,18 +94,6 @@ void quanLyGiaoDien::initHeThong()
         break;
     }
 }
-// struct HeThong
-// {
-//     unsigned int bacGiaDien[6];
-//     unsigned long giaDien[6];
-//     unsigned long giaNuoc;
-//     string tenDonVi;
-//     string diaChi;
-//     unsigned long giaPhongMatDinh;
-//     unsigned long giaCocMatDinh;
-//     NgonNgu ngonNgu;
-//     ChuDeGiaoDien chuDeGD;
-// };
 void quanLyGiaoDien::luuHeThong()
 {
     docGhiFile ghiTep(dDHeThong);
@@ -116,7 +115,8 @@ void quanLyGiaoDien::luuHeThong()
 }
 void quanLyGiaoDien::bieuDien()
 {
-    hop boxKhung({0, 0, float(GetScreenWidth()), 46}, {0, 128, 128, 255});
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Mau[6]);
+    hop boxKhung({0, 0, float(GetScreenWidth()), 46}, Mau[7]);
     boxKhung.bieuDien();
     thanhChuyen->bieuDien(0, 0, 0, 3);
     DrawTextureEx(logoBachKhoa, Vector2{1350, 3}, 0.0f, 0.18f, WHITE);
@@ -126,6 +126,15 @@ void quanLyGiaoDien::bieuDien()
 }
 void quanLyGiaoDien::capNhatTT()
 {
+    static int bienCapNhatNgonNgu = -1;
+    static int bienCapNhatChuDe = -1;
+
+    if (bienCapNhatNgonNgu != heThong.ngonNgu || bienCapNhatChuDe != heThong.chuDeGD)
+    {
+        capNhatGDVoiHeThong();
+        bienCapNhatNgonNgu = heThong.ngonNgu;
+        bienCapNhatChuDe = heThong.chuDeGD;
+    }
     if (oPhong.laDuocChon())
     {
         flagGDMoi = FGD_PHONG;
@@ -149,7 +158,7 @@ void quanLyGiaoDien::capNhatTT()
 
     if (flagGDMoi != flagGD)
     {
-        switch (flagGDMoi)
+        switch (flagGDMoi) 
         {
         case FGD_SINH_VIEN:
             doi(new giaoDienChinh(quanLyKTX, heThong));
@@ -170,7 +179,9 @@ void quanLyGiaoDien::capNhatTT()
     }
     thanhChuyen->vungHoatDong(0, 0, 0, 3);
     gDHienThi->capNhatTT();
-    static int bienCapNhatNgonNgu = -1;
+}
+void quanLyGiaoDien::capNhatGDVoiHeThong()
+{
 
     switch (heThong.ngonNgu)
     {
@@ -184,17 +195,20 @@ void quanLyGiaoDien::capNhatTT()
         QLGD::ngonNguHienTai = QLGD::tiengNhat;
         break;
     }
-    if (bienCapNhatNgonNgu != heThong.ngonNgu)
+    switch (heThong.chuDeGD)
     {
-        capNhatGDVoiHeThong();
-        bienCapNhatNgonNgu = heThong.ngonNgu;
+    case GD_SANG:
+        Mau = MauSang;
+        break;
+    case GD_TOI:
+        Mau = MauToi;
+        break;
     }
-}
-void quanLyGiaoDien::capNhatGDVoiHeThong()
-{
     for (int i = 0; i < thanhChuyen->lSoCot(); i++)
     {
         (*thanhChuyen)(0, i).cNoiDung(QLGD::ngonNguHienTai[i]);
+        (*thanhChuyen)(0, i).cMauChu(Mau[2]);
+        (*thanhChuyen)(0, i).cMauNen(Mau[0]);
     }
 }
 void quanLyGiaoDien::xoa()

@@ -1,26 +1,42 @@
-#include <hpdf.h>
-#include <iostream>
+#include "../include/raylib.h"
+
+#include <windows.h> // Thư viện Windows API
 
 int main()
 {
-    HPDF_Doc pdf = HPDF_New(NULL, NULL);
-    if (!pdf)
+    // Khởi tạo cửa sổ Raylib
+    InitWindow(800, 600, "Transparent Window");
+    SetTargetFPS(60);
+
+    // Lấy handle của cửa sổ Raylib
+    HWND hwnd = GetActiveWindow();
+    if (!hwnd)
     {
-        std::cerr << "Error: cannot create PdfDoc object\n";
-        return 1;
+        CloseWindow();
+        return -1;
     }
 
-    HPDF_Page page = HPDF_AddPage(pdf);
-    HPDF_Page_SetSize(page, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
+    // Thiết lập cửa sổ trong suốt
+    LONG style = GetWindowLong(hwnd, GWL_EXSTYLE);
+    SetWindowLong(hwnd, GWL_EXSTYLE, style | WS_EX_LAYERED); // Thêm thuộc tính WS_EX_LAYERED
 
-    HPDF_Font font = HPDF_GetFont(pdf, "Helvetica", NULL);
-    HPDF_Page_BeginText(page);
-    HPDF_Page_SetFontAndSize(page, font, 24);
-    HPDF_Page_TextOut(page, 50, 800, "Hello, libharu!");
-    HPDF_Page_EndText(page);
+    // Đặt độ trong suốt (Alpha: 0 = hoàn toàn trong suốt, 255 = hoàn toàn không trong suốt)
+    BYTE transparency = 200;          // Ví dụ: 200 là hơi trong
+    COLORREF colorKey = RGB(0, 0, 0); // Không sử dụng Color Key, để nguyên alpha
+    SetLayeredWindowAttributes(hwnd, colorKey, transparency, LWA_ALPHA);
 
-    HPDF_SaveToFile(pdf, "example.pdf");
+    // Vòng lặp game
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
 
-    HPDF_Free(pdf);
+        // DrawText("Hello Transparent Window!", 190, 200, 20, DARKGRAY);
+
+        EndDrawing();
+    }
+
+    // Kết thúc chương trình
+    CloseWindow();
     return 0;
 }

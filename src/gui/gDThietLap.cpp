@@ -17,6 +17,7 @@ struct NgonNguHienThi
     const char **noiDungNut1;
 };
 
+extern const Color *Mau;
 const NgonNguHienThi tiengViet{noiDungOTiengViet, noiDungNutMoiNgonNgu, noiDungNut1TiengViet};
 const NgonNguHienThi tiengAnh{noiDungOTiengAnh, noiDungNutMoiNgonNgu, noiDungNut1TiengAnh};
 const NgonNguHienThi tiengNhat{noiDungOTiengNhat, noiDungNutMoiNgonNgu, noiDungNut1TiengNhat};
@@ -113,8 +114,11 @@ void gDThietLap::vekhoiTao()
     for (int i = 0; i < table->lSoHang(); i++)
     {
         (*table)(i, 0).cNoiDung(ngonNguHienTai->noiDungO[i]);
+        (*table)(i, 0).cMauChu(Mau[2]);
+        (*table)(i, 1).cMauChu(Mau[2]);
     }
-    table->cMauTheoCot(1, BLUE);
+    table->cMauTheoCot(1, Mau[0]);
+    table->cMauTheoCot(0, Mau[6]);
 
     const int soNut = 3;
     tuyChonNgonNgu.dSNut = Vector<hopChu>(soNut);
@@ -124,6 +128,8 @@ void gDThietLap::vekhoiTao()
     {
         tuyChonNgonNgu.dSNut[i] = hopChu({(*table)(NGON_NGU, 1).layViTri().x + (chieuDaiO + khoangCachO) * i, (*table)(NGON_NGU, 1).layViTri().y, chieuDaiO, 40}, ngonNguHienTai->noiDungNut[i], BLUE, YELLOW, BLACK, font26);
         tuyChonNgonNgu.dSNut[i].cDoBoVien(0.3f);
+        tuyChonNgonNgu.dSNut[i].cMauChu(Mau[2]);
+        tuyChonNgonNgu.dSNut[i].cMauNen(Mau[0]);
     }
 
     tuyChonChuDe.dSNut = Vector<hopChu>(2);
@@ -133,6 +139,8 @@ void gDThietLap::vekhoiTao()
     {
         tuyChonChuDe.dSNut[i] = hopChu({(*table)(GIAO_DIEN, 1).layViTri().x + (chieuDaiO1 + khoangCachO1) * i, (*table)(GIAO_DIEN, 1).layViTri().y, chieuDaiO1, 40}, ngonNguHienTai->noiDungNut1[i], BLUE, YELLOW, BLACK, font26);
         tuyChonChuDe.dSNut[i].cDoBoVien(0.3f);
+        tuyChonChuDe.dSNut[i].cMauChu(Mau[2]);
+        tuyChonChuDe.dSNut[i].cMauNen(Mau[0]);
     }
 }
 void gDThietLap::bieuDien()
@@ -143,6 +151,13 @@ void gDThietLap::bieuDien()
 }
 void gDThietLap::capNhatTT()
 {
+    static int chuDeHienTai = -1;
+    if (nutNgonNguHienTai != tuyChonNgonNgu.nutBiRangBuot || chuDeHienTai != heThong->chuDeGD)
+    {
+        chuDeHienTai = heThong->chuDeGD;
+        nutNgonNguHienTai = tuyChonNgonNgu.nutBiRangBuot;
+        vekhoiTao();
+    }
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         cout << GetMouseY() << "  ---  " << GetMouseX() << endl;
     table->vungHoatDong(0, 1, table->lSoHang() - 1, table->lSoCot() - 1);
@@ -161,11 +176,7 @@ void gDThietLap::capNhatTT()
         ngonNguHienTai = &tiengNhat;
         break;
     }
-    if (nutNgonNguHienTai != tuyChonNgonNgu.nutBiRangBuot)
-    {
-        nutNgonNguHienTai = tuyChonNgonNgu.nutBiRangBuot;
-        vekhoiTao();
-    }
+   
 }
 gDThietLap::~gDThietLap()
 {
