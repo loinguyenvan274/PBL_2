@@ -9,7 +9,7 @@
 #include "../app/Phong.h"
 #include "../app/docGhiFile.h"
 #include "../app/QuanLyKTX.h"
-#include "tinyfiledialogs.h"
+#include "../include/tinyfiledialogs.h"
 
 #define MAU_XANH {65, 105, 225, 255}
 #define MAU_LA_CAY {0, 128, 128, 255}
@@ -60,7 +60,7 @@ protected:
     Bang *table;
     hopChu boxThem, boxXoa, boxTimKiem;
     int sohangBD;
-    bool flagTimKiem;                                             // dùng để tìm kiếm
+    bool flagTimKiem; // dùng để tìm kiếm
     string chuoiTimSoSanh;
     HeThong *heThong;                                             // dung để kiểm tra cập nhật tìm kiếm nếu chuổi vừa mới nhật khác chuổi vừa nảy thì sẽ tìm kiếm lại
     const string floatSangString(const float &, const int & = 4); // loai bỏ số 000 dư thừa phía sau;
@@ -68,7 +68,7 @@ protected:
 
 public:
     static Font font26;
-    giaoDien(QuanLyKTX &, HeThong&);
+    giaoDien(QuanLyKTX &, HeThong &);
     virtual void capNhatTT() = 0;
     virtual void bieuDien() = 0;
     virtual ~giaoDien() = default;
