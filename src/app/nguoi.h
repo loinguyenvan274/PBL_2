@@ -8,7 +8,7 @@ protected:
     string hoVaTen;
     string ma;
     string sDT;
-    string gioiTinh;
+    bool gioiTinh;
     string ngaySinh;
 
 public:
@@ -18,9 +18,9 @@ public:
     void cNgaySinh(const string &);
     void cMa(const string &);
     void cSDT(const string &);
-    void cGioiTinh(const string &);
+    void cGioiTinh(const bool &);
     string lSDT() const;
-    string lGioiTinh() const;
+    bool lGioiTinh() const;
     string lHoVaTen() const;
     string lMa() const;
     string lngaySinh() const;

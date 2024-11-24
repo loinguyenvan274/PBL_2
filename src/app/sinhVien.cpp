@@ -29,7 +29,9 @@ Vector<string> SinhVien::lThongTin() const
     dSThuocTinh[1] = ngaySinh;
     dSThuocTinh[2] = ma;
     dSThuocTinh[3] = sDT;
-    dSThuocTinh[4] = gioiTinh;
+    dSThuocTinh[4] = "1";
+    if (gioiTinh == 0)
+        dSThuocTinh[4] = "0";
     dSThuocTinh[5] = hopDong.maPhong;
     dSThuocTinh[6] = to_string(hopDong.tienTheChap);
     dSThuocTinh[7] = to_string(hopDong.soThangO);
@@ -45,7 +47,9 @@ void SinhVien::cThongTin(const Vector<string> &dSThuocTinhDV)
     ngaySinh = dSThuocTinhDV[1];
     ma = dSThuocTinhDV[2];
     sDT = dSThuocTinhDV[3];
-    gioiTinh = dSThuocTinhDV[4];
+    gioiTinh = 1;
+    if (dSThuocTinhDV[4] == "0")
+        gioiTinh = 0;
     hopDong.maPhong = dSThuocTinhDV[5];
     hopDong.tienTheChap = stoul(dSThuocTinhDV[6]);
     hopDong.soThangO = stoi(dSThuocTinhDV[7]);

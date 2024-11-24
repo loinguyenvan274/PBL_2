@@ -28,10 +28,11 @@ private:
     void capNhatTTChinh();
     void cNLoaiPhongVaGiaPhong();
     void taoNutTuyChon();
+    void xuatPhieuThu();
     Vector<SinhVien> dsSinhVienTimKiem();
 
 public:
-    giaoDienChinh(QuanLyKTX &,HeThong&);
+    giaoDienChinh(QuanLyKTX &, HeThong &);
     void capNhatTT() override;
     void bieuDien() override;
     ~giaoDienChinh();

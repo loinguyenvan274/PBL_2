@@ -15,6 +15,7 @@ void cuaSoCon::capNhatTT()
     {
         dShopChu[i].capNhatTT();
     }
+    nutTuyChon.capNhatTT();
 }
 void cuaSoCon::bieuDien()
 {
@@ -29,4 +30,5 @@ void cuaSoCon::bieuDien()
     {
         dSHopHienThi[i].bieuDien();
     }
+    nutTuyChon.bieuDien();
 }

@@ -1,5 +1,5 @@
 #include "gDDienNuoc.h"
-#include "tinyfiledialogs.h"
+
 enum cotBang
 {
     C_STT,

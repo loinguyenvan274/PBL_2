@@ -9,6 +9,7 @@
 #include "../app/Phong.h"
 #include "../app/docGhiFile.h"
 #include "../app/QuanLyKTX.h"
+#include "tinyfiledialogs.h"
 
 #define MAU_XANH {65, 105, 225, 255}
 #define MAU_LA_CAY {0, 128, 128, 255}
