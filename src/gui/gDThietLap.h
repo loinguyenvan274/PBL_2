@@ -10,8 +10,6 @@ private:
     void capNhatVaoHeThong();
     NutTuyChon tuyChonNgonNgu;
     NutTuyChon tuyChonChuDe;
-    int nutNgonNguHienTai;
-
 public:
     gDThietLap(QuanLyKTX &, HeThong &);
     void bieuDien() override;

@@ -24,18 +24,15 @@ void NutTuyChon::bieuDien()
 }
 void NutTuyChon ::capNhatTT()
 {
-    bool cRangBuot;
     for (int i = 0; i < dSNut.lSoPhanTu(); i++)
     {
         dSNut[i].capNhatTT();
+        dSNut[i].cRangBuoc(false);
         if (dSNut[i].laDuocChon())
         {
-            nutBiRangBuot = i;
             dSNut[i].cTrangThaiChon(false);
+            nutBiRangBuot = i;
         }
-        cRangBuot = false;
-        if (i == nutBiRangBuot)
-            cRangBuot = true;
-        dSNut[i].cRangBuoc(cRangBuot);
     }
+    dSNut[nutBiRangBuot].cRangBuoc(true);
 }

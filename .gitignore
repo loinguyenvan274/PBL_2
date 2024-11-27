@@ -1,4 +1,5 @@
 test
-include
-lib
-.vscode
+# include
+# lib
+*.vscode
+.gitignore

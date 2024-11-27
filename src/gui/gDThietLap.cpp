@@ -34,8 +34,18 @@ enum TenCacO
 };
 gDThietLap::gDThietLap(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien(quanLyKTX, heThong)
 {
-    ngonNguHienTai = &tiengViet;
-    nutNgonNguHienTai = -1;
+    switch (heThong.ngonNgu)
+    {
+    case TIENG_VIET:
+        ngonNguHienTai = &tiengViet;
+        break;
+    case TIENG_ANH:
+        ngonNguHienTai = &tiengAnh;
+        break;
+    case TIENG_NHAT:
+        ngonNguHienTai = &tiengNhat;
+        break;
+    }
     table = new Bang({100, 100}, 2, 6, {250, 36});
     table->cGianHangCot(70, 23);
     table->cCot(0, 300);
@@ -152,6 +162,7 @@ void gDThietLap::bieuDien()
 void gDThietLap::capNhatTT()
 {
     static int chuDeHienTai = -1;
+    static int nutNgonNguHienTai = -1;
     if (nutNgonNguHienTai != tuyChonNgonNgu.nutBiRangBuot || chuDeHienTai != heThong->chuDeGD)
     {
         chuDeHienTai = heThong->chuDeGD;
@@ -176,7 +187,6 @@ void gDThietLap::capNhatTT()
         ngonNguHienTai = &tiengNhat;
         break;
     }
-   
 }
 gDThietLap::~gDThietLap()
 {

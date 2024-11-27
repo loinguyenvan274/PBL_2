@@ -296,7 +296,7 @@ void giaoDienChinh::capNhatBang(const Vector<SinhVien> &danhSachSinhVien)
 {
     static unsigned soDongBang = 0;
     unsigned demHangThoaMang = 0;
-    sohangBD = danhSachSinhVien.lSoPhanTu() + boxThem.laDuocChon();
+    sohangBD = danhSachSinhVien.lSoPhanTu();
 
     NTN ngayHienTai;
     NTN ngayHetHan;
@@ -305,29 +305,29 @@ void giaoDienChinh::capNhatBang(const Vector<SinhVien> &danhSachSinhVien)
         soDongBang = (sohangBD + 1) * 2; // gấp đôi lê hễ thêm 1 đối tượng thôi mà phải tạo lại thì không tốt cho lắm
         taoBang(soDongBang);
     }
-    if (boxThem.laDuocChon())
-        capNhatDong(1, SinhVien());
-
     int viTriDanhSach;
-    for (int i = 1 + boxThem.laDuocChon(); i <= sohangBD; i++)
+    cout << "\n\n " << sohangBD<<"\n\n";
+    for (int i = 1; i <= sohangBD; i++)
     {
-        viTriDanhSach = i - 1 - boxThem.laDuocChon();
+        viTriDanhSach = i - 1;
         ngayHetHan = danhSachSinhVien[viTriDanhSach].lHopDong().ngaySinhVienVao;
         ngayHetHan += danhSachSinhVien[viTriDanhSach].lHopDong().soThangO;
 
         if (cacNutChon.dSNut[N_HET_HAN].laRangBuoc())
         {
+            cout<<"c";
             if (!(ngayHetHan < ngayHienTai))
                 continue;
         }
         else if (cacNutChon.dSNut[N_CON_HAN].laRangBuoc())
         {
+            cout<<"b";
             if (ngayHetHan < ngayHienTai)
             {
                 continue;
             }
         }
-        capNhatDong(demHangThoaMang++ + 1 + boxThem.laDuocChon(), danhSachSinhVien[viTriDanhSach]);
+        capNhatDong(demHangThoaMang++ + 1, danhSachSinhVien[viTriDanhSach]);
     }
     sohangBD = demHangThoaMang;
     boxHTSoNguoiOBang.cNoiDung(chuGDC->noiDungRoiRac[3] + to_string(sohangBD) + "/" + to_string(quanLyKTX.lDanhSachSinhVien().lSoPhanTu()));
