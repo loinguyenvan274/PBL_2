@@ -114,5 +114,4 @@ public:
     ~Vector();
 };
 #include "Vector.cpp"
-#endif // _QUANLY
-       // huynh nhu bao nhan\\
+#endif 
