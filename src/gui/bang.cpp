@@ -62,10 +62,10 @@ void Bang::cCot(const int &cot, const double &cDai)
     }
 }
 
-void Bang::cMauTheoO(const OXY &viTri, const Color &mau)
-{
-    // cái ni khi nào dùng rồi viết chừ thấy chưa dùng chi hết nên không viết
-}
+// void Bang::cMauTheoO(const OXY &viTri, const Color &mau)
+// {
+//     // cái ni khi nào dùng rồi viết chừ thấy chưa dùng chi hết nên không viết
+// }
 
 void Bang::cMauTheoCot(const int &cot, const Color &mau)
 {

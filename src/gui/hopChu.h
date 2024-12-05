@@ -5,6 +5,8 @@
 #include <string>
 #include "../app/Vector.h"
 
+extern const int vietnameseCodepoints[2332];
+
 using namespace std;
 
 class hopChu : public hop

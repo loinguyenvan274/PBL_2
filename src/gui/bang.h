@@ -21,8 +21,8 @@ public:
     Bang(const Vector2 & = {0, 0}, const int & = 2, const int & = 2, const Vector2 & = {20, 10});
     void cKieuChu(const Font &, const int & = 26);
     void cCot(const int &, const double &);
-    void cHang(const int &, const double &);
-    void cMauTheoO(const OXY &, const Color &);
+    // void cHang(const int &, const double &);
+    // void cMauTheoO(const Vector2 &, const Color &);
     void cMauTheoCot(const int &, const Color &);
     void cMauTheoHang(const int &, const Color &);
     const int &lSoHang() const;
@@ -42,5 +42,6 @@ public:
 
     ~Bang();
 };
+
 
 #endif
