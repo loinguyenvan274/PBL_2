@@ -58,11 +58,12 @@ void hopChu::cKieuChu(const Font &kieuChuDV)
 
 void hopChu::bieuDien()
 {
+    
     hop::bieuDien();
-    int textWidth = MeasureText(chu.c_str(), coChu);
-    DrawTextEx(kieuChu, chu.c_str(), (Vector2){hinhThai.x + this->doDayVien, hinhThai.y + this->doDayVien + (hinhThai.height - coChu) / 2}, coChu, 1.0f, mauChu);
-    if (tTchon)
-        DrawTextEx(kieuChu, "|", (Vector2){hinhThai.x + this->doDayVien + textWidth, hinhThai.y + this->doDayVien + (hinhThai.height - coChu) / 2}, coChu, 1.0f, mauChu);
+    Vector2 kichChoChu = MeasureTextEx(kieuChu, chu.c_str(), coChu, 1.0f);
+    DrawTextEx(kieuChu, chu.c_str(), (Vector2){hinhThai.x + this->doDayVien, hinhThai.y + this->doDayVien + (hinhThai.height - kichChoChu.y) / 2}, coChu, 1.0f, mauChu);
+    if (tTchon && int(GetTime()*10) % 2 == 0)
+        DrawTextEx(kieuChu, "|", viTriConTro, coChu, 0, mauChu);
 }
 void hopChu::capNhatTT()
 {
@@ -70,28 +71,50 @@ void hopChu::capNhatTT()
     if (tTchon)
     {
         char kyTuVuaNhan = GetCharPressed();
-
         if (IsKeyPressed(KEY_BACKSPACE))
         {
             tGBatDauNhan = tGTamThoi = GetTime();
             if (!chu.empty())
             {
-                chu.pop_back();
+                chu.erase(soKiTuTruocConTro - 1, 1);
+                soKiTuTruocConTro--;
             }
         }
-        if (IsKeyDown(KEY_BACKSPACE) && GetTime() - tGBatDauNhan > 0.8)
+        else if (IsKeyDown(KEY_BACKSPACE) && GetTime() - tGBatDauNhan > 0.8)
         {
             if (!chu.empty() && GetTime() - tGTamThoi > 0.04)
             {
                 tGTamThoi = GetTime();
-                chu.pop_back();
+                chu.erase(soKiTuTruocConTro - 1, 1);
+                soKiTuTruocConTro--;
             }
         }
         else if (kyTuVuaNhan != 0 && kyTuVuaNhan != '~' && !((((kyTuVuaNhan < '0' || kyTuVuaNhan > '9') && kyTuVuaNhan != '.' || (chu == "" && kyTuVuaNhan == '.')) || chu.size() > 8) && chiNhapSo))
         {
-            chu += kyTuVuaNhan;
+            chu.insert(soKiTuTruocConTro, 1, kyTuVuaNhan);
+            soKiTuTruocConTro++;
+        }
+
+        if (IsKeyPressed(KEY_RIGHT))
+        {
+            soKiTuTruocConTro++;
+            if (soKiTuTruocConTro == chu.size() + 1)
+                soKiTuTruocConTro = 0;
+        }
+        else if (IsKeyPressed(KEY_LEFT))
+        {
+            soKiTuTruocConTro--;
+            if (soKiTuTruocConTro == -1)
+                soKiTuTruocConTro = chu.size();
         }
     }
+    else
+    {
+        soKiTuTruocConTro = chu.size();
+    }
+    Vector2 kichThuocChu;
+    kichThuocChu = MeasureTextEx(kieuChu, chu.substr(0, soKiTuTruocConTro).c_str(), coChu, 1.0f);
+    viTriConTro = (Vector2){hinhThai.x + this->doDayVien + kichThuocChu.x, hinhThai.y + this->doDayVien + (hinhThai.height - kichThuocChu.y) / 2};
 }
 
 NTN hopChu::lNTN()

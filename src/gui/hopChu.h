@@ -18,6 +18,8 @@ class hopChu : public hop
     static double tGBatDauNhan;
     static double tGTamThoi;
     bool chiNhapSo; // chỉ cho phép nhập số
+    Vector2 viTriConTro;
+    int soKiTuTruocConTro;
 
 public:
     // (vị trí, chuôi , màu nên, màu viền, màu chữ )
