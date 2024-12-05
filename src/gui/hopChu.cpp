@@ -59,8 +59,10 @@ void hopChu::cKieuChu(const Font &kieuChuDV)
 void hopChu::bieuDien()
 {
     hop::bieuDien();
+    int textWidth = MeasureText(chu.c_str(), coChu);
     DrawTextEx(kieuChu, chu.c_str(), (Vector2){hinhThai.x + this->doDayVien, hinhThai.y + this->doDayVien + (hinhThai.height - coChu) / 2}, coChu, 1.0f, mauChu);
-    // DrawTextEx(kieuChu, chu.substr((chu.size() > hinhThai.width / (coChu / 2.8)) ? chu.size() - hinhThai.width / (coChu / 2.8) : 0).c_str(), (Vector2){hinhThai.x + this->doDayVien, hinhThai.y + this->doDayVien + (hinhThai.height - coChu) / 2}, coChu, 1.0f, mauChu);
+    if (tTchon)
+        DrawTextEx(kieuChu, "|", (Vector2){hinhThai.x + this->doDayVien + textWidth, hinhThai.y + this->doDayVien + (hinhThai.height - coChu) / 2}, coChu, 1.0f, mauChu);
 }
 void hopChu::capNhatTT()
 {
