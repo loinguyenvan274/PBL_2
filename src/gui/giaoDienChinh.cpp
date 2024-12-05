@@ -306,7 +306,7 @@ void giaoDienChinh::capNhatBang(const Vector<SinhVien> &danhSachSinhVien)
         taoBang(soDongBang);
     }
     int viTriDanhSach;
-    cout << "\n\n " << sohangBD<<"\n\n";
+    cout << "\n\n " << sohangBD << "\n\n";
     for (int i = 1; i <= sohangBD; i++)
     {
         viTriDanhSach = i - 1;
@@ -315,13 +315,13 @@ void giaoDienChinh::capNhatBang(const Vector<SinhVien> &danhSachSinhVien)
 
         if (cacNutChon.dSNut[N_HET_HAN].laRangBuoc())
         {
-            cout<<"c";
+            cout << "c";
             if (!(ngayHetHan < ngayHienTai))
                 continue;
         }
         else if (cacNutChon.dSNut[N_CON_HAN].laRangBuoc())
         {
-            cout<<"b";
+            cout << "b";
             if (ngayHetHan < ngayHienTai)
             {
                 continue;
@@ -337,7 +337,7 @@ SinhVien giaoDienChinh::LaySinhVienOBang() const
     SinhVien sinhvien(cuaSoChinhSua.dShopChu[HO_VA_TEN].layChu(), cuaSoChinhSua.dShopChu[CCCD].layChu(), cuaSoChinhSua.dShopChu[NGAY_SINH].layChu());
     sinhvien.cSDT(cuaSoChinhSua.dShopChu[SDT].layChu());
     sinhvien.cGioiTinh(cuaSoChinhSua.nutTuyChon.nutBiRangBuot);
-    HopDongSinhVien hopDong;
+    HopDongThue hopDong;
     hopDong.maPhong = cuaSoChinhSua.dShopChu[MA_PHONG].layChu();
     hopDong.ngaySinhVienVao = cuaSoChinhSua.dShopChu[NGAY_VAO_O].lNTN();
     try
@@ -425,7 +425,7 @@ void giaoDienChinh::capNhatTTChinh()
 
     if (boxThem.laDuocChon())
     {
-        HopDongSinhVien hopDongMatDinh;
+        HopDongThue hopDongMatDinh;
         hopDongMatDinh.tienTheChap = heThong->giaCocMatDinh;
         sinhVienCu = SinhVien();
 
@@ -510,9 +510,22 @@ void giaoDienChinh::capNhatTT()
         capNhatTTChinh();
     }
 }
+template <typename T>
+T stringSangSo(const string &chuoi)
+{
+    long double soTraVe;
+    try
+    {
+        soTraVe = stold(chuoi);
+    }
+    catch (...)
+    {
+        soTraVe = 0.0;
+    }
+    return T(soTraVe);
+}
 void giaoDienChinh::xuatPhieuThu()
 {
-
     struct ThongTinForm
     {
         const char *tenDonVi, *ngay, *thang, *nam, *hoVaTen, *noiDung, *soTien, *ngayHetHan, *diaChi;
@@ -520,13 +533,13 @@ void giaoDienChinh::xuatPhieuThu()
 
     NTN ngayHienTai; // vi gia tri mat dich la ngay hien tai nen k can chinh
     NTN ngayHetHan = cuaSoChinhSua.dShopChu[NGAY_VAO_O].lNTN();
-    ngayHetHan += stoi(cuaSoChinhSua.dShopChu[SO_THANG_O].layChu());
+    ngayHetHan += stringSangSo<int>(cuaSoChinhSua.dShopChu[SO_THANG_O].layChu());
     string noiDungPhiCuoc = chuGDC->noiDungRoiRac[7];
     noiDungPhiCuoc += " (" + cuaSoChinhSua.dShopChu[TIEN_THE_CHAP].layChu() + ")";
     string noiDungPhiLuuTru = chuGDC->noiDungRoiRac[8];
     noiDungPhiLuuTru += " (" + cuaSoChinhSua.dShopChu[TIEN_PHONG].layChu() + ")";
     string diaChi = cuaSoChinhSua.dShopChu[LOAI_PHONG].layChu() + " " + cuaSoChinhSua.dShopChu[MA_PHONG].layChu() + " " + heThong->diaChi;
-    string soTien = to_string(stoul(cuaSoChinhSua.dShopChu[TIEN_PHONG].layChu()) + stoul(cuaSoChinhSua.dShopChu[TIEN_THE_CHAP].layChu()));
+    string soTien = to_string(stringSangSo<long>(cuaSoChinhSua.dShopChu[TIEN_PHONG].layChu()) + stringSangSo<long>(cuaSoChinhSua.dShopChu[TIEN_THE_CHAP].layChu()));
     ThongTinForm thongTinFom{
         heThong->tenDonVi.c_str(),
         to_string(ngayHienTai.ngay).c_str(),
@@ -553,14 +566,13 @@ void giaoDienChinh::xuatPhieuThu()
     ImageDrawTextEx(&image, customFont, thongTinFom.noiDung, Vector2{380, 878}, fontSize, spacing, BLACK);
     ImageDrawTextEx(&image, customFont, thongTinFom.soTien, Vector2{380, 920}, fontSize, spacing, BLACK);
     ImageDrawTextEx(&image, customFont, thongTinFom.ngayHetHan, Vector2{450, 973}, fontSize, spacing, BLACK);
-
     const char *filters[] = {"*.png"};
     const char *tenMatDinh = "Phieu_Thu.png";
     const char *tieuDe = "xuat Phieu Thu";
-    char *duongDan = tinyfd_saveFileDialog(tieuDe, tenMatDinh, 1, filters, NULL);
-    if (duongDan != NULL)
+    const string duongDan = docGhiFile::layDuongDanTuWindows("png");
+    if (!duongDan.empty())
     {
-        ExportImage(image, duongDan);
+        ExportImage(image, duongDan.c_str());
     }
     UnloadImage(image);
 }

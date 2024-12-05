@@ -54,7 +54,7 @@ const Vector<SinhVien> QuanLyKTX::timSinhVienGiong(const string &chuoiCon, bool 
         if (soSanh(cacSinhVien[i], chuoiCon))
             sinhvienDuocTim.them(cacSinhVien[i]);
     }
-    return sinhvienDuocTim;
+    return sinhvienDuocTim; 
 }
 bool QuanLyKTX::soSanhMaSV(const SinhVien &sinhVien, const string &maSV) { return sinhVien.lMa().find(maSV) != string::npos; }
 bool QuanLyKTX::soSanhTenSV(const SinhVien &sinhVien, const string &tenSinhVien) { return sinhVien.lHoVaTen().find(tenSinhVien) != string::npos; }

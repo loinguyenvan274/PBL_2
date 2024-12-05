@@ -4,7 +4,7 @@
 #include "Nguoi.h"
 #include "Vector.h"
 
-struct HopDongSinhVien
+struct HopDongThue
 {
     NTN ngaySinhVienVao;
     string maPhong;
@@ -12,19 +12,19 @@ struct HopDongSinhVien
     int soThangO;
     // unsigned long tienPhong;
     unsigned long tienTheChap;
-    HopDongSinhVien();
+    HopDongThue();
 };
 class SinhVien : public Nguoi
 {
 private:
-    HopDongSinhVien hopDong;
+    HopDongThue hopDong;
 
 public:
     SinhVien(const string & = "", const string & = "", const string & = "");
 
     void cMaPhong(const string &);
-    const HopDongSinhVien &lHopDong() const;
-    void cHopDong(const HopDongSinhVien &);
+    const HopDongThue &lHopDong() const;
+    void cHopDong(const HopDongThue &);
 
     string lMaPhong() const;
     void bieuDien() const;

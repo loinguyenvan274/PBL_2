@@ -1,7 +1,7 @@
 #include "SinhVien.h"
 #include <ctime>
 
-HopDongSinhVien::HopDongSinhVien()
+HopDongThue::HopDongThue()
 {
     maPhong = "";
     // loaiPhong = "";
@@ -67,6 +67,6 @@ SinhVien &SinhVien::operator=(const SinhVien &sinhvien)
     hopDong = sinhvien.lHopDong();
     return *this;
 }
-const HopDongSinhVien &SinhVien::lHopDong() const { return hopDong; }
-void SinhVien::cHopDong(const HopDongSinhVien &hopDong) { this->hopDong = hopDong; }
+const HopDongThue &SinhVien::lHopDong() const { return hopDong; }
+void SinhVien::cHopDong(const HopDongThue &hopDong) { this->hopDong = hopDong; }
 SinhVien::~SinhVien() {}

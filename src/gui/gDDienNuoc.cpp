@@ -86,13 +86,11 @@ void gDDienNuoc::initDienNuoc()
 }
 void gDDienNuoc::XuatFile()
 {
-    const char *filters[] = {"*.txt", "*.cpp", "*.h", 0};
-    const char *tenMatDinh = "Tien_Dien_Nuoc.txt";
-    const char *tieuDe = "Lưu file";
-    char *duongDan = tinyfd_saveFileDialog(tieuDe, tenMatDinh, 1, filters, NULL);
-    if (duongDan != NULL)
+    // const char *filters[] = {"*.txt", "*.cpp", "*.h", 0};
+    const string duongDan = docGhiFile::layDuongDanTuWindows("txt");
+    if (!duongDan.empty())
     {
-        ghiFileVaoDiaChi(duongDan);
+        ghiFileVaoDiaChi(duongDan.c_str());
     }
 }
 void gDDienNuoc::ghiFileVaoDiaChi(const char *duongDan)

@@ -1,4 +1,8 @@
 #include "docGhiFile.h"
+#define byte win_byte_override 
+#include <windows.h>
+#undef byte
+#include <commdlg.h>
 
 docGhiFile::docGhiFile(const string &tenPath) : duongDan(tenPath) {}
 
@@ -42,4 +46,36 @@ void docGhiFile::ghiData(const Vector<Vector<string>> &dSDoiTuong)
     }
     ghiFile.close();
 }
+std::string docGhiFile::layDuongDanTuWindows(const char *dangFileMatDinh)
+{
+    OPENFILENAMEW ofn; 
+    WCHAR fileMatDinh[256];
+    MultiByteToWideChar(CP_UTF8, 0, dangFileMatDinh, -1, fileMatDinh, 256); 
+    WCHAR szFile[260] = {0};
+
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = NULL;
+    ofn.lpstrFile = szFile;
+    ofn.nMaxFile = sizeof(szFile) / sizeof(WCHAR);            
+    ofn.lpstrFilter = L"All Files\0*.*\0Text Files\0*.TXT\0"; 
+    ofn.nFilterIndex = 1;
+    ofn.lpstrDefExt = fileMatDinh;
+    ofn.lpstrTitle = L"Lưu";
+    ofn.Flags = OFN_OVERWRITEPROMPT;
+
+    if (GetSaveFileNameW(&ofn))
+    { 
+        char pathTraVe[256];
+        WideCharToMultiByte(CP_UTF8, 0, ofn.lpstrFile, -1, pathTraVe, 256, NULL, NULL); 
+        std::cout << "File duoc luu: " << pathTraVe << std::endl;
+        return std::string(pathTraVe);
+    }
+    else
+    {
+        std::cout << "Co loi xay ra" << std::endl;
+        return "";
+    }
+}
+
 docGhiFile::~docGhiFile() {}
