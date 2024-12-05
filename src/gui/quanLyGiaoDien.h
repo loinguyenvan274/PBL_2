@@ -1,7 +1,6 @@
 #ifndef _QUANLYGIAODIEN
 #define _QUANLYGIAODIEN
 
-#include "raylib.h"
 #include "giaoDien.h"
 
 enum flagGiaoDien

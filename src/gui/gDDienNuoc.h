@@ -2,7 +2,6 @@
 #ifndef _GIAODIENCHINH
 #define _GIEODIENCHINH
 
-#include "raylib.h"
 #include "giaoDien.h"
 
 class gDDienNuoc : public giaoDien

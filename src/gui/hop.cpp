@@ -2,7 +2,7 @@
 
 hop::hop(Rectangle hinhThai, Color mauNen, Color mauVien) : hinhThai(hinhThai), mauNen(mauNen), mauVien(mauVien)
 {
-    tTchon = false;
+    tTChon = false;
     coChuotChi = false;
     rangBuoc = false;
     doDayVien = 2.0;
@@ -28,10 +28,10 @@ void hop::cDoDayVien(float doDayDV) { doDayVien = doDayDV; }
 void hop::cDoBoVien(const float &doBoVienDV) { doBoVien = doBoVienDV; };
 void hop::cRangBuoc(const bool &rangBuocDV) { rangBuoc = rangBuocDV; };
 
-const bool &hop::laDuocChon() { return tTchon; }
+const bool &hop::laDuocChon() { return tTChon; }
 const bool &hop::laRangBuoc() { return rangBuoc; }
 
-void hop::cTrangThaiChon(const bool &TTChon) { tTchon = TTChon; }
+void hop::cTrangThaiChon(const bool &TTChon) { tTChon = TTChon; }
 
 void hop::bieuDien()
 {
@@ -46,7 +46,7 @@ void hop::bieuDien()
     DrawRectangleRounded((Rectangle){hinhThai.x, hinhThai.y, hinhThai.width, hinhThai.height}, doBoVien, phanDoan, mauVien);
     // Vẽ hình chữ nhật bên trong với độ bo và trừ đi độ dày viền
     DrawRectangleRounded((Rectangle){hinhThai.x + doDayVien, hinhThai.y + doDayVien, hinhThai.width - doDayVien * 2, hinhThai.height - doDayVien * 2}, doBoVien, phanDoan, mauNen);
-    if (coChuotChi || tTchon)
+    if (coChuotChi || tTChon)
     {
         DrawRectangleRounded((Rectangle){hinhThai.x + doDayVien, hinhThai.y + doDayVien, hinhThai.width - doDayVien * 2, hinhThai.height - doDayVien * 2}, doBoVien, phanDoan, Color{34, 139, 34, 120});
     }
@@ -56,13 +56,13 @@ void hop::capNhatTT()
     if ((GetMouseX() > hinhThai.x && GetMouseX() < hinhThai.x + hinhThai.width && GetMouseY() > hinhThai.y && GetMouseY() < hinhThai.y + hinhThai.height))
     {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-            this->tTchon = true;
+            this->tTChon = true;
         this->coChuotChi = true;
     }
     else
     {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-            tTchon = false;
+            tTChon = false;
         this->coChuotChi = false;
     }
 }

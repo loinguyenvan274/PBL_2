@@ -10,7 +10,7 @@ protected:
     Color mauNen;  // màu trong ô
     Color mauVien; // màu đường viền
 
-    bool tTchon;     // trang thai chon
+    bool tTChon;     // trang thai chon
     bool coChuotChi; // chuột đang chỉ vào ô
     bool rangBuoc;   // ràng buộc đuối tượng mà không phụ thuộc vào con chuột
     float doBoVien;

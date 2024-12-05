@@ -5,7 +5,7 @@ cc = g++
 all_file_compile = ./src/main.cpp $(all_cpp_app) ./src/gui/*.cpp
 path_include = ./include
 path_lib = ./lib
-lInclude = -lraylib -lwinmm -lgdi32 -lopengl32 -lole32 -lcomdlg32 
+lInclude = -lraylib -lwinmm -lgdi32 -lopengl32 -lole32 -lcomdlg32 -lImm32
 path_build = ./index.exe
 paht_test = ./test/test.exe
 

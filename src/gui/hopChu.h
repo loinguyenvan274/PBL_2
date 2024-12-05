@@ -1,7 +1,6 @@
 #pragma once
 
 #include "hop.h"
-#include "raylib.h"
 #include <string>
 #include "../app/Vector.h"
 
@@ -11,7 +10,9 @@ using namespace std;
 
 class hopChu : public hop
 {
-    string chu; // text trong ô
+    wstring chu; // text trong ô
+    wstring chuoiIME;
+    wstring strChuoiIME;
     string chuCoDinh;
     Color mauChu; // màu chữ trong ô
     int coChu;
