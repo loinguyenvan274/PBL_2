@@ -4,7 +4,7 @@
 #include <string>
 #include "../app/Vector.h"
 
-extern const int vietnameseCodepoints[2332];
+extern const int vietnameseCodepoints[2523];
 
 using namespace std;
 
