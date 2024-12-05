@@ -72,8 +72,10 @@ giaoDienPhong ::giaoDienPhong(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien
     boxXoa.cKieuChu(font26);
     boxXoa.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({70, 134, 400, 40}, chuGDP->roiRac[2], Mau[0], YELLOW, Mau[8]);
+    boxTimKiem = hopChu({70, 134, 400, 40}, "", Mau[0], YELLOW, Mau[8]);
     boxTimKiem.cKieuChu(font26);
+    boxTimKiem.cFlagChuCoDinh(true);
+    boxTimKiem.cChuCoDinh(chuGDP->roiRac[12]);
     boxTimKiem.cDoBoVien(0.3f);
 
     flagThongBaoKHL = false;
@@ -280,12 +282,10 @@ void giaoDienPhong::capNhatTT()
     }
     if (boxTimKiem.laDuocChon() && !flagTimKiem)
     {
-        boxTimKiem.cNoiDung("");
         flagTimKiem = true;
     }
     if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
     {
-        boxTimKiem.cNoiDung(chuGDP->roiRac[12]);
         flagTimKiem = false;
     }
 

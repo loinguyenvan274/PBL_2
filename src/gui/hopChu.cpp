@@ -37,10 +37,12 @@ const int vietnameseCodepoints[2332] = {
 double hopChu::tGTamThoi = 0;
 double hopChu::tGBatDauNhan = 0;
 
-hopChu::hopChu(Rectangle hinhThaiDV, const string chuDV, Color mauNenDV, Color mauVienDV, Color mauChuDV, Font kieuChu) : hop(hinhThaiDV, mauNenDV, mauVienDV), chu(chuDV), mauChu(mauChuDV), kieuChu(kieuChu)
+hopChu::hopChu(Rectangle hinhThaiDV, const string chuDV, Color mauNenDV, Color mauVienDV, Color mauChuDV, Font kieuChu) : hop(hinhThaiDV, mauNenDV, mauVienDV), chu(chuDV), mauChu(mauChuDV), kieuChu(kieuChu), chuCoDinh("")
 {
     coChu = 26; // cở chử mặt định 26
     chiNhapSo = false;
+    chuCoDinh.shrink_to_fit();
+    flagChuThayThe = false;
 }
 hopChu ::~hopChu() {}
 
@@ -58,11 +60,16 @@ void hopChu::cKieuChu(const Font &kieuChuDV)
 
 void hopChu::bieuDien()
 {
-    
+
     hop::bieuDien();
-    Vector2 kichChoChu = MeasureTextEx(kieuChu, chu.c_str(), coChu, 1.0f);
-    DrawTextEx(kieuChu, chu.c_str(), (Vector2){hinhThai.x + this->doDayVien, hinhThai.y + this->doDayVien + (hinhThai.height - kichChoChu.y) / 2}, coChu, 1.0f, mauChu);
-    if (tTchon && int(GetTime()*10) % 2 == 0)
+    string chuHienThi = chu;
+    if (flagChuThayThe && !tTchon)
+    {
+        chuHienThi = chuCoDinh;
+    }
+    Vector2 kichChoChu = MeasureTextEx(kieuChu, chuHienThi.c_str(), coChu, 1.0f);
+    DrawTextEx(kieuChu, chuHienThi.c_str(), (Vector2){hinhThai.x + this->doDayVien, hinhThai.y + this->doDayVien + (hinhThai.height - kichChoChu.y) / 2}, coChu, 1.0f, mauChu);
+    if (tTchon && int(GetTime() * 10) % 2 == 0)
         DrawTextEx(kieuChu, "|", viTriConTro, coChu, 0, mauChu);
 }
 void hopChu::capNhatTT()
@@ -138,4 +145,10 @@ NTN hopChu::lNTN()
     return ntn;
 }
 
-string hopChu::layChu() { return chu; }
+void hopChu::cChuCoDinh(const string &chuThayThe) { this->chuCoDinh = chuThayThe; }
+void hopChu::cFlagChuCoDinh(const bool &flagChuThayThe) { this->flagChuThayThe = flagChuThayThe; }
+
+string hopChu::layChu()
+{
+    return chu;
+}

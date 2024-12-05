@@ -112,7 +112,9 @@ giaoDienChinh ::giaoDienChinh(QuanLyKTX &quanLyKTX, HeThong &heThong) : giaoDien
     boxHTSoNguoiOBang = hopChu({10, 70, 540, 40}, "", Mau[0], Mau[8], Mau[2], font26);
     boxHTSoNguoiOBang.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({146, 144, 400, 40}, chuGDC->cacNutCongCu[2], Mau[0], Mau[1], Mau[8], font26);
+    boxTimKiem = hopChu({146, 144, 400, 40},"", Mau[0], Mau[1], Mau[8], font26);
+    boxTimKiem.cFlagChuCoDinh(true);
+    boxTimKiem.cChuCoDinh(chuGDC->noiDungRoiRac[4]);
     boxTimKiem.cDoBoVien(0.3f);
 
     tuyChonTimKiem = hopChu({10, 144, 130, 40}, chuGDC->cacNutCongCu[3], Mau[0], Mau[1], Mau[8], font26);
@@ -445,12 +447,10 @@ void giaoDienChinh::capNhatTTChinh()
     }
     if (boxTimKiem.laDuocChon() && !flagTimKiem)
     {
-        boxTimKiem.cNoiDung("");
         flagTimKiem = true;
     }
     if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
     {
-        boxTimKiem.cNoiDung(chuGDC->noiDungRoiRac[4]);
         flagTimKiem = false;
     }
     // tìm kiếm

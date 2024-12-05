@@ -11,7 +11,8 @@ using namespace std;
 
 class hopChu : public hop
 {
-    string chu;   // text trong ô
+    string chu; // text trong ô
+    string chuCoDinh;
     Color mauChu; // màu chữ trong ô
     int coChu;
     Font kieuChu;
@@ -20,6 +21,7 @@ class hopChu : public hop
     bool chiNhapSo; // chỉ cho phép nhập số
     Vector2 viTriConTro;
     int soKiTuTruocConTro;
+    bool flagChuThayThe;
 
 public:
     // (vị trí, chuôi , màu nên, màu viền, màu chữ )
@@ -32,6 +34,8 @@ public:
     void cKieuChu(const Font &);
     void bieuDien();
     void cChiNhapSo(const bool &);
+    void cChuCoDinh(const string &);
+    void cFlagChuCoDinh(const bool &);
     NTN lNTN();
 
     string layChu();

@@ -137,13 +137,11 @@ void gDDienNuoc::capNhatTTChinh()
     }
     else if (boxTimKiem.laDuocChon() && !flagTimKiem)
     {
-        boxTimKiem.cNoiDung("");
         flagTimKiem = true;
     }
 
     if (!boxTimKiem.laDuocChon() && boxTimKiem.layChu() == "")
     {
-        boxTimKiem.cNoiDung(chuGDDN->roiRac[0]);
         flagTimKiem = false;
     }
     // tìm kiếm
@@ -502,8 +500,10 @@ void gDDienNuoc::veKhoiTao()
     boxSetGiaTien.cKieuChu(font26);
     boxSetGiaTien.cDoBoVien(0.3f);
 
-    boxTimKiem = hopChu({30, 134, 370, 40}, chuGDDN->roiRac[14], Mau[0], YELLOW, Mau[8]);
+    boxTimKiem = hopChu({30, 134, 370, 40}, "", Mau[0], YELLOW, Mau[8]);
     boxTimKiem.cKieuChu(font26);
+    boxTimKiem.cFlagChuCoDinh(true);
+    boxTimKiem.cChuCoDinh(chuGDDN->roiRac[0]);
     boxTimKiem.cDoBoVien(0.3f);
 
     boxResetHet = hopChu({(GetScreenWidth() - 560) / 2.0f, (GetScreenHeight() - 60) / 2.0f - 40, 560, 60}, chuGDDN->roiRac[15]);
